@@ -113,10 +113,10 @@
       pointer-events: none;
     }
 
-    .traffic { display: flex; gap: 8px; align-items: center; padding: 0 8px 0 2px; }
+    .traffic { display: flex; gap: 7px; align-items: center; padding: 0 10px 0 2px; }
     .traffic .dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      background: var(--traffic-dot, rgba(0,0,0,0.18));
+      width: 11px; height: 11px; border-radius: 50%;
+      background: var(--traffic-dot, rgba(0,0,0,0.14));
     }
     .window:hover .traffic .dot:nth-child(1) { background: #ED6B5F; }
     .window:hover .traffic .dot:nth-child(2) { background: #F5BD4F; }
@@ -150,8 +150,9 @@
       flex: 1 1 auto;
       text-align: center;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      font-size: 12.5px;
-      letter-spacing: -0.005em;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
     }
     .url-pill .right-icons { display: flex; gap: 0; margin-right: -6px; }
     .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }

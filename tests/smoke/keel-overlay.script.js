@@ -104,9 +104,12 @@
   }
 
   const accent = pageAccent();
-  const host  = (P.host  || location.host).replace(/</g, "&lt;");
-  const title = (P.title || document.title || "").replace(/</g, "&lt;");
-  const tint  = pageTint();
+  // Strip leading "www." for a cleaner read in the URL pill — matches Safari
+  // and Arc. The full host is still in the tooltip via `title`.
+  const rawHost = (P.host || location.host).replace(/</g, "&lt;");
+  const host    = rawHost.replace(/^www\./i, "");
+  const title   = (P.title || document.title || "").replace(/</g, "&lt;");
+  const tint    = pageTint();
 
   const root = document.createElement("div");
   root.id = "__keel_chrome__";
@@ -177,12 +180,12 @@
 
     /* Traffic lights — standalone, no pill */
     .traffic {
-      display: flex; gap: 8px; align-items: center;
-      padding: 0 8px 0 2px;
+      display: flex; gap: 7px; align-items: center;
+      padding: 0 10px 0 2px;
     }
     .traffic .dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      background: ${isLight ? 'rgba(0,0,0,0.18)' : 'rgba(255,255,255,0.22)'};
+      width: 11px; height: 11px; border-radius: 50%;
+      background: ${isLight ? 'rgba(0,0,0,0.14)' : 'rgba(255,255,255,0.18)'};
       transition: background 120ms;
     }
     .ribbon:hover .traffic .dot:nth-child(1) { background: #ED6B5F; }
@@ -226,8 +229,9 @@
       flex: 1 1 auto;
       text-align: center;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      font-size: 12.5px;
-      letter-spacing: -0.005em;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
     }
     .url-pill .lock { opacity: 0.42; flex: 0 0 auto; }
     .url-pill .favicon {
