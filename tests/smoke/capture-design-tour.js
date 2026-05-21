@@ -27,6 +27,11 @@ const sites = [
   { name: "12-figma",      url: "https://www.figma.com",     theme: "light" },
   { name: "13-notion",     url: "https://www.notion.so",     theme: "light" },
   { name: "14-ramp",       url: "https://ramp.com",          theme: "dark"  },
+  // Novel coverage: image-hero, terminal-style, magazine, news.
+  { name: "15-pitchfork",  url: "https://pitchfork.com",     theme: "light" },
+  { name: "16-supabase",   url: "https://supabase.com",      theme: "dark"  },
+  { name: "17-readme",     url: "https://en.wikipedia.org/wiki/Mount_Everest", theme: "light" },
+  { name: "18-news",       url: "https://news.ycombinator.com", theme: "light" },
 ];
 
 const isRoot = process.getuid && process.getuid() === 0;
