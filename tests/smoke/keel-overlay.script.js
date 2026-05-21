@@ -134,7 +134,7 @@
       height: 46px;
       z-index: 2147483647;
       display: flex; align-items: center;
-      padding: 0 12px;
+      padding: 0 18px;
       gap: 4px;
       font: 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
       pointer-events: none;
@@ -146,8 +146,9 @@
         : 'linear-gradient(180deg, rgba(22,23,26,0.82) 0%, rgba(22,23,26,0.74) 78%, rgba(22,23,26,0) 100%)'};
       backdrop-filter: blur(26px) saturate(180%);
       -webkit-backdrop-filter: blur(26px) saturate(180%);
-      /* Faint accent line at the bottom — the only colored chrome element,
-         a single 1px-wide tab indicator (per-tab tint). */
+      /* Soft drop-shadow under the scrim so the chrome reads as "floating
+         above the page" rather than painted on top. Falls off quickly. */
+      box-shadow: 0 6px 16px -10px ${isLight ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.55)'};
       border-bottom: 0.5px solid ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)'};
     }
     .ribbon > * { pointer-events: auto; }
@@ -206,17 +207,20 @@
     /* URL pill — the only pill. Centered. The per-tab accent shows only as
        the scrim underline, so no duplicate inset here. */
     .url-pill {
-      display: inline-flex; align-items: center; gap: 6px;
+      display: inline-flex; align-items: center; gap: 8px;
       height: 28px; min-width: 240px; max-width: 440px;
       padding: 0 12px;
       border-radius: 8px;
       background: ${isLight ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.06)'};
       color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
       box-shadow: inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.07)'};
-      transition: background 140ms ease;
+      transition: background 140ms ease, box-shadow 140ms ease;
     }
     .url-pill:hover {
       background: ${isLight ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.10)'};
+      box-shadow:
+        inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'},
+        0 2px 8px -4px rgba(0,0,0,0.15);
     }
     .url-pill .text {
       flex: 1 1 auto;
