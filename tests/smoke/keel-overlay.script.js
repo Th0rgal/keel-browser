@@ -172,14 +172,17 @@
     }
 
     /* Steady-state hairline — present even when ribbon is hidden so the user
-       has a discoverable handle. */
+       has a discoverable handle. Picks up the per-tab accent at low
+       opacity, so the always-visible state quietly carries tab identity. */
     .peek {
       position: fixed; top: 0; left: 0; right: 0; height: 2px;
       pointer-events: none;
       z-index: 2147483646;
-      background: linear-gradient(180deg,
-        ${isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.05)'} 0%,
-        transparent 100%);
+      background:
+        linear-gradient(90deg, transparent 0%, ${accent}38 50%, transparent 100%),
+        linear-gradient(180deg,
+          ${isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.05)'} 0%,
+          transparent 100%);
       transition: opacity 220ms;
     }
     :host([data-state="visible"]) .peek { opacity: 0; }
