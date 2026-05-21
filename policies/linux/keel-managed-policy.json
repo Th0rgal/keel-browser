@@ -1,0 +1,78 @@
+{
+  "_comment": "Keel managed policies for Brave/Chromium on Linux. Install to /etc/brave/policies/managed/keel-managed-policy.json. These are enforced and cannot be overridden by the end user. Documentation: https://chromeenterprise.google/policies/ and https://github.com/brave/brave-browser",
+
+  "BraveRewardsDisabled": true,
+  "BraveWalletDisabled": true,
+  "BraveVPNDisabled": true,
+  "BraveAIChatEnabled": false,
+  "BraveTalkDisabled": true,
+  "TorDisabled": false,
+  "WebTorrentDisabled": true,
+  "BraveSpeedreaderEnabled": false,
+  "BraveSyncUrl": "",
+
+  "MetricsReportingEnabled": false,
+  "SafeBrowsingEnabled": true,
+  "SafeBrowsingProtectionLevel": 1,
+  "SafeBrowsingExtendedReportingEnabled": false,
+  "ChromeCleanupReportingEnabled": false,
+  "UrlKeyedAnonymizedDataCollectionEnabled": false,
+  "SearchSuggestEnabled": false,
+  "NetworkPredictionOptions": 2,
+  "SpellcheckEnabled": true,
+  "SpellCheckServiceEnabled": false,
+  "TranslateEnabled": false,
+  "AlternateErrorPagesEnabled": false,
+
+  "BlockThirdPartyCookies": true,
+  "DefaultCookiesSetting": 1,
+  "PasswordManagerEnabled": true,
+  "PasswordLeakDetectionEnabled": true,
+  "AutofillAddressEnabled": false,
+  "AutofillCreditCardEnabled": false,
+  "PaymentMethodQueryEnabled": false,
+
+  "HttpsOnlyMode": "force_enabled",
+  "DnsOverHttpsMode": "automatic",
+
+  "BackgroundModeEnabled": false,
+  "PromotionalTabsEnabled": false,
+  "PromotionsEnabled": false,
+  "BrowserSignin": 0,
+
+  "DefaultBrowserSettingEnabled": false,
+  "HideWebStoreIcon": false,
+  "ShowAppsShortcutInBookmarkBar": false,
+  "BookmarkBarEnabled": true,
+  "ShowHomeButton": false,
+  "HomepageIsNewTabPage": true,
+
+  "DefaultSearchProviderEnabled": true,
+  "DefaultSearchProviderName": "Brave Search",
+  "DefaultSearchProviderKeyword": "brave",
+  "DefaultSearchProviderSearchURL": "https://search.brave.com/search?q={searchTerms}",
+  "DefaultSearchProviderSuggestURL": "https://search.brave.com/api/suggest?q={searchTerms}",
+
+  "ExtensionInstallBlocklist": [],
+  "ExtensionInstallAllowlist": [],
+  "ExtensionAllowedTypes": ["extension", "theme"],
+  "ExtensionSettings": {
+    "*": {
+      "installation_mode": "allowed"
+    }
+  },
+
+  "ComponentUpdatesEnabled": true,
+  "BrowserAddPersonEnabled": true,
+  "BrowserGuestModeEnabled": true,
+
+  "_keel_notes": {
+    "rewards_wallet_vpn_leo_talk": "Disabled via Brave policy keys. These prevent feature surfaces from appearing in the UI.",
+    "safe_browsing": "Kept ON. Extended reporting OFF for privacy. Standard protection level (1) avoids sending hashes for unrequested checks.",
+    "https_only": "Force-enabled at policy level so the user cannot accidentally browse plaintext.",
+    "metrics": "All telemetry/usage pings disabled where the policy permits.",
+    "search": "Default kept as Brave Search (privacy-preserving, configurable by user).",
+    "extensions": "Allowed but not pre-installed. ExtensionAllowedTypes restricts to extensions/themes only.",
+    "component_updates": "Kept ON. These deliver security fixes (cert revocation, Subresource Filter, etc.)."
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "_comment": "Brave 'master preferences' (a.k.a. 'initial preferences'). Applied to NEW profiles only. On Linux install to /etc/brave/master_preferences; on macOS to /Library/Application Support/BraveSoftware/Brave-Browser/Master Preferences; on Windows to the install dir as 'master_preferences'. Unlike managed policies, the user can change these afterwards.",
+
+  "homepage": "chrome://newtab",
+  "homepage_is_newtabpage": true,
+  "session": {
+    "restore_on_startup": 1
+  },
+
+  "bookmark_bar": {
+    "show_on_all_tabs": true
+  },
+
+  "browser": {
+    "show_home_button": false,
+    "check_default_browser": false,
+    "has_seen_welcome_page": true,
+    "custom_chrome_frame": false
+  },
+
+  "distribution": {
+    "import_bookmarks": false,
+    "import_history": false,
+    "import_search_engine": false,
+    "import_home_page": false,
+    "skip_first_run_ui": true,
+    "do_not_create_desktop_shortcut": false,
+    "do_not_create_quick_launch_shortcut": true,
+    "do_not_create_taskbar_shortcut": false,
+    "do_not_launch_chrome": true,
+    "do_not_register_for_update_launch": false,
+    "make_chrome_default_for_user": false,
+    "ping_delay": 60,
+    "suppress_first_run_default_browser_prompt": true,
+    "system_level": false,
+    "verbose_logging": false
+  },
+
+  "first_run_tabs": [
+    "chrome://newtab"
+  ],
+
+  "brave": {
+    "rewards": {
+      "show_button": false,
+      "enabled": false
+    },
+    "wallet": {
+      "show_wallet_icon_on_toolbar": false
+    },
+    "brave_news": {
+      "opted_in": false,
+      "is_opted_in": false,
+      "show_on_new_tab_page": false
+    },
+    "sidebar": {
+      "sidebar_show_option": 3
+    },
+    "new_tab_page": {
+      "show_background_image": false,
+      "show_branded_background_image": false,
+      "show_sponsored_images_background_image": false,
+      "show_brave_news": false,
+      "show_clock": false,
+      "show_stats": false,
+      "show_rewards": false,
+      "show_together": false,
+      "show_binance": false,
+      "show_gemini": false,
+      "show_cryptodotcom": false,
+      "show_ftx": false,
+      "show_search_widget": false,
+      "show_search_box": false,
+      "show_leo_assistant_button": false,
+      "shows_options": 0,
+      "hide_all_widgets": true,
+      "background": {
+        "type": "solid",
+        "value": ""
+      },
+      "custom_background_enabled": false,
+      "preferred_market_locale_set_by_user": true
+    },
+    "vpn": {
+      "promotion_disabled": true
+    },
+    "today": {
+      "should_show_on_ntp": false,
+      "opted_in": false,
+      "is_opted_in": false
+    },
+    "ai_chat": {
+      "enabled": false
+    },
+    "shields": {
+      "ads_blocked_value": "aggressive",
+      "fingerprinting_blocked_value": "default",
+      "https_upgrades_value": "strict",
+      "no_script_value": "block_third_party"
+    },
+    "stats": {
+      "reporting_enabled": false
+    },
+    "p3a": {
+      "enabled": false
+    }
+  },
+
+  "search": {
+    "suggest_enabled": false
+  },
+
+  "translate": {
+    "enabled": false
+  },
+
+  "safebrowsing": {
+    "enabled": true,
+    "scout_reporting_enabled": false,
+    "extended_reporting_enabled": false
+  },
+
+  "https_only_mode_enabled": true,
+
+  "profile": {
+    "default_content_setting_values": {
+      "cookies": 1
+    },
+    "block_third_party_cookies": true,
+    "cookie_controls_mode": 1
+  },
+
+  "credentials_enable_service": true,
+  "credentials_enable_autosignin": false,
+
+  "autofill": {
+    "enabled": false,
+    "profile_enabled": false,
+    "credit_card_enabled": false
+  },
+
+  "payments": {
+    "can_make_payment_enabled": false
+  },
+
+  "background_mode": {
+    "enabled": false
+  }
+}

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Keel managed policies for Brave on macOS.
+  Install to /Library/Managed Preferences/com.brave.Browser.plist
+  or deploy via MDM as a Configuration Profile targeting com.brave.Browser.
+
+  Convert this XML to a binary plist when shipping:
+    plutil -convert binary1 com.brave.Browser.plist.xml -o com.brave.Browser.plist
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>BraveRewardsDisabled</key>
+    <true/>
+    <key>BraveWalletDisabled</key>
+    <true/>
+    <key>BraveVPNDisabled</key>
+    <true/>
+    <key>BraveAIChatEnabled</key>
+    <false/>
+    <key>BraveTalkDisabled</key>
+    <true/>
+    <key>WebTorrentDisabled</key>
+    <true/>
+    <key>BraveSpeedreaderEnabled</key>
+    <false/>
+
+    <key>MetricsReportingEnabled</key>
+    <false/>
+    <key>SafeBrowsingEnabled</key>
+    <true/>
+    <key>SafeBrowsingProtectionLevel</key>
+    <integer>1</integer>
+    <key>SafeBrowsingExtendedReportingEnabled</key>
+    <false/>
+    <key>UrlKeyedAnonymizedDataCollectionEnabled</key>
+    <false/>
+    <key>SearchSuggestEnabled</key>
+    <false/>
+    <key>NetworkPredictionOptions</key>
+    <integer>2</integer>
+    <key>TranslateEnabled</key>
+    <false/>
+    <key>AlternateErrorPagesEnabled</key>
+    <false/>
+
+    <key>BlockThirdPartyCookies</key>
+    <true/>
+    <key>PasswordManagerEnabled</key>
+    <true/>
+    <key>PasswordLeakDetectionEnabled</key>
+    <true/>
+    <key>AutofillAddressEnabled</key>
+    <false/>
+    <key>AutofillCreditCardEnabled</key>
+    <false/>
+    <key>PaymentMethodQueryEnabled</key>
+    <false/>
+
+    <key>HttpsOnlyMode</key>
+    <string>force_enabled</string>
+    <key>DnsOverHttpsMode</key>
+    <string>automatic</string>
+
+    <key>BackgroundModeEnabled</key>
+    <false/>
+    <key>PromotionalTabsEnabled</key>
+    <false/>
+    <key>PromotionsEnabled</key>
+    <false/>
+
+    <key>BookmarkBarEnabled</key>
+    <true/>
+    <key>ShowHomeButton</key>
+    <false/>
+    <key>HomepageIsNewTabPage</key>
+    <true/>
+
+    <key>DefaultSearchProviderEnabled</key>
+    <true/>
+    <key>DefaultSearchProviderName</key>
+    <string>Brave Search</string>
+    <key>DefaultSearchProviderKeyword</key>
+    <string>brave</string>
+    <key>DefaultSearchProviderSearchURL</key>
+    <string>https://search.brave.com/search?q={searchTerms}</string>
+
+    <key>ExtensionAllowedTypes</key>
+    <array>
+        <string>extension</string>
+        <string>theme</string>
+    </array>
+
+    <key>ComponentUpdatesEnabled</key>
+    <true/>
+</dict>
+</plist>

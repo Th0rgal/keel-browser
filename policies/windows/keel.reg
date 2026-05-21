@@ -1,0 +1,55 @@
+Windows Registry Editor Version 5.00
+
+; Keel managed policies for Brave on Windows.
+; Apply with:  reg import keel.reg   (as Administrator)
+; Or deploy via Group Policy / MDM under HKLM\SOFTWARE\Policies\BraveSoftware\Brave
+;
+; Mirrors policies/linux/keel-managed-policy.json. See that file for rationale.
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\BraveSoftware\Brave]
+"BraveRewardsDisabled"=dword:00000001
+"BraveWalletDisabled"=dword:00000001
+"BraveVPNDisabled"=dword:00000001
+"BraveAIChatEnabled"=dword:00000000
+"BraveTalkDisabled"=dword:00000001
+"WebTorrentDisabled"=dword:00000001
+"BraveSpeedreaderEnabled"=dword:00000000
+
+"MetricsReportingEnabled"=dword:00000000
+"SafeBrowsingEnabled"=dword:00000001
+"SafeBrowsingProtectionLevel"=dword:00000001
+"SafeBrowsingExtendedReportingEnabled"=dword:00000000
+"UrlKeyedAnonymizedDataCollectionEnabled"=dword:00000000
+"SearchSuggestEnabled"=dword:00000000
+"NetworkPredictionOptions"=dword:00000002
+"TranslateEnabled"=dword:00000000
+"AlternateErrorPagesEnabled"=dword:00000000
+
+"BlockThirdPartyCookies"=dword:00000001
+"PasswordManagerEnabled"=dword:00000001
+"PasswordLeakDetectionEnabled"=dword:00000001
+"AutofillAddressEnabled"=dword:00000000
+"AutofillCreditCardEnabled"=dword:00000000
+"PaymentMethodQueryEnabled"=dword:00000000
+
+"HttpsOnlyMode"="force_enabled"
+"DnsOverHttpsMode"="automatic"
+
+"BackgroundModeEnabled"=dword:00000000
+"PromotionalTabsEnabled"=dword:00000000
+"PromotionsEnabled"=dword:00000000
+
+"BookmarkBarEnabled"=dword:00000001
+"ShowHomeButton"=dword:00000000
+"HomepageIsNewTabPage"=dword:00000001
+
+"DefaultSearchProviderEnabled"=dword:00000001
+"DefaultSearchProviderName"="Brave Search"
+"DefaultSearchProviderKeyword"="brave"
+"DefaultSearchProviderSearchURL"="https://search.brave.com/search?q={searchTerms}"
+
+"ComponentUpdatesEnabled"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\BraveSoftware\Brave\ExtensionAllowedTypes]
+"1"="extension"
+"2"="theme"
