@@ -1,0 +1,41 @@
+# Keel build args. Drop into out/Component/args.gn (or out/Release/args.gn)
+# inside the brave-core src/ directory. Then `gn gen out/Component`.
+
+# Dev / iteration mode by default — flip to release mode at the bottom for
+# a shippable .deb.
+
+import("//brave/build/args/dev.gni")
+
+target_cpu = "x64"
+target_os  = "linux"
+
+# Smaller .so per subdir → 5-30s incremental relinks.
+is_component_build = true
+
+# Optimisation level: O0 for fastest compile, O1 for runnable. Keel dev sweet
+# spot is O1 + symbols.
+is_debug = false
+symbol_level = 1
+dcheck_always_on = true
+
+# Brave's RBE is internal-only. We use sccache locally instead.
+use_remoteexec = false
+cc_wrapper = "sccache"
+
+# Keel-specific feature flags here in the future.
+# brave_use_keel_topbar = true
+
+# ----------------------------------------------------------------------------
+# Release mode (uncomment, comment out dev import above):
+#
+# import("//brave/build/args/release.gni")
+#
+# target_cpu = "x64"
+# target_os  = "linux"
+# is_component_build = false
+# is_official_build  = true
+# symbol_level = 1
+# use_remoteexec = false
+# cc_wrapper = "sccache"
+#
+# Produces out/Release/brave + the .deb/.rpm via brave/script/dist.py.
