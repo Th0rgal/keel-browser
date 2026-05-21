@@ -106,126 +106,119 @@
   })();
 
   // ---- styles --------------------------------------------------------------
+  // v5: Safari-style top "chrome zone" — when summoned, a 46px translucent
+  // strip with backdrop blur sits above the page, containing all pills as a
+  // single coherent bar. In hidden state, only a 2-px peek line remains.
   const style = document.createElement("style");
   style.textContent = `
     :host { all: initial; }
 
-    /* The chrome ribbon — sits at top:0, lets the page background show through */
+    /* The chrome zone — translucent strip at top, blurred so it visually
+       contains the page content beneath. Pills float inside. */
     .ribbon {
       position: fixed; top: 0; left: 0; right: 0;
-      height: 56px;
+      height: 46px;
       z-index: 2147483647;
       display: flex; align-items: center;
-      padding: 0 18px;
-      gap: 10px;
+      padding: 0 12px;
+      gap: 4px;
       font: 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
       pointer-events: none;
-      /* No background — the page provides the color */
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: transform 220ms cubic-bezier(.2,.7,.1,1), opacity 220ms ease;
+      background: ${isLight
+        ? 'linear-gradient(180deg, rgba(245,246,248,0.88) 0%, rgba(245,246,248,0.82) 78%, rgba(245,246,248,0) 100%)'
+        : 'linear-gradient(180deg, rgba(22,23,26,0.82) 0%, rgba(22,23,26,0.74) 78%, rgba(22,23,26,0) 100%)'};
+      backdrop-filter: blur(26px) saturate(180%);
+      -webkit-backdrop-filter: blur(26px) saturate(180%);
+      /* Faint accent line at the bottom — the only colored chrome element,
+         a single 1px-wide tab indicator (per-tab tint). */
+      border-bottom: 0.5px solid ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)'};
     }
     .ribbon > * { pointer-events: auto; }
+    /* Tint accent — a thin colored under-line that scrolls with the chrome */
+    .ribbon::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, ${accent}55 50%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* Steady-state hairline — present even when ribbon is hidden so the user
+       has a discoverable handle. */
+    .peek {
+      position: fixed; top: 0; left: 0; right: 0; height: 2px;
+      pointer-events: none;
+      z-index: 2147483646;
+      background: linear-gradient(180deg,
+        ${isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.05)'} 0%,
+        transparent 100%);
+      transition: opacity 220ms;
+    }
+    :host([data-state="visible"]) .peek { opacity: 0; }
 
     /* Traffic lights — standalone, no pill */
     .traffic {
       display: flex; gap: 8px; align-items: center;
-      padding-right: 4px;
+      padding: 0 8px 0 2px;
     }
     .traffic .dot {
-      width: 13px; height: 13px; border-radius: 50%;
-      background: #c0c0c0;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: ${isLight ? 'rgba(0,0,0,0.18)' : 'rgba(255,255,255,0.22)'};
       transition: background 120ms;
     }
     .ribbon:hover .traffic .dot:nth-child(1) { background: #ED6B5F; }
     .ribbon:hover .traffic .dot:nth-child(2) { background: #F5BD4F; }
     .ribbon:hover .traffic .dot:nth-child(3) { background: #62C554; }
 
-    /* Pill base */
-    .pill {
-      display: inline-flex; align-items: center; gap: 0;
-      height: 32px;
-      padding: 0 8px;
-      border-radius: 16px;
-      background: ${isLight
-        ? 'rgba(255,255,255,0.78)'
-        : 'rgba(34,36,40,0.72)'};
-      box-shadow:
-        0 1px 0 0 ${isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.04)'} inset,
-        0 0 0 1px ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'},
-        0 4px 14px -6px rgba(0,0,0,0.18);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
-      transition: background 140ms ease, box-shadow 140ms ease;
-    }
-
-    /* Icon button inside a pill */
+    /* Naked icon — no pill background, just hoverable. Safari-style. */
     .icon {
-      width: 28px; height: 28px;
+      width: 30px; height: 30px;
       border: none; background: transparent;
-      color: inherit;
-      border-radius: 14px;
-      font-size: 13px;
+      color: ${isLight ? '#1d1d1f' : '#e9ebef'};
+      border-radius: 8px;
+      font-size: 14px;
       display: inline-flex; align-items: center; justify-content: center;
       cursor: pointer;
-      opacity: 0.78;
+      opacity: 0.72;
+      transition: background 120ms ease, opacity 120ms ease;
     }
-    .icon:hover { opacity: 1; background: ${isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.08)'}; }
-    .caret {
-      width: 16px; height: 28px;
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 9px; opacity: 0.5;
-      margin-right: 2px;
-    }
+    .icon:hover { opacity: 1; background: ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}; }
+    .icon-group { display: inline-flex; align-items: center; gap: 2px; }
 
-    /* URL pill — wider, centered */
+    /* URL pill — the only pill. Centered, with a subtle tint underline. */
     .url-pill {
-      display: inline-flex; align-items: center; gap: 8px;
-      height: 32px; min-width: 360px; max-width: 520px;
-      padding: 0 14px;
-      border-radius: 16px;
-      background: ${isLight ? 'rgba(255,255,255,0.86)' : 'rgba(34,36,40,0.78)'};
-      box-shadow:
-        0 1px 0 0 ${isLight ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.04)'} inset,
-        0 0 0 1px ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'},
-        0 4px 18px -6px rgba(0,0,0,0.22);
-      backdrop-filter: blur(22px) saturate(180%);
-      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 28px; min-width: 280px; max-width: 520px;
+      padding: 0 12px;
+      border-radius: 8px;
+      background: ${isLight ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.06)'};
       color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
-      /* per-tab tint — 1px accent line at the bottom-inside */
       box-shadow:
-        0 1px 0 0 ${isLight ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.04)'} inset,
-        0 -1px 0 0 ${accent}50 inset,
-        0 0 0 1px ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'},
-        0 6px 18px -6px rgba(0,0,0,0.22);
+        inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.07)'},
+        inset 0 -1.5px 0 0 ${accent}40;
+      transition: background 140ms ease;
+    }
+    .url-pill:hover {
+      background: ${isLight ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.10)'};
     }
     .url-pill .text {
       flex: 1 1 auto;
       text-align: center;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      font-size: 13px;
-      letter-spacing: -0.01em;
+      font-size: 12.5px;
+      letter-spacing: -0.005em;
     }
-    .url-pill .lock { opacity: 0.45; font-size: 11px; }
-    .url-pill .right-icons { display: flex; align-items: center; gap: 4px; opacity: 0.6; }
-    .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; }
+    .url-pill .lock { opacity: 0.42; flex: 0 0 auto; }
+    .url-pill .right-icons { display: flex; align-items: center; gap: 0; margin-right: -6px; }
+    .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
 
     .spacer { flex: 1 1 auto; }
 
-    /* Hot-zone for cursor-summon (chrome auto-fades after idle) */
-    .hotzone {
-      position: fixed; top: 0; left: 0; right: 0; height: 80px;
-      pointer-events: none;
-      z-index: 2147483646;
-    }
-
-    :host([data-state="hidden"]) .ribbon {
-      transform: translateY(-100%);
-      opacity: 0;
-      transition: transform 220ms ease, opacity 220ms ease;
-    }
     :host([data-state="visible"]) .ribbon {
       transform: translateY(0);
       opacity: 1;
-      transition: transform 220ms ease, opacity 220ms ease;
     }
   `;
   shadow.appendChild(style);
@@ -252,26 +245,31 @@
     el("div", { class: "dot" }),
   ]);
 
-  const sidebarPill = el("div", { class: "pill" }, [
+  const leftIcons = el("div", { class: "icon-group" }, [
     el("button", { class: "icon", title: "Sidebar" }, ["▥"]),
-    el("span", { class: "caret" }, ["▾"]),
-  ]);
-
-  const navPill = el("div", { class: "pill" }, [
     el("button", { class: "icon", title: "Back" }, ["‹"]),
     el("button", { class: "icon", title: "Forward" }, ["›"]),
   ]);
 
+  // Lock glyph — clean SVG instead of unicode emoji (renders consistent on all OSes).
+  const lockSvg = (() => {
+    const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    s.setAttribute("class", "lock");
+    s.setAttribute("viewBox", "0 0 12 14");
+    s.setAttribute("width", "9"); s.setAttribute("height", "11");
+    s.innerHTML = '<path d="M3 6V4a3 3 0 1 1 6 0v2h.5A1.5 1.5 0 0 1 11 7.5v4A1.5 1.5 0 0 1 9.5 13h-7A1.5 1.5 0 0 1 1 11.5v-4A1.5 1.5 0 0 1 2.5 6H3zm1 0h4V4a2 2 0 1 0-4 0v2z" fill="currentColor"/>';
+    return s;
+  })();
+
   const urlPill = el("div", { class: "url-pill", title: title }, [
-    el("span", { class: "lock" }, ["🔒"]),
     el("span", { class: "text" }, [host]),
     el("div", { class: "right-icons" }, [
-      el("button", { class: "icon", title: "Translate" }, ["⇪"]),
       el("button", { class: "icon", title: "Reload" }, ["⟲"]),
     ]),
   ]);
+  urlPill.insertBefore(lockSvg, urlPill.firstChild);
 
-  const sharePill = el("div", { class: "pill" }, [
+  const rightIcons = el("div", { class: "icon-group" }, [
     el("button", { class: "icon", title: "Share" }, ["⤴"]),
     el("button", { class: "icon", title: "New tab" }, ["+"]),
     el("button", { class: "icon", title: "Tab overview" }, ["▢"]),
@@ -279,37 +277,53 @@
 
   const ribbon = el("div", { class: "ribbon" }, [
     traffic,
-    sidebarPill,
-    navPill,
+    leftIcons,
     el("div", { class: "spacer" }),
     urlPill,
     el("div", { class: "spacer" }),
-    sharePill,
+    rightIcons,
   ]);
 
-  const hotzone = el("div", { class: "hotzone" });
-
-  shadow.appendChild(hotzone);
+  const peek = el("div", { class: "peek" });
+  shadow.appendChild(peek);
   shadow.appendChild(ribbon);
 
-  // Reserve the top 56px so the page content isn't covered.
-  // Use scroll-padding + viewport height adjustment for sticky elements.
-  document.documentElement.style.scrollPaddingTop = "56px";
-  document.body.style.paddingTop = "56px";
-
-  // Visibility state: visible by default; hide after 1.6s of no input,
-  // resummon on mouse-enter at top 80px or any keyboard event.
+  // Hidden by default — pages get the full viewport. The 3-px peek line is
+  // the only steady-state hint. Move cursor into the top ~100px to summon.
   const hostEl = shadow.host;
-  hostEl.dataset.state = "visible";
+  hostEl.dataset.state = "hidden";
+
   let idleT;
-  const reset = () => {
+  const show = () => {
     hostEl.dataset.state = "visible";
     clearTimeout(idleT);
-    idleT = setTimeout(() => { hostEl.dataset.state = "hidden"; }, 1600);
+    idleT = setTimeout(() => { hostEl.dataset.state = "hidden"; }, 1200);
   };
-  reset();
+
+  // Cursor proximity (Safari-style) — require 200ms dwell in top 60px to
+  // avoid accidental summons. After cursor leaves top area, auto-hide in 1.2s.
+  let dwellT, inTop = false;
   document.addEventListener("mousemove", e => {
-    if (e.clientY < 80) reset();
+    if (e.clientY < 60) {
+      if (!inTop) {
+        inTop = true;
+        clearTimeout(dwellT);
+        dwellT = setTimeout(() => { if (inTop) show(); }, 200);
+      }
+    } else {
+      inTop = false;
+      clearTimeout(dwellT);
+    }
   }, { passive: true });
-  document.addEventListener("keydown", reset, { passive: true });
+
+  // Always-summon shortcuts (mirrors patches/0004 KeelAutohideController)
+  document.addEventListener("keydown", e => {
+    if (e.key === "F6" || (e.ctrlKey && (e.key === "l" || e.key === "L")) ||
+        (e.ctrlKey && (e.key === "t" || e.key === "T"))) {
+      show();
+    }
+  }, { passive: true });
+
+  // Brief flash on inject so the user sees the chrome exists, then auto-hide
+  show();
 })();

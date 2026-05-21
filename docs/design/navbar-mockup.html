@@ -83,95 +83,109 @@
     .page .grid .col h4 { color: var(--accent); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 8px; }
     .page .grid .col p { font-size: 14px; line-height: 1.5; margin: 0; opacity: 0.78; }
 
-    /* ─── Chrome ribbon ────────────────────────────────────────────── */
+    /* ─── Chrome ribbon — Safari-style ──────────────────────────────────
+       A 46-px translucent scrim at the top of the window, with a backdrop
+       blur, contains all chrome elements as a single coherent bar. Flat
+       icons + one URL pill. Per-tab tint shows as a faint accent line at
+       the bottom of the scrim. */
     .ribbon {
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 56px;
+      height: 46px;
       display: flex; align-items: center;
-      padding: 0 18px;
-      gap: 10px;
+      padding: 0 12px;
+      gap: 4px;
       z-index: 10;
       pointer-events: none;
+      background: var(--scrim-bg, linear-gradient(180deg, rgba(245,246,248,0.88) 0%, rgba(245,246,248,0.82) 78%, rgba(245,246,248,0) 100%));
+      backdrop-filter: blur(26px) saturate(180%);
+      -webkit-backdrop-filter: blur(26px) saturate(180%);
+      border-bottom: 0.5px solid var(--scrim-edge, rgba(0,0,0,0.06));
     }
     .ribbon > * { pointer-events: auto; }
+    /* Per-tab tint underline */
+    .ribbon::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--accent) 38%, transparent) 50%, transparent 100%);
+      pointer-events: none;
+    }
 
-    .traffic { display: flex; gap: 8px; align-items: center; padding-right: 4px; }
+    .traffic { display: flex; gap: 8px; align-items: center; padding: 0 8px 0 2px; }
     .traffic .dot {
-      width: 13px; height: 13px; border-radius: 50%;
-      background: #c0c0c0;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--traffic-dot, rgba(0,0,0,0.18));
     }
     .window:hover .traffic .dot:nth-child(1) { background: #ED6B5F; }
     .window:hover .traffic .dot:nth-child(2) { background: #F5BD4F; }
     .window:hover .traffic .dot:nth-child(3) { background: #62C554; }
 
-    /* Glass pill base. light/dark variants set by [data-mode] on .page */
-    .pill {
-      display: inline-flex; align-items: center;
-      height: 32px;
-      padding: 0 8px;
-      border-radius: 16px;
-      background: var(--pill-bg, rgba(255,255,255,0.78));
-      box-shadow:
-        0 1px 0 0 var(--pill-highlight, rgba(255,255,255,0.7)) inset,
-        0 0 0 1px var(--pill-border, rgba(0,0,0,0.06)),
-        0 4px 14px -6px rgba(0,0,0,0.18);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      color: var(--pill-fg, #1d1d1f);
-    }
-
+    .icon-group { display: inline-flex; align-items: center; gap: 2px; }
     .icon {
-      width: 28px; height: 28px;
-      border: none; background: transparent; color: inherit;
-      border-radius: 14px; cursor: pointer;
+      width: 30px; height: 30px;
+      border: none; background: transparent;
+      color: var(--icon-fg, #1d1d1f);
+      border-radius: 8px; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center;
-      font-size: 13px; opacity: 0.72;
+      font-size: 14px; opacity: 0.72;
+      transition: background 120ms ease, opacity 120ms ease;
     }
-    .icon:hover { opacity: 1; background: var(--icon-hover, rgba(0,0,0,0.05)); }
-    .caret {
-      width: 14px; height: 28px;
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 9px; opacity: 0.5;
-    }
+    .icon:hover { opacity: 1; background: var(--icon-hover, rgba(0,0,0,0.06)); }
 
     .url-pill {
-      display: inline-flex; align-items: center; gap: 8px;
-      height: 32px; min-width: 380px;
-      padding: 0 14px;
-      border-radius: 16px;
-      background: var(--pill-bg-strong, rgba(255,255,255,0.88));
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 28px; min-width: 320px; max-width: 520px;
+      padding: 0 12px;
+      border-radius: 8px;
+      background: var(--url-bg, rgba(255,255,255,0.55));
+      color: var(--url-fg, #1d1d1f);
       box-shadow:
-        0 1px 0 0 var(--pill-highlight, rgba(255,255,255,0.8)) inset,
-        0 -1px 0 0 color-mix(in srgb, var(--accent) 50%, transparent) inset,
-        0 0 0 1px var(--pill-border, rgba(0,0,0,0.06)),
-        0 6px 18px -6px rgba(0,0,0,0.22);
-      backdrop-filter: blur(22px) saturate(180%);
-      -webkit-backdrop-filter: blur(22px) saturate(180%);
-      color: var(--pill-fg, #1d1d1f);
+        inset 0 0 0 0.5px var(--url-border, rgba(0,0,0,0.08)),
+        inset 0 -1.5px 0 0 color-mix(in srgb, var(--accent) 40%, transparent);
+      transition: background 140ms ease;
     }
-    .url-pill .lock { opacity: 0.45; font-size: 11px; }
+    .url-pill:hover { background: var(--url-bg-hover, rgba(255,255,255,0.75)); }
+    .url-pill .lock { opacity: 0.42; flex: 0 0 auto; }
     .url-pill .text {
       flex: 1 1 auto;
       text-align: center;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      font-size: 13px;
-      letter-spacing: -0.01em;
+      font-size: 12.5px;
+      letter-spacing: -0.005em;
     }
-    .url-pill .right-icons { display: flex; gap: 2px; opacity: 0.7; }
-    .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; }
+    .url-pill .right-icons { display: flex; gap: 0; margin-right: -6px; }
+    .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
 
     .spacer { flex: 1 1 auto; }
 
-    /* Dark-page pill overrides */
+    /* Dark-page overrides — scrim picks up dark tones, flat icons go light */
     .page[data-mode="dark"] {
-      --pill-bg: rgba(34,36,40,0.72);
-      --pill-bg-strong: rgba(34,36,40,0.82);
-      --pill-highlight: rgba(255,255,255,0.04);
-      --pill-border: rgba(255,255,255,0.06);
-      --pill-fg: #f0f1f3;
-      --icon-hover: rgba(255,255,255,0.08);
+      --scrim-bg: linear-gradient(180deg, rgba(22,23,26,0.82) 0%, rgba(22,23,26,0.74) 78%, rgba(22,23,26,0) 100%);
+      --scrim-edge: rgba(255,255,255,0.04);
+      --traffic-dot: rgba(255,255,255,0.22);
+      --icon-fg: #e9ebef;
+      --icon-hover: rgba(255,255,255,0.09);
+      --url-bg: rgba(255,255,255,0.06);
+      --url-bg-hover: rgba(255,255,255,0.10);
+      --url-border: rgba(255,255,255,0.07);
+      --url-fg: #f0f1f3;
     }
+    /* Have the scrim variables propagate up to .ribbon (sibling of .page) */
+    .window:has(.page[data-mode="dark"]) .ribbon {
+      background: linear-gradient(180deg, rgba(22,23,26,0.82) 0%, rgba(22,23,26,0.74) 78%, rgba(22,23,26,0) 100%);
+      border-bottom-color: rgba(255,255,255,0.04);
+    }
+    .window:has(.page[data-mode="dark"]) .traffic .dot { background: rgba(255,255,255,0.22); }
+    .window:has(.page[data-mode="dark"]) .icon { color: #e9ebef; }
+    .window:has(.page[data-mode="dark"]) .icon:hover { background: rgba(255,255,255,0.09); }
+    .window:has(.page[data-mode="dark"]) .url-pill {
+      background: rgba(255,255,255,0.06);
+      color: #f0f1f3;
+      box-shadow:
+        inset 0 0 0 0.5px rgba(255,255,255,0.07),
+        inset 0 -1.5px 0 0 color-mix(in srgb, var(--accent) 40%, transparent);
+    }
+    .window:has(.page[data-mode="dark"]) .url-pill:hover { background: rgba(255,255,255,0.10); }
 
     /* ── Decisions row ─────────────────────────────────────────────── */
     .decisions {
@@ -219,12 +233,8 @@
         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
       </div>
 
-      <div class="pill" title="Sidebar">
-        <button class="icon">▥</button>
-        <span class="caret">▾</span>
-      </div>
-
-      <div class="pill">
+      <div class="icon-group">
+        <button class="icon" title="Sidebar">▥</button>
         <button class="icon" title="Back">‹</button>
         <button class="icon" title="Forward">›</button>
       </div>
@@ -232,17 +242,18 @@
       <div class="spacer"></div>
 
       <div class="url-pill" id="urlpill" title="">
-        <span class="lock">🔒</span>
+        <svg class="lock" viewBox="0 0 12 14" width="9" height="11" aria-hidden="true">
+          <path d="M3 6V4a3 3 0 1 1 6 0v2h.5A1.5 1.5 0 0 1 11 7.5v4A1.5 1.5 0 0 1 9.5 13h-7A1.5 1.5 0 0 1 1 11.5v-4A1.5 1.5 0 0 1 2.5 6H3zm1 0h4V4a2 2 0 1 0-4 0v2z" fill="currentColor"/>
+        </svg>
         <span class="text" id="urltext">veritylang.com</span>
         <div class="right-icons">
-          <button class="icon" title="Translate">⇪</button>
           <button class="icon" title="Reload">⟲</button>
         </div>
       </div>
 
       <div class="spacer"></div>
 
-      <div class="pill">
+      <div class="icon-group">
         <button class="icon" title="Share">⤴</button>
         <button class="icon" title="New tab">+</button>
         <button class="icon" title="Tab overview">▢</button>
@@ -280,16 +291,16 @@
 
   <div class="decisions">
     <div>
-      <h3>Safari-style segmented pills</h3>
-      <p>Instead of a single bar, the chrome is <strong>four floating capsules</strong>: sidebar/caret, back/forward, URL, and share/new-tab/overview. The strip background is the <strong>page color</strong> showing through — no opaque toolbar. <code>backdrop-filter: blur(20px) saturate(180%)</code>.</p>
+      <h3>Translucent chrome zone</h3>
+      <p>One 46-px scrim at the top with <code>backdrop-filter: blur(26px) saturate(180%)</code> contains all chrome elements. Page content reads through but is muted by the blur — distinct browser surface, no page nav fighting the toolbar. Steady state: scrim is hidden, just a 2-px hairline at top.</p>
     </div>
     <div>
-      <h3>Per-tab tint (accent line)</h3>
-      <p>The URL pill carries a 1-px inset bottom line in the page's accent color (clamped HSL <code>S ≤ 0.55, L ∈ [0.40, 0.70]</code>). Verity = teal, HN = calmed orange, arXiv = crimson, GitHub = calmed green. Switch tab dots above to preview.</p>
+      <h3>Per-tab tint as a hairline</h3>
+      <p>A 1-px gradient line along the bottom of the scrim carries the page's accent color (clamped HSL <code>S ≤ 0.55, L ∈ [0.40, 0.70]</code>). A matching 1.5-px inset on the URL pill echoes it. Verity = teal, HN = orange, arXiv = crimson, GitHub = green.</p>
     </div>
     <div>
-      <h3>No tab strip</h3>
-      <p>Tabs collapse to the <code>▢</code> tab-overview button (Safari's grid). The hidden 56-px ribbon auto-hides after 1.6 s idle and resummons on cursor proximity / <code>F6</code> / <code>Ctrl+L</code>. Long titles in the URL pill truncate with <code>…</code>.</p>
+      <h3>One pill, naked icons</h3>
+      <p>Only the URL pill has a background — the other controls are bare 30-px tap targets that hover-fill. Tabs collapse to the <code>▢</code> overview button. Resummons on cursor proximity / <code>F6</code> / <code>Ctrl+L</code>; auto-hides 1.2 s after the cursor leaves the top 60 px.</p>
     </div>
   </div>
 
