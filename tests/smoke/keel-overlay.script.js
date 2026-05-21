@@ -82,11 +82,25 @@
     return P.accent || "#2F9D8C";
   }
 
-  // Sample the page's near-edge background color to tint the ribbon.
+  // Sample the page's near-edge background color to tint the ribbon. Walks
+  // the DOM near the top viewport and picks the first opaque background it
+  // finds — this catches dark heroes / sticky nav bars that the page's
+  // <html>/<body> bg would otherwise miss (apple.com, arxiv.org).
   function pageTint() {
-    const bg = getComputedStyle(document.documentElement).backgroundColor
-            || getComputedStyle(document.body).backgroundColor || "rgb(247,246,242)";
-    return bg;
+    const samplePoints = [
+      [40,  20], [Math.floor(innerWidth/2), 20], [innerWidth - 40, 20],
+      [40,  44], [Math.floor(innerWidth/2), 44], [innerWidth - 40, 44],
+    ];
+    for (const [x, y] of samplePoints) {
+      let el = document.elementFromPoint(x, y);
+      while (el && el !== document.documentElement) {
+        const bg = getComputedStyle(el).backgroundColor;
+        if (bg && !/rgba?\(.*?,\s*0\s*\)/.test(bg) && bg !== "transparent") return bg;
+        el = el.parentElement;
+      }
+    }
+    return getComputedStyle(document.documentElement).backgroundColor
+        || getComputedStyle(document.body).backgroundColor || "rgb(247,246,242)";
   }
 
   const accent = pageAccent();
@@ -238,6 +252,35 @@
     return e;
   }
 
+  // ---- icon set (SVG, 16×16 viewBox, 1.5px stroke, rounded caps) -----------
+  // Crisp on all OSes and trivially restyleable via currentColor.
+  const ICONS = {
+    sidebar:  '<path d="M3 4h10M3 8h10M3 12h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+    back:     '<path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
+    forward:  '<path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
+    reload:   '<path d="M3.5 8a4.5 4.5 0 1 1 1.3 3.15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M3.2 4v3h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
+    share:    '<path d="M8 2.5v8M5 5.5l3-3 3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M4 8.5v4a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/>',
+    plus:     '<path d="M8 3.5v9M3.5 8h9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+    grid:     '<rect x="3" y="3" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="9" y="3" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="3" y="9" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="9" y="9" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/>',
+    lock:     '<path d="M3 6V4a3 3 0 1 1 6 0v2h.5A1.5 1.5 0 0 1 11 7.5v4A1.5 1.5 0 0 1 9.5 13h-7A1.5 1.5 0 0 1 1 11.5v-4A1.5 1.5 0 0 1 2.5 6H3zm1 0h4V4a2 2 0 1 0-4 0v2z" fill="currentColor"/>',
+  };
+  function svgIcon(name, opts) {
+    opts = opts || {};
+    const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    s.setAttribute("viewBox", name === "lock" ? "0 0 12 14" : "0 0 16 16");
+    s.setAttribute("width",  String(opts.size || 16));
+    s.setAttribute("height", String(opts.size || 16));
+    s.setAttribute("aria-hidden", "true");
+    if (opts.cls) s.setAttribute("class", opts.cls);
+    s.innerHTML = ICONS[name];
+    return s;
+  }
+  function iconBtn(name, title, opts) {
+    const b = el("button", { class: "icon", title: title }, []);
+    b.appendChild(svgIcon(name, opts));
+    return b;
+  }
+
   // ---- ribbon --------------------------------------------------------------
   const traffic = el("div", { class: "traffic" }, [
     el("div", { class: "dot" }),
@@ -246,33 +289,23 @@
   ]);
 
   const leftIcons = el("div", { class: "icon-group" }, [
-    el("button", { class: "icon", title: "Sidebar" }, ["▥"]),
-    el("button", { class: "icon", title: "Back" }, ["‹"]),
-    el("button", { class: "icon", title: "Forward" }, ["›"]),
+    iconBtn("sidebar", "Sidebar"),
+    iconBtn("back",    "Back"),
+    iconBtn("forward", "Forward"),
   ]);
-
-  // Lock glyph — clean SVG instead of unicode emoji (renders consistent on all OSes).
-  const lockSvg = (() => {
-    const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    s.setAttribute("class", "lock");
-    s.setAttribute("viewBox", "0 0 12 14");
-    s.setAttribute("width", "9"); s.setAttribute("height", "11");
-    s.innerHTML = '<path d="M3 6V4a3 3 0 1 1 6 0v2h.5A1.5 1.5 0 0 1 11 7.5v4A1.5 1.5 0 0 1 9.5 13h-7A1.5 1.5 0 0 1 1 11.5v-4A1.5 1.5 0 0 1 2.5 6H3zm1 0h4V4a2 2 0 1 0-4 0v2z" fill="currentColor"/>';
-    return s;
-  })();
 
   const urlPill = el("div", { class: "url-pill", title: title }, [
     el("span", { class: "text" }, [host]),
     el("div", { class: "right-icons" }, [
-      el("button", { class: "icon", title: "Reload" }, ["⟲"]),
+      iconBtn("reload", "Reload", { size: 13 }),
     ]),
   ]);
-  urlPill.insertBefore(lockSvg, urlPill.firstChild);
+  urlPill.insertBefore(svgIcon("lock", { cls: "lock", size: 11 }), urlPill.firstChild);
 
   const rightIcons = el("div", { class: "icon-group" }, [
-    el("button", { class: "icon", title: "Share" }, ["⤴"]),
-    el("button", { class: "icon", title: "New tab" }, ["+"]),
-    el("button", { class: "icon", title: "Tab overview" }, ["▢"]),
+    iconBtn("share", "Share"),
+    iconBtn("plus",  "New tab"),
+    iconBtn("grid",  "Tab overview"),
   ]);
 
   const ribbon = el("div", { class: "ribbon" }, [
