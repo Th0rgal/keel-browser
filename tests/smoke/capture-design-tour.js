@@ -13,16 +13,20 @@ await mkdir(OUT, { recursive: true });
 const overlay = await readFile(path.join(ROOT, "tests/smoke/keel-overlay.script.js"), "utf8");
 
 const sites = [
-  { name: "01-verity",     url: "https://veritylang.com",  theme: "dark"  },
-  { name: "02-apple",      url: "https://www.apple.com",   theme: "dark"  },
-  { name: "03-linear",     url: "https://linear.app",      theme: "dark"  },
-  { name: "04-vercel",     url: "https://vercel.com",      theme: "dark"  },
-  { name: "05-stripe",     url: "https://stripe.com",      theme: "light" },
+  { name: "01-verity",     url: "https://veritylang.com",    theme: "dark"  },
+  { name: "02-apple",      url: "https://www.apple.com",     theme: "dark"  },
+  { name: "03-linear",     url: "https://linear.app",        theme: "dark"  },
+  { name: "04-vercel",     url: "https://vercel.com",        theme: "dark"  },
+  { name: "05-stripe",     url: "https://stripe.com",        theme: "light" },
   { name: "06-anthropic",  url: "https://www.anthropic.com", theme: "light" },
-  { name: "07-arxiv",      url: "https://arxiv.org",       theme: "light" },
-  { name: "08-tailwind",   url: "https://tailwindcss.com", theme: "light" },
-  { name: "09-github",     url: "https://github.com",      theme: "dark"  },
-  { name: "10-pitch",      url: "https://pitch.com",       theme: "dark"  },
+  { name: "07-arxiv",      url: "https://arxiv.org",         theme: "light" },
+  { name: "08-tailwind",   url: "https://tailwindcss.com",   theme: "light" },
+  { name: "09-github",     url: "https://github.com",        theme: "dark"  },
+  { name: "10-pitch",      url: "https://pitch.com",         theme: "dark"  },
+  { name: "11-framer",     url: "https://www.framer.com",    theme: "light" },
+  { name: "12-figma",      url: "https://www.figma.com",     theme: "light" },
+  { name: "13-notion",     url: "https://www.notion.so",     theme: "light" },
+  { name: "14-ramp",       url: "https://ramp.com",          theme: "dark"  },
 ];
 
 const isRoot = process.getuid && process.getuid() === 0;
