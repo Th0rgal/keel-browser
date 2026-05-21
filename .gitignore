@@ -1,0 +1,23 @@
+# Build artifacts
+build/smoke/*.png
+build/smoke/*.json
+build/smoke/*.html
+build/preview/*_view.png
+
+# Upstream tree (cloned on demand by scripts/clone-upstream.sh)
+upstream/brave-browser/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
