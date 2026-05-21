@@ -1,18 +1,17 @@
-# Keel build pipeline.
+# Keel build pipeline. Two paths:
 #
-# Two paths:
-#   1. policy-pack: ZIP up policies/, master_preferences, newtab/, branding/
-#      - Fast, runs every PR, no Brave compile needed
-#   2. source-build: clone Brave, apply patches, run brave-browser build
-#      - Slow (~hours). Only on workflow_dispatch or release tags.
-#
-# Path: .github/workflows/build.yml when deployed.
+#   1. policy-pack: ZIP policies / newtab / branding. Fast, on every PR.
+#   2. source-build: clone brave-core, gclient sync, apply patches,
+#      compile with sccache, package .deb, upload to GitHub release.
+#      Slow (multi-hour cold; ~30-60 min warm with restored cache).
+#      Runs on release tags or workflow_dispatch.
 
 name: build
 
 on:
   push:
     branches: [main]
+    tags: ["v*"]
   pull_request:
   workflow_dispatch:
     inputs:
@@ -20,16 +19,19 @@ on:
         description: "Run the slow source-build job"
         required: false
         default: "false"
+      mode:
+        description: "dev (component) or release (.deb)"
+        required: false
+        default: "release"
 
 permissions:
-  contents: read
+  contents: write   # for release uploads
 
 jobs:
   policy-pack:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Validate JSON / plist
         run: |
           sudo apt-get update && sudo apt-get install -y jq libplist-utils
@@ -38,70 +40,102 @@ jobs:
           jq empty theme/tokens.json
           jq empty branding/strings/keel.json
           plistutil -i policies/macos/com.brave.Browser.plist.xml -o /dev/null
-
       - name: Lint scripts
         run: sudo apt-get install -y shellcheck && shellcheck scripts/*.sh || true
-
       - name: Render branding icons
-        run: |
-          sudo apt-get install -y librsvg2-bin
-          bash scripts/render-icons.sh
-
+        run: sudo apt-get install -y librsvg2-bin && bash scripts/render-icons.sh
+      - name: Audit patches
+        run: bash docs/audit-patches.sh
       - name: Sync upstream metadata
         run: bash scripts/sync-upstream.sh
-
       - name: Bundle policy pack
         run: |
           mkdir -p dist
           tar -czf dist/keel-policy-pack.tar.gz \
-            policies master_preferences.json newtab branding theme \
-            KEEL_BROWSER_SPEC.md README.md \
-            2>/dev/null || true
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+            policies newtab branding theme \
+            KEEL_BROWSER_SPEC.md README.md docs/no-analytics.md \
+            2>/dev/null
+      - uses: actions/upload-artifact@v4
         with:
           name: keel-policy-pack
           path: dist/keel-policy-pack.tar.gz
 
   source-build:
-    if: github.event.inputs.source_build == 'true' || startsWith(github.ref, 'refs/tags/')
-    runs-on: ubuntu-22.04
+    if: |
+      startsWith(github.ref, 'refs/tags/v') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.source_build == 'true')
+    runs-on: ubuntu-24.04
     needs: policy-pack
-    timeout-minutes: 360
+    timeout-minutes: 480
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Prepare host
+      - name: Configure Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install host deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y git python3 curl jq build-essential \
-            libnss3-dev libgconf-2-4 libxss1 libasound2 libgbm-dev
-          npm i -g npm@latest
+          sudo apt-get install -y python3 git curl ninja-build gperf lsb-release \
+            build-essential pkg-config zstd jq
+          # Brave will run install-build-deps.sh during init for the rest.
 
-      - name: Sync upstream
-        run: bash scripts/sync-upstream.sh
-
-      - name: Clone Brave at pinned tag
-        run: bash scripts/clone-upstream.sh
-
-      - name: Apply Keel patch stack
-        run: bash scripts/apply-patches.sh --check && bash scripts/apply-patches.sh
-
-      - name: Build
+      - name: Install sccache
         run: |
-          cd upstream/brave-browser
-          npm install
-          npm run build Release
-        # NOTE: this is hours of compile time. Cache aggressively in real CI.
+          curl -fsSL -o /tmp/sccache.tgz \
+            https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz
+          tar -xf /tmp/sccache.tgz -C /tmp
+          sudo install -m 0755 /tmp/sccache-v0.10.0-x86_64-unknown-linux-musl/sccache /usr/local/bin/sccache
 
-      - name: Smoke test
-        run: bash scripts/smoke-test.sh
+      - name: Restore sccache from previous release
+        id: cache_restore
+        run: |
+          mkdir -p "$HOME/.sccache"
+          if gh release download v0.1.0-prerelease \
+               --repo "${{ github.repository }}" \
+               --pattern 'sccache-cache.tar.zst' \
+               --output /tmp/cache.tar.zst 2>/dev/null; then
+            echo "Restoring cache..."
+            zstd -d -c /tmp/cache.tar.zst | tar -xC "$HOME/.sccache"
+            echo "restored=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "No prior cache. Cold build."
+            echo "restored=0" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+      - name: Sync + apply patches + build
+        env:
+          SCCACHE_DIR: ~/.sccache
+          SCCACHE_CACHE_SIZE: 40G
+        run: |
+          sccache --start-server
+          bash scripts/sync-upstream.sh
+          MODE="${{ github.event.inputs.mode || 'release' }}"
+          if [[ "$MODE" == "release" ]]; then
+            bash scripts/build-keel.sh --release
+          else
+            bash scripts/build-keel.sh
+          fi
+          sccache --show-stats
+
+      - name: Package + upload artifacts
+        if: success() || failure()  # upload sccache even on partial build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${GITHUB_REF_NAME:-v0.1.0-prerelease}"
+          bash scripts/upload-release.sh "$TAG"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: keel-build-${{ github.sha }}
           path: |
-            upstream/brave-browser/src/out/Release/*.deb
-            build/smoke/
+            upstream/chromium-build/src/out/**/brave-browser*.deb
+            upstream/chromium-build/src/out/**/keel*.deb
