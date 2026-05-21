@@ -21,6 +21,7 @@ CCACHE_BYTES=$(du -sb "$CCACHE_DIR_PATH" 2>/dev/null | awk '{print $1}')
 CCACHE_GB=$(awk "BEGIN { printf \"%.2f\", $CCACHE_BYTES / 1073741824 }")
 log "ccache size: ${CCACHE_GB} GiB ($CCACHE_BYTES bytes)"
 
+rm -f "$WORK/ccache-cache.tar.zst"
 tar -C "$CCACHE_DIR_PATH" --warning=no-file-changed --ignore-failed-read \
     -cf - . \
   | zstd -${LEVEL} -T0 -o "$WORK/ccache-cache.tar.zst" 2>&1 | tail -2
@@ -28,5 +29,9 @@ tar -C "$CCACHE_DIR_PATH" --warning=no-file-changed --ignore-failed-read \
 ARCHIVE_GB=$(du -sb "$WORK/ccache-cache.tar.zst" 2>/dev/null | awk '{ printf "%.2f", $1 / 1073741824 }')
 log "archive: ${ARCHIVE_GB} GiB"
 
-gh release upload "$TAG" --repo "$REPO" --clobber "$WORK/ccache-cache.tar.zst" 2>&1 | tail -3
-ok "uploaded ccache-cache.tar.zst (${ARCHIVE_GB} GiB compressed from ${CCACHE_GB} GiB)"
+if gh release upload "$TAG" --repo "$REPO" --clobber "$WORK/ccache-cache.tar.zst" 2>&1 | tail -3 ; then
+  ok "uploaded ccache-cache.tar.zst (${ARCHIVE_GB} GiB compressed from ${CCACHE_GB} GiB)"
+else
+  err "upload failed"
+  exit 1
+fi
