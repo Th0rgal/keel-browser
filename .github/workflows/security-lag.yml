@@ -1,0 +1,65 @@
+# Hourly security-lag report. Updates a tracking issue with the current lag
+# whenever it changes. Closes the issue when lag returns to 0.
+#
+# Path: .github/workflows/security-lag.yml when deployed.
+
+name: security-lag
+
+on:
+  schedule:
+    - cron: "27 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tools
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Sync
+        run: bash scripts/sync-upstream.sh
+
+      - name: Lag
+        id: lag
+        run: |
+          set +e
+          OUTPUT=$(bash scripts/security-lag.sh)
+          STATUS=$?
+          set -e
+          echo "$OUTPUT"
+          {
+            echo "report<<__END__"
+            echo "$OUTPUT"
+            echo "__END__"
+            echo "status=$STATUS"
+          } >> "$GITHUB_OUTPUT"
+        continue-on-error: true
+
+      - name: Update tracking issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPORT: ${{ steps.lag.outputs.report }}
+          STATUS: ${{ steps.lag.outputs.status }}
+        run: |
+          TITLE="security-lag report"
+          BODY=$'```text\n'"$REPORT"$'\n```\nUpdated by `ci/workflows/security-lag.yml`.\nExit status: '"$STATUS"
+          NUM=$(gh issue list --label security-lag --state open --json number,title \
+                | jq -r '.[] | select(.title=="'"$TITLE"'") | .number' | head -n1)
+          if [[ -z "$NUM" ]]; then
+            gh issue create --title "$TITLE" --label security-lag --body "$BODY"
+          else
+            gh issue edit "$NUM" --body "$BODY"
+          fi
+
+          # If the lag is back to within SLA (status 0) and the body shows 0h, close the issue.
+          if [[ "$STATUS" == "0" ]] && echo "$REPORT" | grep -q "Security lag:.*0h" ; then
+            gh issue close "$NUM" --comment "Lag returned to 0h."
+          fi

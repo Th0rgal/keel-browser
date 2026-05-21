@@ -1,0 +1,107 @@
+# Keel build pipeline.
+#
+# Two paths:
+#   1. policy-pack: ZIP up policies/, master_preferences, newtab/, branding/
+#      - Fast, runs every PR, no Brave compile needed
+#   2. source-build: clone Brave, apply patches, run brave-browser build
+#      - Slow (~hours). Only on workflow_dispatch or release tags.
+#
+# Path: .github/workflows/build.yml when deployed.
+
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      source_build:
+        description: "Run the slow source-build job"
+        required: false
+        default: "false"
+
+permissions:
+  contents: read
+
+jobs:
+  policy-pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON / plist
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq libplist-utils
+          jq empty policies/linux/keel-managed-policy.json
+          jq empty policies/master_preferences.json
+          jq empty theme/tokens.json
+          jq empty branding/strings/keel.json
+          plistutil -i policies/macos/com.brave.Browser.plist.xml -o /dev/null
+
+      - name: Lint scripts
+        run: sudo apt-get install -y shellcheck && shellcheck scripts/*.sh || true
+
+      - name: Render branding icons
+        run: |
+          sudo apt-get install -y librsvg2-bin
+          bash scripts/render-icons.sh
+
+      - name: Sync upstream metadata
+        run: bash scripts/sync-upstream.sh
+
+      - name: Bundle policy pack
+        run: |
+          mkdir -p dist
+          tar -czf dist/keel-policy-pack.tar.gz \
+            policies master_preferences.json newtab branding theme \
+            KEEL_BROWSER_SPEC.md README.md \
+            2>/dev/null || true
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-policy-pack
+          path: dist/keel-policy-pack.tar.gz
+
+  source-build:
+    if: github.event.inputs.source_build == 'true' || startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-22.04
+    needs: policy-pack
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare host
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git python3 curl jq build-essential \
+            libnss3-dev libgconf-2-4 libxss1 libasound2 libgbm-dev
+          npm i -g npm@latest
+
+      - name: Sync upstream
+        run: bash scripts/sync-upstream.sh
+
+      - name: Clone Brave at pinned tag
+        run: bash scripts/clone-upstream.sh
+
+      - name: Apply Keel patch stack
+        run: bash scripts/apply-patches.sh --check && bash scripts/apply-patches.sh
+
+      - name: Build
+        run: |
+          cd upstream/brave-browser
+          npm install
+          npm run build Release
+        # NOTE: this is hours of compile time. Cache aggressively in real CI.
+
+      - name: Smoke test
+        run: bash scripts/smoke-test.sh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-build-${{ github.sha }}
+          path: |
+            upstream/brave-browser/src/out/Release/*.deb
+            build/smoke/

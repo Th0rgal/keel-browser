@@ -1,0 +1,64 @@
+# Watch upstream Brave Stable releases. Fires on schedule + on demand and
+# opens an issue when a new release appears. The issue title is the exact
+# shape that scripts/security-lag.sh expects so the lag reporter can be
+# pointed at the latest issue if needed.
+#
+# Path: .github/workflows/upstream-watch.yml when deployed.
+
+name: upstream-watch
+
+on:
+  schedule:
+    - cron: "13 */3 * * *"   # every 3 hours, offset to avoid the hour boundary
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Fetch upstream
+        run: bash scripts/sync-upstream.sh
+
+      - name: Compute lag
+        id: lag
+        run: |
+          # Use the current build manifest if present, else fabricate a stub
+          # so the script can still produce a report on a fresh repo.
+          if [[ ! -f build/keel.json ]]; then
+            echo '{"keel_version":"unknown","brave_version":"none","patch_status":"unknown","build_status":"unknown"}' > build/keel.json
+          fi
+          set +e
+          OUTPUT=$(bash scripts/security-lag.sh)
+          STATUS=$?
+          set -e
+          {
+            echo "report<<__END__"
+            echo "$OUTPUT"
+            echo "__END__"
+            echo "status=$STATUS"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open / update tracker issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPORT: ${{ steps.lag.outputs.report }}
+          STATUS: ${{ steps.lag.outputs.status }}
+        run: |
+          BRAVE=$(jq -r '.brave_version' build/upstream.json)
+          TITLE="upstream: Brave $BRAVE available"
+          BODY=$'```text\n'"$REPORT"$'\n```\n\nFiled by `ci/workflows/upstream-watch.yml`.\nReturn code from security-lag.sh: '"$STATUS"
+          if gh issue list --label upstream-watch --state open --search "$BRAVE" \
+             --json number,title | jq -e '. | length > 0' >/dev/null; then
+             echo "Issue already exists."
+          else
+             gh issue create --title "$TITLE" --label upstream-watch --body "$BODY"
+          fi
