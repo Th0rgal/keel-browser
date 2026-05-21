@@ -151,11 +151,13 @@
       border-bottom: 0.5px solid ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)'};
     }
     .ribbon > * { pointer-events: auto; }
-    /* Tint accent — a thin colored under-line that scrolls with the chrome */
+    /* Tint accent — a thin colored under-line that scrolls with the chrome.
+       This is the ONLY per-tab tint indicator; the URL pill no longer
+       carries its own inset to avoid double-marking the accent. */
     .ribbon::after {
       content: ""; position: absolute; left: 0; right: 0; bottom: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0%, ${accent}55 50%, transparent 100%);
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent 0%, ${accent}70 50%, transparent 100%);
       pointer-events: none;
     }
 
@@ -201,17 +203,16 @@
     .icon:hover { opacity: 1; background: ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}; }
     .icon-group { display: inline-flex; align-items: center; gap: 2px; }
 
-    /* URL pill — the only pill. Centered, with a subtle tint underline. */
+    /* URL pill — the only pill. Centered. The per-tab accent shows only as
+       the scrim underline, so no duplicate inset here. */
     .url-pill {
       display: inline-flex; align-items: center; gap: 6px;
-      height: 28px; min-width: 280px; max-width: 520px;
+      height: 28px; min-width: 240px; max-width: 440px;
       padding: 0 12px;
       border-radius: 8px;
       background: ${isLight ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.06)'};
       color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
-      box-shadow:
-        inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.07)'},
-        inset 0 -1.5px 0 0 ${accent}40;
+      box-shadow: inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.07)'};
       transition: background 140ms ease;
     }
     .url-pill:hover {
@@ -302,9 +303,11 @@
   ]);
   urlPill.insertBefore(svgIcon("lock", { cls: "lock", size: 11 }), urlPill.firstChild);
 
+  // Right side: just share + tab overview. New-tab moves to Ctrl/Cmd-T —
+  // having three icons here always collides with site CTAs (Sign up, Try X,
+  // Donate). Two icons leaves more breathing room.
   const rightIcons = el("div", { class: "icon-group" }, [
     iconBtn("share", "Share"),
-    iconBtn("plus",  "New tab"),
     iconBtn("grid",  "Tab overview"),
   ]);
 

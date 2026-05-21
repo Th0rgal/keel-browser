@@ -103,11 +103,12 @@
       border-bottom: 0.5px solid var(--scrim-edge, rgba(0,0,0,0.06));
     }
     .ribbon > * { pointer-events: auto; }
-    /* Per-tab tint underline */
+    /* Per-tab tint underline — the sole accent indicator (the URL pill no
+       longer carries a duplicate inset). */
     .ribbon::after {
       content: ""; position: absolute; left: 0; right: 0; bottom: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--accent) 38%, transparent) 50%, transparent 100%);
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--accent) 55%, transparent) 50%, transparent 100%);
       pointer-events: none;
     }
 
@@ -134,14 +135,12 @@
 
     .url-pill {
       display: inline-flex; align-items: center; gap: 6px;
-      height: 28px; min-width: 320px; max-width: 520px;
+      height: 28px; min-width: 280px; max-width: 440px;
       padding: 0 12px;
       border-radius: 8px;
       background: var(--url-bg, rgba(255,255,255,0.55));
       color: var(--url-fg, #1d1d1f);
-      box-shadow:
-        inset 0 0 0 0.5px var(--url-border, rgba(0,0,0,0.08)),
-        inset 0 -1.5px 0 0 color-mix(in srgb, var(--accent) 40%, transparent);
+      box-shadow: inset 0 0 0 0.5px var(--url-border, rgba(0,0,0,0.08));
       transition: background 140ms ease;
     }
     .url-pill:hover { background: var(--url-bg-hover, rgba(255,255,255,0.75)); }
@@ -181,9 +180,7 @@
     .window:has(.page[data-mode="dark"]) .url-pill {
       background: rgba(255,255,255,0.06);
       color: #f0f1f3;
-      box-shadow:
-        inset 0 0 0 0.5px rgba(255,255,255,0.07),
-        inset 0 -1.5px 0 0 color-mix(in srgb, var(--accent) 40%, transparent);
+      box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.07);
     }
     .window:has(.page[data-mode="dark"]) .url-pill:hover { background: rgba(255,255,255,0.10); }
 
@@ -255,7 +252,6 @@
 
       <div class="icon-group">
         <button class="icon" title="Share"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 2.5v8M5 5.5l3-3 3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M4 8.5v4a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg></button>
-        <button class="icon" title="New tab"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
         <button class="icon" title="Tab overview"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect x="3" y="3" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="9" y="3" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="3" y="9" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="9" y="9" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></button>
       </div>
     </div>
