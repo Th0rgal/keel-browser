@@ -143,15 +143,20 @@
       pointer-events: none;
       transform: translateY(-100%);
       opacity: 0;
-      transition: transform 220ms cubic-bezier(.2,.7,.1,1), opacity 220ms ease;
+      /* Spring-like ease: quick entrance, soft settle. Closer to Apple's
+         native swipe-in feel than a flat cubic-bezier. */
+      transition: transform 260ms cubic-bezier(.16,.84,.20,1), opacity 180ms ease-out;
       background: ${isLight
         ? 'linear-gradient(180deg, rgba(245,246,248,0.88) 0%, rgba(245,246,248,0.82) 78%, rgba(245,246,248,0) 100%)'
         : 'linear-gradient(180deg, rgba(22,23,26,0.82) 0%, rgba(22,23,26,0.74) 78%, rgba(22,23,26,0) 100%)'};
       backdrop-filter: blur(26px) saturate(180%);
       -webkit-backdrop-filter: blur(26px) saturate(180%);
       /* Soft drop-shadow under the scrim so the chrome reads as "floating
-         above the page" rather than painted on top. Falls off quickly. */
-      box-shadow: 0 6px 16px -10px ${isLight ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.55)'};
+         above the page" rather than painted on top. Falls off quickly.
+         Plus a 0.5px top highlight for a glass-like reflection. */
+      box-shadow:
+        inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.06)'},
+        0 6px 16px -10px ${isLight ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.55)'};
       border-bottom: 0.5px solid ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)'};
     }
     .ribbon > * { pointer-events: auto; }
@@ -161,7 +166,8 @@
     .ribbon::after {
       content: ""; position: absolute; left: 0; right: 0; bottom: 0;
       height: 1.5px;
-      background: linear-gradient(90deg, transparent 0%, ${accent}70 50%, transparent 100%);
+      background: linear-gradient(90deg, transparent 0%, ${accent}90 30%, ${accent}90 70%, transparent 100%);
+      opacity: 0.85;
       pointer-events: none;
     }
 
