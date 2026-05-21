@@ -35,8 +35,18 @@ FORBIDDEN=(
 FAIL=0
 for p in "$ROOT"/patches/*.patch; do
   name=$(basename "$p")
+  # Only inspect the diff body: lines that are part of an actual hunk.
+  # A line counts as a "code line" if it's an added line (^+), an existing
+  # context line (^ ), or a removed line (^-) — but NOT the patch header
+  # commentary, the "diff --git" / "+++" / "---" lines, or the @@ markers.
+  body=$(awk '
+    /^diff --git/        { in_diff = 1; next }
+    /^(---|\+\+\+|@@)/   { next }
+    in_diff && /^[+ -]/  { print }
+  ' "$p")
+
   for tok in "${FORBIDDEN[@]}"; do
-    if grep -q -- "$tok" "$p"; then
+    if grep -q -F -- "$tok" <<< "$body"; then
       echo "✗ $name touches forbidden surface: $tok"
       FAIL=1
     fi

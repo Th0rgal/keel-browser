@@ -37,9 +37,12 @@ Keel is a thin distribution layer over upstream **Brave Stable**. We do not fork
 
 - Product strings: `Brave` → `Keel`
 - Toolbar buttons for Rewards / Wallet / Leo: hidden in `BraveToolbarView`
-- Tab strip height and omnibox padding: tighter, Safari-inspired
-- Dark/light color tokens: routed through `ThemeProperties`
+- **Top bar:** 28-px peek strip in steady state; full single-row toolbar slides down on cursor proximity / `F6` / `Ctrl+L`. Native title bar replaced on every platform. (`patches/0004-keel-topbar-autohide.patch`)
+- **Per-tab tinting:** each tab's accent color is extracted from the page's `<meta theme-color>` or favicon, calmed through HSL clamping, then applied to the URL underline, tab marker, and strip glow. (`patches/0005-keel-per-tab-accent-tint.patch`)
 - Default new tab page: Keel's static bundle (`newtab/`)
+
+Design: [`docs/design/navbar-ideas.md`](docs/design/navbar-ideas.md) walks the 14 candidates we considered and the three accepted decisions.
+Implementation: [`docs/design/implementation.md`](docs/design/implementation.md) maps every paint and state-machine transition to a concrete file.
 
 **Not changed:**
 

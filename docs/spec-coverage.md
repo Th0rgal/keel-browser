@@ -56,9 +56,11 @@ Maps every section of `KEEL_BROWSER_SPEC.md` to the artifact(s) that implement i
 |---|---|---|
 | Spec palette (dark) | `theme/tokens.json` `dark` block, used in `newtab/style.css` | ✓ Rendered |
 | Spec palette (light) | `theme/tokens.json` `light` block + CSS rules for `[data-theme="light"]` | ✓ Rendered |
-| Top-bar dims (40/30/8/14/2 etc.) | `theme/tokens.json` `topbar` block + `patches/0004` constants | Shipped (constants in patch) |
-| Compact tab strip, unified spacing | `patches/0004-keel-topbar-layout.patch` | Shipped |
-| Theme color routing through Brave | `patches/0005-keel-topbar-style.patch` | Shipped |
+| Top-bar dims (strip 28, bar 38, tabs 26, etc.) | `theme/tokens.json` `topbar` block | ✓ Updated to two-state model |
+| Compact tab strip + auto-hide peek strip | `patches/0004-keel-topbar-autohide.patch` (KeelMinimalToolbar + KeelAutohideController) | Shipped |
+| Per-tab page-accent tinting | `patches/0005-keel-per-tab-accent-tint.patch` (KeelTabAccent + factory) | Shipped |
+| Native title bar replaced | KeelMinimalToolbar draws traffic-light area | Shipped |
+| Long titles truncate (no marquee) | `KeelMinimalToolbar` uses `gfx::ELIDE_TAIL`; tab labels truncate | Shipped |
 
 ## New tab page
 

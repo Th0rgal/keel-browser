@@ -229,10 +229,27 @@ I'd love to. But:
 
 ---
 
-## Open questions for the user
+## Decisions (accepted)
 
-1. **macOS native title bar:** keep it (with `windowControlsOverlay`-style flush integration) or replace it entirely? Replacing it lets us recover a few px but adds platform-specific code.
-2. **Per-tab color tinting:** Safari draws a tint on the active tab borrowed from the page's accent color. Do you want that, or stay strictly monochrome?
-3. **Tab title scrolling:** when the active tab's title is longer than the slot, do we let it scroll on hover, or just truncate?
+1. **macOS native title bar:** REPLACE. We draw our own title bar / traffic-light area on every platform. Cross-platform consistency wins over recovering ~6 px of native pixels. Implementation: `KeelMinimalToolbar` paints the traffic-light area on macOS via a `views::NativeFrameView` override so the close/minimize/maximize buttons remain native (accessibility, gesture support) while the strip background is ours.
 
-My defaults for these would be: (1) replace it on macOS too (consistent across platforms), (2) keep strictly monochrome (the page already has its own colors — the chrome shouldn't compete), (3) truncate with `…`, no scroll.
+2. **Per-tab color tinting:** ACCEPTED. Each tab carries its own accent color derived from the page. The active tab's accent does three things:
+   - Tints the bottom 1 px of the omnibox / strip with the accent at ~60 % opacity
+   - Provides a 2 px left-edge marker on the tab chip itself
+   - Provides the focus-ring color for `Ctrl+L` interactions in that tab
+
+   Color extraction priority:
+   - First, parse `<meta name="theme-color" content="…">` from the page's `<head>`
+   - If absent, sample the dominant color from the favicon (LRU-cached per origin)
+   - If still absent, fall back to the static Keel accent `#53DAC6`
+
+   Saturation is clamped (HSL `S` ≤ 0.55, `L` between 0.40 and 0.70) so even loud page accents stay calm in the chrome. Hover/inactive tabs use the same accent dimmed to 40 % so the chrome never feels rainbow-busy.
+
+3. **Tab title scrolling:** TRUNCATE with `…`. No marquee, no on-hover scroll. Hovering the tab reveals the full title via the standard tooltip after the OS hover delay. Strip's "host · title" line also truncates from the right.
+
+These are reflected in:
+- `theme/tokens.json` (new `topbar.strip_*` and `tab.tint_*` groups)
+- `patches/0004-keel-topbar-autohide.patch` (layout + auto-hide controller)
+- `patches/0005-keel-per-tab-accent-tint.patch` (tint sampling + paint)
+- `docs/design/implementation.md` (C++ class scaffolding)
+- `docs/design/navbar-mockup.html` (interactive demo of all three)

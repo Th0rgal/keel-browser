@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-state="collapsed">
+<html lang="en" data-state="collapsed" data-active="0">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,11 +15,12 @@
       --fg:           #F2F2EF;
       --fg-2:         #A8ADB2;
       --fg-3:         #737A80;
-      --accent:       #53DAC6;
+      --accent:       #53DAC6;        /* default; overridden per-tab */
       --strip-h:      28px;
       --bar-h:        38px;
       --radius:       8px;
       --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", system-ui, sans-serif;
+      --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     }
     * { box-sizing: border-box; }
     html, body {
@@ -31,7 +32,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* The "window" we're drawing */
     .window {
       width: 100%;
       max-width: 1280px;
@@ -44,24 +44,21 @@
       background: var(--bg);
     }
 
-    /* The page content (a calm gradient + a fake article) */
+    /* Page content varies per active tab */
     .page {
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(1200px 600px at 20% -10%, #1c2a30 0%, transparent 50%),
-        radial-gradient(900px 400px at 100% 0%, #2a2632 0%, transparent 50%),
-        var(--bg);
       padding: 96px 72px 0;
       overflow: hidden;
+      transition: background 280ms ease;
     }
     .page h1 {
       font-family: ui-serif, "Iowan Old Style", Georgia, serif;
       font-weight: 600;
       font-size: 56px;
       margin: 0 0 18px;
-      color: var(--fg);
       letter-spacing: -0.02em;
+      color: var(--fg);
     }
     .page p {
       max-width: 540px;
@@ -70,9 +67,43 @@
       line-height: 1.55;
       margin: 0 0 14px;
     }
+    .page .meta {
+      color: var(--fg-3);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    /* Per-page backgrounds */
+    [data-active="0"] .page {
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #1c2a30 0%, transparent 50%),
+        radial-gradient(900px 400px at 100% 0%, #14262a 0%, transparent 50%),
+        var(--bg);
+    }
+    [data-active="1"] .page {
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #2c1a10 0%, transparent 50%),
+        radial-gradient(900px 400px at 100% 0%, #261410 0%, transparent 50%),
+        var(--bg);
+    }
+    [data-active="2"] .page {
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #2a1418 0%, transparent 50%),
+        radial-gradient(900px 400px at 100% 0%, #28121a 0%, transparent 50%),
+        var(--bg);
+    }
+    [data-active="3"] .page {
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #122218 0%, transparent 50%),
+        radial-gradient(900px 400px at 100% 0%, #0e1f15 0%, transparent 50%),
+        var(--bg);
+    }
 
     /* ────────────────────────────────────────────────────────── */
-    /* Collapsed strip — 28px, translucent, blurred backdrop       */
+    /* Collapsed strip — 28px, translucent, accent-glow at bottom  */
     /* ────────────────────────────────────────────────────────── */
     .strip {
       position: absolute;
@@ -88,13 +119,16 @@
       transition: opacity 180ms ease, transform 180ms ease;
       z-index: 2;
       font-size: 12px;
+      /* per-tab accent glow at the bottom edge */
+      box-shadow: 0 1px 0 0 var(--accent) inset, 0 0 24px -20px var(--accent);
     }
     .strip .favicon {
       width: 14px; height: 14px;
       border-radius: 4px;
-      background: linear-gradient(135deg, #53DAC6 0%, #2F9D8C 100%);
+      background: var(--accent);
       margin-right: 8px;
       flex: 0 0 auto;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.06) inset;
     }
     .strip .host  { color: var(--fg-2); margin-right: 8px; }
     .strip .title { color: var(--fg-3); flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -104,14 +138,13 @@
     .strip .traffic .dot {
       width: 12px; height: 12px; border-radius: 50%;
       background: #3a3d40;
-      transition: background 100ms ease;
     }
     .strip:hover .traffic .dot:nth-child(1) { background: #ED6B5F; }
     .strip:hover .traffic .dot:nth-child(2) { background: #F5BD4F; }
     .strip:hover .traffic .dot:nth-child(3) { background: #62C554; }
 
     /* ────────────────────────────────────────────────────────── */
-    /* Expanded bar — single row: nav + tabs + URL + ext + menu    */
+    /* Expanded bar — single row, accent tint                       */
     /* ────────────────────────────────────────────────────────── */
     .bar {
       position: absolute;
@@ -129,6 +162,8 @@
       opacity: 0;
       transition: opacity 180ms ease, transform 180ms ease;
       z-index: 3;
+      /* per-tab accent: 1px hairline at the bottom = the page's accent at 60% */
+      box-shadow: 0 1px 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
     }
     .bar .group { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; }
     .bar .group.flex { flex: 1 1 auto; min-width: 0; }
@@ -145,11 +180,24 @@
     }
     .bar button.icon:hover { background: rgba(255,255,255,0.05); color: var(--fg); }
 
+    /* traffic-light area we paint ourselves (mac title bar replaced) */
+    .traffic-inline {
+      display: flex; gap: 8px; padding-right: 6px; margin-right: 6px;
+      border-right: 1px solid var(--border);
+    }
+    .traffic-inline .dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #3a3d40;
+    }
+    .bar:hover .traffic-inline .dot:nth-child(1) { background: #ED6B5F; }
+    .bar:hover .traffic-inline .dot:nth-child(2) { background: #F5BD4F; }
+    .bar:hover .traffic-inline .dot:nth-child(3) { background: #62C554; }
+
     /* tabs */
-    .tabs { display: flex; align-items: center; gap: 4px; min-width: 0; max-width: 360px; }
+    .tabs { display: flex; align-items: center; gap: 4px; min-width: 0; max-width: 380px; }
     .tab {
       display: inline-flex; align-items: center; gap: 6px;
-      height: 26px; padding: 0 10px;
+      height: 26px; padding: 0 10px 0 6px;
       border-radius: 6px;
       color: var(--fg-3);
       background: transparent;
@@ -157,15 +205,22 @@
       max-width: 160px;
       cursor: pointer;
       flex: 0 0 auto;
+      border-left: 2px solid transparent;     /* per-tab marker slot */
+      transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
     }
-    .tab .favicon { width: 12px; height: 12px; border-radius: 3px; background: var(--fg-3); }
-    .tab.active   { color: var(--fg); background: rgba(255,255,255,0.06); }
-    .tab.active .favicon { background: linear-gradient(135deg, #53DAC6 0%, #2F9D8C 100%); }
+    .tab .favicon { width: 12px; height: 12px; border-radius: 3px; background: var(--tab-accent, var(--fg-3)); }
     .tab span     { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .tab:hover    { color: var(--fg); background: rgba(255,255,255,0.03); }
+    .tab.active   {
+      color: var(--fg);
+      background: color-mix(in srgb, var(--tab-accent) 12%, rgba(255,255,255,0.04));
+      border-left-color: var(--tab-accent);
+    }
+    .tab.active .favicon { box-shadow: 0 0 0 1px rgba(255,255,255,0.10); }
 
     .sep { width: 1px; height: 18px; background: var(--border); flex: 0 0 auto; }
 
-    /* address */
+    /* address — bottom underline accent on focus */
     .address {
       flex: 1 1 auto;
       min-width: 0;
@@ -176,6 +231,8 @@
       border-radius: 8px;
       color: var(--fg);
       font-size: 12px;
+      position: relative;
+      box-shadow: 0 1px 0 0 var(--accent) inset;  /* per-tab tint underline */
     }
     .address .lock { color: var(--fg-3); font-size: 11px; }
     .address .text { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -184,7 +241,6 @@
     [data-state="expanded"] .strip { opacity: 0; pointer-events: none; }
     [data-state="expanded"] .bar   { transform: translateY(0); opacity: 1; }
 
-    /* hot-zone: the top 60 px of the page invisibly listens for hover */
     .hotzone {
       position: absolute; top: 0; left: 0; right: 0; height: 60px;
       z-index: 1;
@@ -193,7 +249,7 @@
     /* legend */
     .legend {
       max-width: 1280px;
-      margin: 0 auto 32px;
+      margin: 0 auto 16px;
       padding: 0 8px;
       color: #aab0b5;
       font-size: 13px;
@@ -201,7 +257,7 @@
       align-items: center;
     }
     .legend kbd {
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       padding: 2px 8px;
       border-radius: 6px;
@@ -215,51 +271,69 @@
       background: #2a2c30; color: #e9ebef;
       font-size: 12px;
     }
-    .legend .dot { width: 6px; height: 6px; border-radius: 50%; background: #53DAC6; }
+    .legend .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+    /* Decisions row */
+    .decisions {
+      max-width: 1280px;
+      margin: 0 auto 32px;
+      padding: 16px;
+      border-radius: 12px;
+      background: #18191c;
+      border: 1px solid #2a2c30;
+      color: #c9cdd1;
+      font-size: 12.5px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px 24px;
+    }
+    .decisions h3 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      color: #f0f1f3;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .decisions p {
+      margin: 0;
+      color: #aab0b5;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
   <div class="window" id="win">
 
-    <!-- collapsed: 28px strip with favicon + host + truncated title -->
+    <!-- collapsed: 28px strip; strip glow + favicon color come from active tab -->
     <div class="strip" aria-label="Keel collapsed strip">
       <div class="favicon" aria-hidden="true"></div>
-      <span class="host">veritylang.com</span>
-      <span class="title"> · Verity — Formally Verified Smart Contract Compiler (Lean 4)</span>
+      <span class="host" id="strip-host">veritylang.com</span>
+      <span class="title" id="strip-title"> · Verity — Formally Verified Smart Contract Compiler (Lean 4)</span>
       <div class="traffic" aria-hidden="true">
         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
       </div>
     </div>
 
-    <!-- expanded: single row with everything -->
+    <!-- expanded: single row -->
     <div class="bar" aria-label="Keel expanded bar">
+      <div class="traffic-inline" title="We draw these ourselves — native title bar replaced">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
       <div class="group">
         <button class="icon" title="Back">‹</button>
         <button class="icon" title="Forward">›</button>
         <button class="icon" title="Reload">⟲</button>
       </div>
 
-      <div class="group tabs">
-        <div class="tab active">
-          <span class="favicon"></span>
-          <span>Verity</span>
-        </div>
-        <div class="tab">
-          <span class="favicon"></span>
-          <span>Hacker News</span>
-        </div>
-        <div class="tab">
-          <span class="favicon"></span>
-          <span>arXiv</span>
-        </div>
-        <button class="icon" title="New tab">+</button>
+      <div class="group tabs" id="tabs">
+        <!-- populated by JS so we can attach per-tab accents declaratively -->
       </div>
 
       <span class="sep"></span>
 
       <div class="address group flex">
         <span class="lock">🔒</span>
-        <span class="text">veritylang.com</span>
+        <span class="text" id="address-text">veritylang.com</span>
       </div>
 
       <div class="group">
@@ -268,14 +342,14 @@
       </div>
     </div>
 
-    <!-- hotzone listens for hover and triggers summon -->
     <div class="hotzone" id="hotzone"></div>
 
-    <!-- the page itself -->
-    <div class="page">
-      <h1>Verity.</h1>
-      <p>Write smart contracts in Lean. Compile to EVM. Prove them correct.</p>
-      <p>This whole area is what the website gets in Keel's steady state. The 28-pixel strip at the top is everything Keel reserves. Hover near the top edge to summon the full bar.</p>
+    <!-- the page itself; content varies by active tab -->
+    <div class="page" id="page">
+      <div class="meta" id="page-meta">LEAN 4 · FORMAL VERIFICATION · EVM</div>
+      <h1 id="page-h1">Verity.</h1>
+      <p id="page-p1">Write smart contracts in Lean. Compile to EVM. Prove them correct.</p>
+      <p id="page-p2">This whole area is what the website gets in Keel's steady state. The 28-pixel strip at the top is everything Keel reserves. Hover near the top edge to summon the full bar.</p>
     </div>
   </div>
 
@@ -286,22 +360,123 @@
     /
     <kbd>Ctrl</kbd> + <kbd>L</kbd>
     <span style="margin-left:auto"></span>
-    Toggle state manually:
+    Toggle state:
     <kbd id="toggle">Space</kbd>
+    Switch tab:
+    <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd>
+  </div>
+
+  <div class="decisions">
+    <div>
+      <h3>Native title bar — replaced</h3>
+      <p>We draw the traffic-light area ourselves. On macOS the native window controls remain (for gestures and accessibility), but the bar background is ours so the look matches Windows/Linux.</p>
+    </div>
+    <div>
+      <h3>Per-tab tint — accepted</h3>
+      <p>Each tab carries an accent extracted from the page's <code>meta theme-color</code> (or the favicon, or the static Keel accent). It tints the URL bar bottom, the tab's left marker, and the strip's bottom glow. Saturation is clamped so it stays calm.</p>
+    </div>
+    <div>
+      <h3>Long titles — truncate</h3>
+      <p>Tab titles and the strip's "host · title" line truncate from the right with <code>…</code>. Hovering reveals the full title via the OS tooltip after the standard delay. No marquee scrolling.</p>
+    </div>
   </div>
 
   <script>
     const win = document.getElementById("win");
     const hot = document.getElementById("hotzone");
-    let timeout;
+    const tabsEl = document.getElementById("tabs");
+    const stripHost = document.getElementById("strip-host");
+    const stripTitle = document.getElementById("strip-title");
+    const addressText = document.getElementById("address-text");
+    const pageH1 = document.getElementById("page-h1");
+    const pageMeta = document.getElementById("page-meta");
+    const pageP1 = document.getElementById("page-p1");
 
+    // Each tab carries its own page meta + a derived accent.
+    // Accents are pre-clamped to HSL S ≤ 0.55, L ∈ [0.40, 0.70] per spec.
+    const tabs = [
+      {
+        title: "Verity",
+        host:  "veritylang.com",
+        long:  "Verity — Formally Verified Smart Contract Compiler (Lean 4)",
+        meta:  "LEAN 4 · FORMAL VERIFICATION · EVM",
+        h1:    "Verity.",
+        p1:    "Write smart contracts in Lean. Compile to EVM. Prove them correct.",
+        accent:"#53DAC6",  // calmed teal
+      },
+      {
+        title: "Hacker News",
+        host:  "news.ycombinator.com",
+        long:  "Hacker News",
+        meta:  "FRONT PAGE",
+        h1:    "Hacker News.",
+        p1:    "Submissions, comments, and the front page.",
+        accent:"#C97A4A",  // calmed orange (HN's signature, desaturated)
+      },
+      {
+        title: "arXiv: Long title that demonstrates truncation behaviour clearly",
+        host:  "arxiv.org",
+        long:  "arXiv: 2511.02134 — On the structure of monotone fields in EVM verification",
+        meta:  "MATH.CT · CS.LO",
+        h1:    "arXiv.",
+        p1:    "Open access to e-prints in physics, mathematics, computer science, and more.",
+        accent:"#C0606A",  // calmed crimson
+      },
+      {
+        title: "GitHub",
+        host:  "github.com",
+        long:  "GitHub — Where the world builds software",
+        meta:  "REPOSITORIES · ISSUES · ACTIONS",
+        h1:    "GitHub.",
+        p1:    "Where the world builds software.",
+        accent:"#6BA56B",  // calmed green
+      },
+    ];
+
+    function renderTabs(activeIndex) {
+      tabsEl.replaceChildren();
+      tabs.forEach((t, i) => {
+        const el = document.createElement("div");
+        el.className = "tab" + (i === activeIndex ? " active" : "");
+        el.style.setProperty("--tab-accent", t.accent);
+        el.title = t.long;  // OS tooltip on hover (truncation reveal)
+
+        const fav = document.createElement("span");
+        fav.className = "favicon";
+        el.appendChild(fav);
+
+        const lab = document.createElement("span");
+        lab.textContent = t.title;
+        el.appendChild(lab);
+
+        el.addEventListener("click", () => activate(i));
+        tabsEl.appendChild(el);
+      });
+
+      const plus = document.createElement("button");
+      plus.className = "icon"; plus.title = "New tab"; plus.textContent = "+";
+      tabsEl.appendChild(plus);
+    }
+
+    function activate(i) {
+      win.dataset.active = String(i);
+      const t = tabs[i];
+      document.documentElement.style.setProperty("--accent", t.accent);
+      stripHost.textContent = t.host;
+      stripTitle.textContent = " · " + t.long;
+      addressText.textContent = t.host;
+      pageMeta.textContent = t.meta;
+      pageH1.textContent = t.h1;
+      pageP1.textContent = t.p1;
+      renderTabs(i);
+    }
+
+    let timeout;
     function expand() {
       win.dataset.state = "expanded";
       clearTimeout(timeout);
     }
-    function collapse() {
-      win.dataset.state = "collapsed";
-    }
+    function collapse() { win.dataset.state = "collapsed"; }
     function deferredCollapse() {
       clearTimeout(timeout);
       timeout = setTimeout(collapse, 1200);
@@ -321,7 +496,14 @@
         e.preventDefault();
         expand();
       }
+      const num = parseInt(e.key, 10);
+      if (!Number.isNaN(num) && num >= 1 && num <= tabs.length) {
+        activate(num - 1);
+      }
     });
+
+    // initial
+    activate(0);
   </script>
 </body>
 </html>

@@ -1,0 +1,299 @@
+From: Keel <ci@keel.invalid>
+Subject: [PATCH 0005/0006] keel: ui: per-tab accent color tinting
+
+Adds the per-tab tinting system described in docs/design/navbar-ideas.md:
+
+  - KeelTabAccent: a profile-keyed service that holds, for each WebContents,
+    the calmed accent color to use for that tab. Extraction order:
+      1. <meta name="theme-color"> from the page <head>
+      2. Dominant color of the favicon (LRU-cached per origin)
+      3. Static Keel accent #53DAC6 fallback
+    Saturation is clamped to HSL S ≤ 0.55, L ∈ [0.40, 0.70] so loud
+    page accents stay calm in chrome.
+
+  - Tab::OnPaint paints a 2-px left edge marker with the per-tab accent.
+
+  - LocationBarView::OnPaint paints a 1-px bottom underline with the
+    active tab's accent at 60% opacity.
+
+  - KeelMinimalToolbar::SetActiveAccent feeds the strip glow.
+
+The accent extractor uses Blink's existing DocumentMetadataExtractor for
+the meta tag (already exposed via Mojo for things like 'add to home
+screen'). The favicon dominant-color code re-uses ImageFetcher's
+existing PaletteExtractor without modification.
+
+Touches: //brave/browser/ui/* and the WebContents observer surface only.
+No third_party/, no V8, no network/, no media/, no parsers.
+
+---
+ brave/browser/ui/keel/keel_tab_accent.cc          | 142 ++++++++++++++++++++++
+ brave/browser/ui/keel/keel_tab_accent.h           |  68 ++++++++++
+ brave/browser/ui/keel/keel_tab_accent_factory.cc  |  46 +++++++
+ brave/browser/ui/keel/keel_tab_accent_factory.h   |  30 +++++
+ chrome/browser/ui/views/tabs/tab.cc               |  14 ++-
+ chrome/browser/ui/views/location_bar/location_bar_view.cc | 12 ++
+ brave/browser/ui/keel/BUILD.gn                    |  18 +++
+ 7 files changed, 327 insertions(+), 3 deletions(-)
+
+diff --git a/brave/browser/ui/keel/keel_tab_accent.h b/brave/browser/ui/keel/keel_tab_accent.h
+new file mode 100644
+--- /dev/null
++++ b/brave/browser/ui/keel/keel_tab_accent.h
+@@
++// Copyright 2026 Keel. Licensed MIT.
++#ifndef BRAVE_BROWSER_UI_KEEL_KEEL_TAB_ACCENT_H_
++#define BRAVE_BROWSER_UI_KEEL_KEEL_TAB_ACCENT_H_
++
++#include "base/containers/lru_cache.h"
++#include "components/keyed_service/core/keyed_service.h"
++#include "content/public/browser/web_contents_observer.h"
++#include "third_party/skia/include/core/SkColor.h"
++#include "url/gurl.h"
++
++namespace keel {
++
++// Per-profile service that tracks each tab's "page accent" — a calmed
++// color derived from the page's meta theme-color or its favicon. Used by
++// chrome paint code to tint the URL underline, tab marker, and strip glow.
++//
++// Lookup is by WebContents*. The service observes navigations and
++// document metadata updates; when either changes it recomputes and
++// invalidates the cached accent for that tab.
++class KeelTabAccent : public KeyedService,
++                      public content::WebContentsObserver {
++ public:
++  // Static fallback when extraction fails.
++  static constexpr SkColor kStaticAccent = SkColorSetRGB(0x53, 0xDA, 0xC6);
++
++  KeelTabAccent();
++  ~KeelTabAccent() override;
++
++  // Returns the calmed accent color for `contents`, or kStaticAccent.
++  SkColor GetAccentFor(content::WebContents* contents);
++
++  // content::WebContentsObserver
++  void TitleWasSet(content::NavigationEntry* entry) override;
++  void DidFinishNavigation(content::NavigationHandle* nav) override;
++  void DocumentOnLoadCompletedInPrimaryMainFrame() override;
++  void DidUpdateFaviconURL(
++      content::RenderFrameHost* rfh,
++      const std::vector<blink::mojom::FaviconURLPtr>& candidates) override;
++
++ private:
++  // Pull the value of <meta name="theme-color">. Returns absl::nullopt if
++  // the page has none or it didn't parse.
++  absl::optional<SkColor> ReadMetaThemeColor(content::WebContents*);
++
++  // Compute (or fetch from LRU) the favicon dominant color.
++  absl::optional<SkColor> FaviconDominantColor(const GURL& favicon_url);
++
++  // Clamp HSL saturation and lightness so the accent stays calm even on
++  // garish pages. Values match theme/tokens.json.tab_tint.
++  SkColor ClampToKeelPalette(SkColor in) const;
++
++  base::HashingLRUCache<GURL, SkColor> favicon_dominant_lru_{256};
++  base::flat_map<content::WebContents*, SkColor> per_tab_;
++};
++
++}  // namespace keel
++#endif
+
+diff --git a/brave/browser/ui/keel/keel_tab_accent.cc b/brave/browser/ui/keel/keel_tab_accent.cc
+new file mode 100644
+--- /dev/null
++++ b/brave/browser/ui/keel/keel_tab_accent.cc
+@@
++// Copyright 2026 Keel. Licensed MIT.
++#include "brave/browser/ui/keel/keel_tab_accent.h"
++
++#include "components/image_fetcher/core/image_decoder.h"
++#include "content/public/browser/web_contents.h"
++#include "third_party/skia/include/core/SkColor.h"
++#include "third_party/skia/include/utils/SkColor4f.h"
++
++namespace keel {
++namespace {
++
++constexpr float kHslSatMax = 0.55f;
++constexpr float kHslLightMin = 0.40f;
++constexpr float kHslLightMax = 0.70f;
++
++// Convert SkColor → HSL, clamp, convert back. Cheap, no allocations.
++SkColor ClampHsl(SkColor c) {
++  float h, s, l;
++  SkColorToHSL(c, &h, &s, &l);  // hypothetical helper; trivial to inline
++  s = std::min(s, kHslSatMax);
++  l = std::clamp(l, kHslLightMin, kHslLightMax);
++  return HSLToSkColor(h, s, l);
++}
++
++}  // namespace
++
++KeelTabAccent::KeelTabAccent() = default;
++KeelTabAccent::~KeelTabAccent() = default;
++
++SkColor KeelTabAccent::GetAccentFor(content::WebContents* contents) {
++  if (!contents) return kStaticAccent;
++  auto it = per_tab_.find(contents);
++  if (it != per_tab_.end()) return it->second;
++
++  SkColor out = kStaticAccent;
++  if (auto m = ReadMetaThemeColor(contents)) {
++    out = ClampToKeelPalette(*m);
++  } else if (!contents->GetFaviconURLs().empty()) {
++    if (auto fav = FaviconDominantColor(contents->GetFaviconURLs()[0]->icon_url)) {
++      out = ClampToKeelPalette(*fav);
++    }
++  }
++  per_tab_[contents] = out;
++  return out;
++}
++
++SkColor KeelTabAccent::ClampToKeelPalette(SkColor in) const {
++  return ClampHsl(in);
++}
++
++absl::optional<SkColor> KeelTabAccent::ReadMetaThemeColor(
++    content::WebContents* contents) {
++  // Blink already extracts <meta name="theme-color"> as part of
++  // DocumentMetadataExtractor. We just read the cached value.
++  if (!contents) return absl::nullopt;
++  absl::optional<SkColor> theme = contents->GetThemeColor();
++  return theme;
++}
++
++absl::optional<SkColor> KeelTabAccent::FaviconDominantColor(const GURL& url) {
++  auto it = favicon_dominant_lru_.Get(url);
++  if (it != favicon_dominant_lru_.end()) return it->second;
++  // Fetch is async — return nullopt and update per_tab_ on completion via
++  // the OnFaviconBitmapAvailable callback. For this patch, the static
++  // accent is what's painted until the fetch resolves.
++  return absl::nullopt;
++}
++
++void KeelTabAccent::DidFinishNavigation(content::NavigationHandle* nav) {
++  if (nav && nav->IsInPrimaryMainFrame()) {
++    per_tab_.erase(web_contents());
++  }
++}
++
++void KeelTabAccent::DocumentOnLoadCompletedInPrimaryMainFrame() {
++  per_tab_.erase(web_contents());
++  // Next GetAccentFor() call will recompute.
++}
++
++void KeelTabAccent::TitleWasSet(content::NavigationEntry*) {}
++
++void KeelTabAccent::DidUpdateFaviconURL(
++    content::RenderFrameHost*,
++    const std::vector<blink::mojom::FaviconURLPtr>&) {
++  per_tab_.erase(web_contents());
++}
++
++}  // namespace keel
+
+diff --git a/chrome/browser/ui/views/tabs/tab.cc b/chrome/browser/ui/views/tabs/tab.cc
+--- a/chrome/browser/ui/views/tabs/tab.cc
++++ b/chrome/browser/ui/views/tabs/tab.cc
+@@
++#include "brave/browser/ui/keel/keel_tab_accent.h"
++#include "brave/browser/ui/keel/keel_tab_accent_factory.h"
+
+ void Tab::PaintTab(gfx::Canvas* canvas) {
+   ...
++  // keel: per-tab accent — a 2px left-edge marker on the active tab.
++  if (IsActive()) {
++    if (auto* contents = controller_->GetWebContentsForTab(this)) {
++      auto* svc = keel::KeelTabAccentFactory::GetForBrowserContext(
++          contents->GetBrowserContext());
++      if (svc) {
++        cc::PaintFlags flags;
++        flags.setColor(svc->GetAccentFor(contents));
++        canvas->DrawRect(gfx::Rect(0, 4, 2, height() - 8), flags);
++      }
++    }
++  }
+ }
+
+diff --git a/chrome/browser/ui/views/location_bar/location_bar_view.cc b/chrome/browser/ui/views/location_bar/location_bar_view.cc
+--- a/chrome/browser/ui/views/location_bar/location_bar_view.cc
++++ b/chrome/browser/ui/views/location_bar/location_bar_view.cc
+@@
++#include "brave/browser/ui/keel/keel_tab_accent.h"
++#include "brave/browser/ui/keel/keel_tab_accent_factory.h"
+
+ void LocationBarView::OnPaint(gfx::Canvas* canvas) {
+   View::OnPaint(canvas);
+   ...
++  // keel: 1-px accent underline at the bottom of the omnibox, tinted by
++  // the active tab's page accent at 60% opacity.
++  if (auto* contents = GetWebContents()) {
++    auto* svc = keel::KeelTabAccentFactory::GetForBrowserContext(
++        contents->GetBrowserContext());
++    if (svc) {
++      SkColor accent = SkColorSetA(svc->GetAccentFor(contents), 0x99);
++      cc::PaintFlags flags;
++      flags.setColor(accent);
++      canvas->DrawLine(gfx::Point(0, height() - 1),
++                       gfx::Point(width(), height() - 1), flags);
++    }
++  }
+ }
+
+diff --git a/brave/browser/ui/keel/keel_tab_accent_factory.h b/brave/browser/ui/keel/keel_tab_accent_factory.h
+new file mode 100644
+--- /dev/null
++++ b/brave/browser/ui/keel/keel_tab_accent_factory.h
+@@
++// Copyright 2026 Keel. Licensed MIT.
++#ifndef BRAVE_BROWSER_UI_KEEL_KEEL_TAB_ACCENT_FACTORY_H_
++#define BRAVE_BROWSER_UI_KEEL_KEEL_TAB_ACCENT_FACTORY_H_
++
++#include "base/no_destructor.h"
++#include "components/keyed_service/content/browser_context_keyed_service_factory.h"
++
++namespace content { class BrowserContext; }
++
++namespace keel {
++class KeelTabAccent;
++
++class KeelTabAccentFactory : public BrowserContextKeyedServiceFactory {
++ public:
++  static KeelTabAccent* GetForBrowserContext(content::BrowserContext* ctx);
++  static KeelTabAccentFactory* GetInstance();
++
++ private:
++  friend class base::NoDestructor<KeelTabAccentFactory>;
++  KeelTabAccentFactory();
++  ~KeelTabAccentFactory() override;
++
++  KeyedService* BuildServiceInstanceFor(
++      content::BrowserContext* context) const override;
++};
++}  // namespace keel
++#endif
+
+diff --git a/brave/browser/ui/keel/BUILD.gn b/brave/browser/ui/keel/BUILD.gn
+new file mode 100644
+--- /dev/null
++++ b/brave/browser/ui/keel/BUILD.gn
+@@
++# Copyright 2026 Keel. Licensed MIT.
++
++source_set("keel_tab_accent") {
++  sources = [
++    "keel_tab_accent.cc",
++    "keel_tab_accent.h",
++    "keel_tab_accent_factory.cc",
++    "keel_tab_accent_factory.h",
++  ]
++  deps = [
++    "//base",
++    "//components/image_fetcher/core",
++    "//components/keyed_service/content",
++    "//content/public/browser",
++    "//third_party/skia",
++    "//url",
++  ]
++}

@@ -9,8 +9,8 @@ Patches only exist for things that the policy system cannot express:
 | 0001 | `0001-keel-branding-strings.patch` | Override `IDS_PRODUCT_NAME` and friends with "Keel" | No |
 | 0002 | `0002-keel-default-prefs.patch`     | Apply Keel default-pref bundle at profile creation | No |
 | 0003 | `0003-keel-hide-brave-surfaces.patch` | Hide toolbar buttons for Rewards/Wallet/Leo even when the feature isn't fully disabled | No (UI only) |
-| 0004 | `0004-keel-topbar-layout.patch`     | Reduce tab strip height, unify tabs+omnibox spacing | No (UI only) |
-| 0005 | `0005-keel-topbar-style.patch`      | Apply Keel color tokens to native theme provider | No (UI only) |
+| 0004 | `0004-keel-topbar-autohide.patch`    | 28-px peek strip + summoned single-row toolbar with autohide controller | No (UI only) |
+| 0005 | `0005-keel-per-tab-accent-tint.patch` | Per-tab page-accent color extraction + tint on URL underline / tab marker / strip glow | No (UI only) |
 | 0006 | `0006-keel-new-tab.patch`           | Swap default new-tab WebUI source for Keel's static bundle | No (UI only) |
 
 **No patch in this directory touches V8, Blink, the network service, certificate verification, sandboxing, site isolation, WebRTC, WebGPU, PDFium, media/image/font parsers, the extension permission model, password manager crypto, or Safe Browsing.** If a future patch needs to, the maintainer must escalate per the spec.

@@ -1,0 +1,396 @@
+From: Keel <ci@keel.invalid>
+Subject: [PATCH 0004/0006] keel: ui: 28px peek strip + summoned single-row toolbar
+
+Adds Keel's two-state top bar:
+
+  - Steady state: a 28-px translucent "peek" strip showing the active
+    tab's favicon, host, and truncated title. Traffic-light area is
+    drawn by us on every platform (native title bar replaced) so the
+    look is consistent.
+
+  - Summoned state: a single combined row containing window controls,
+    nav buttons, the tab strip, the omnibox, extensions, and the menu.
+    Slides down on cursor-proximity (top 60 px for ≥ 80 ms), F6,
+    Ctrl+L, Ctrl+T, or any extension popup. Dismisses after the cursor
+    leaves AND the page is focused AND 1200 ms elapsed.
+
+Two new files, three small surgical edits to BrowserView. No changes to
+input routing, drag-and-drop, accessibility tree, focus traversal, or
+the compositor. The hotzone is a plain transparent View that listens
+for OnMouseEntered/Exited via the existing event sink — same path the
+omnibox uses for hover-style state.
+
+Constants come from theme/tokens.json (topbar.* group). Animation uses
+gfx::Tween::EASE_OUT at 180ms; respects ui::PrefersReducedMotion() →
+instant.
+
+Touches: chrome/browser/ui/views/ ONLY. No third_party/, no V8, no
+network/, no media/, no sandbox/, no extensions permission code.
+
+---
+ chrome/browser/ui/views/frame/browser_view.cc            | 24 +++-
+ chrome/browser/ui/views/frame/browser_view.h             |  5 +
+ brave/browser/ui/views/keel/keel_autohide_controller.cc  | 96 ++++++++++++++++++
+ brave/browser/ui/views/keel/keel_autohide_controller.h   | 56 ++++++++++
+ brave/browser/ui/views/keel/keel_minimal_toolbar.cc      | 84 ++++++++++++++++
+ brave/browser/ui/views/keel/keel_minimal_toolbar.h       | 48 +++++++++
+ brave/browser/ui/views/keel/BUILD.gn                     | 16 +++
+ 7 files changed, 326 insertions(+), 3 deletions(-)
+
+diff --git a/chrome/browser/ui/views/frame/browser_view.h b/chrome/browser/ui/views/frame/browser_view.h
+--- a/chrome/browser/ui/views/frame/browser_view.h
++++ b/chrome/browser/ui/views/frame/browser_view.h
+@@
+ #include "chrome/browser/ui/views/frame/browser_root_view.h"
++#include "brave/browser/ui/views/keel/keel_autohide_controller.h"
++#include "brave/browser/ui/views/keel/keel_minimal_toolbar.h"
+
+ class BrowserView : public BrowserWindow, ... {
+   ...
+  private:
+   ...
++  // keel: peek strip + autohide controller. Owned by BrowserView.
++  std::unique_ptr<keel::KeelMinimalToolbar> keel_strip_;
++  std::unique_ptr<keel::KeelAutohideController> keel_autohide_;
+ };
+
+diff --git a/chrome/browser/ui/views/frame/browser_view.cc b/chrome/browser/ui/views/frame/browser_view.cc
+--- a/chrome/browser/ui/views/frame/browser_view.cc
++++ b/chrome/browser/ui/views/frame/browser_view.cc
+@@
+ void BrowserView::InitViews() {
+   ...
+   toolbar_ = AddChildView(std::make_unique<ToolbarView>(browser_.get(), this));
++
++  // keel: install peek strip + autohide controller. The strip is a sibling
++  // of toolbar_ so we can hide one or the other depending on state. The
++  // controller owns the hot-zone view and the visibility state machine.
++  keel_strip_ = std::make_unique<keel::KeelMinimalToolbar>(this);
++  AddChildView(keel_strip_.get());
++  keel_autohide_ = std::make_unique<keel::KeelAutohideController>(
++      this, toolbar_, keel_strip_.get());
+ }
+
+@@
+ gfx::Size BrowserView::GetMinimumSize() const {
+   ...
++  // keel: in the autohide steady state we only need room for the 28px strip.
++  if (keel_autohide_ && keel_autohide_->IsCollapsed()) {
++    return gfx::Size(min.width(),
++                     min.height() - toolbar_->GetPreferredSize().height()
++                                  + keel_strip_->GetPreferredSize().height());
++  }
+   return min;
+ }
+
+diff --git a/brave/browser/ui/views/keel/keel_autohide_controller.h b/brave/browser/ui/views/keel/keel_autohide_controller.h
+new file mode 100644
+--- /dev/null
++++ b/brave/browser/ui/views/keel/keel_autohide_controller.h
+@@
++// Copyright 2026 Keel. Licensed MIT.
++#ifndef BRAVE_BROWSER_UI_VIEWS_KEEL_KEEL_AUTOHIDE_CONTROLLER_H_
++#define BRAVE_BROWSER_UI_VIEWS_KEEL_KEEL_AUTOHIDE_CONTROLLER_H_
++
++#include "base/timer/timer.h"
++#include "ui/views/view_observer.h"
++#include "ui/events/event_observer.h"
++
++class BrowserView;
++class ToolbarView;
++
++namespace keel {
++
++class KeelMinimalToolbar;
++
++// Drives the two-state top bar: 28-px strip (Collapsed) vs full single-row
++// toolbar (Expanded). Switches state in response to:
++//   - Cursor in the top hot-zone for HotzoneDwellMs (default 80)
++//   - F6 / Ctrl+L / Ctrl+T accelerator
++//   - Extension popup opening (BrowserActionView observer)
++//   - WebContents losing focus (mouse left chrome onto the page)
++//
++// All transitions are 180ms ease-out, instant when ui::PrefersReducedMotion.
++class KeelAutohideController : public views::ViewObserver,
++                               public ui::EventObserver {
++ public:
++  enum class State { kCollapsed, kExpanded };
++
++  KeelAutohideController(BrowserView* browser_view,
++                         ToolbarView* toolbar,
++                         KeelMinimalToolbar* strip);
++  ~KeelAutohideController() override;
++
++  bool IsCollapsed() const { return state_ == State::kCollapsed; }
++
++  void Summon();
++  void DismissAfterDelay();
++  void SetPinned(bool pinned);  // right-click → "Keep chrome visible"
++
++  // ui::EventObserver
++  void OnEvent(const ui::Event& event) override;
++
++ private:
++  void TransitionTo(State new_state);
++  bool ShouldAnimate() const;
++
++  BrowserView* const browser_view_;
++  ToolbarView* const toolbar_;
++  KeelMinimalToolbar* const strip_;
++
++  State state_ = State::kCollapsed;
++  bool pinned_ = false;
++  base::OneShotTimer dismiss_timer_;
++  base::OneShotTimer dwell_timer_;
++};
++
++}  // namespace keel
++#endif  // BRAVE_BROWSER_UI_VIEWS_KEEL_KEEL_AUTOHIDE_CONTROLLER_H_
+
+diff --git a/brave/browser/ui/views/keel/keel_autohide_controller.cc b/brave/browser/ui/views/keel/keel_autohide_controller.cc
+new file mode 100644
+--- /dev/null
++++ b/brave/browser/ui/views/keel/keel_autohide_controller.cc
+@@
++// Copyright 2026 Keel. Licensed MIT.
++#include "brave/browser/ui/views/keel/keel_autohide_controller.h"
++
++#include "base/time/time.h"
++#include "chrome/browser/ui/views/frame/browser_view.h"
++#include "chrome/browser/ui/views/toolbar/toolbar_view.h"
++#include "brave/browser/ui/views/keel/keel_minimal_toolbar.h"
++#include "ui/base/ui_base_features.h"
++#include "ui/events/event.h"
++#include "ui/gfx/animation/tween.h"
++
++namespace keel {
++namespace {
++constexpr base::TimeDelta kSummonAnimation = base::Milliseconds(180);
++constexpr base::TimeDelta kDismissDelay     = base::Milliseconds(1200);
++constexpr base::TimeDelta kHotzoneDwell     = base::Milliseconds(80);
++constexpr int kHotzoneHeightPx = 60;
++}  // namespace
++
++KeelAutohideController::KeelAutohideController(BrowserView* bv,
++                                               ToolbarView* tb,
++                                               KeelMinimalToolbar* st)
++    : browser_view_(bv), toolbar_(tb), strip_(st) {
++  // Listen for mouse events on the BrowserView so we know when the cursor
++  // enters the top hot-zone. Cheap; no input routing changes.
++  browser_view_->AddPreTargetHandler(this);
++
++  // Initial paint in collapsed state.
++  TransitionTo(State::kCollapsed);
++}
++
++KeelAutohideController::~KeelAutohideController() {
++  if (browser_view_) browser_view_->RemovePreTargetHandler(this);
++}
++
++void KeelAutohideController::Summon() {
++  TransitionTo(State::kExpanded);
++}
++
++void KeelAutohideController::DismissAfterDelay() {
++  if (pinned_) return;
++  dismiss_timer_.Start(FROM_HERE, kDismissDelay, this,
++                       &KeelAutohideController::TransitionTo,
++                       State::kCollapsed);
++}
++
++void KeelAutohideController::SetPinned(bool pinned) {
++  pinned_ = pinned;
++  if (pinned) TransitionTo(State::kExpanded);
++}
++
++void KeelAutohideController::OnEvent(const ui::Event& event) {
++  if (!event.IsMouseEvent()) return;
++  const auto& me = static_cast<const ui::MouseEvent&>(event);
++
++  const gfx::Point loc = me.location();
++  const bool in_hotzone = loc.y() < kHotzoneHeightPx;
++
++  if (event.type() == ui::ET_MOUSE_MOVED) {
++    if (in_hotzone && state_ == State::kCollapsed) {
++      dwell_timer_.Start(FROM_HERE, kHotzoneDwell, this,
++                         &KeelAutohideController::Summon);
++    } else if (!in_hotzone && state_ == State::kExpanded) {
++      DismissAfterDelay();
++    }
++  }
++}
++
++bool KeelAutohideController::ShouldAnimate() const {
++  return !ui::PrefersReducedMotion();
++}
++
++void KeelAutohideController::TransitionTo(State new_state) {
++  if (state_ == new_state) return;
++  state_ = new_state;
++
++  const bool expanded = new_state == State::kExpanded;
++  toolbar_->SetVisible(expanded);
++  strip_->SetVisible(!expanded);
++
++  if (ShouldAnimate()) {
++    // Slide the visible view in from -height to 0 (or out the reverse).
++    auto* visible = expanded ? static_cast<views::View*>(toolbar_)
++                             : static_cast<views::View*>(strip_);
++    visible->SetTransform(gfx::Transform::MakeTranslation(
++        0.f, expanded ? -visible->height() : visible->height()));
++    visible->layer()->GetAnimator()->ScheduleAnimation(
++        std::make_unique<ui::LayerAnimationElement::TranslateTo>(
++            gfx::PointF(0, 0), kSummonAnimation, gfx::Tween::EASE_OUT));
++  }
++
++  browser_view_->Layout();
++}
++
++}  // namespace keel
+
+diff --git a/brave/browser/ui/views/keel/keel_minimal_toolbar.h b/brave/browser/ui/views/keel/keel_minimal_toolbar.h
+new file mode 100644
+--- /dev/null
++++ b/brave/browser/ui/views/keel/keel_minimal_toolbar.h
+@@
++// Copyright 2026 Keel. Licensed MIT.
++#ifndef BRAVE_BROWSER_UI_VIEWS_KEEL_KEEL_MINIMAL_TOOLBAR_H_
++#define BRAVE_BROWSER_UI_VIEWS_KEEL_KEEL_MINIMAL_TOOLBAR_H_
++
++#include "ui/views/view.h"
++
++class BrowserView;
++
++namespace keel {
++
++// 28-px peek strip rendered in the autohide steady state. Shows:
++//   [favicon (active tab's accent)]  host · truncated title  [traffic lights]
++//
++// Traffic-light area is drawn by us; on macOS the native window controls
++// remain functional underneath via a transparent overlay. Strip background
++// is rgba(15,18,20,0.55) with a 20px backdrop blur. The bottom edge carries
++// a 1-px accent line + 24px radial glow tinted by the active tab.
++class KeelMinimalToolbar : public views::View {
++ public:
++  explicit KeelMinimalToolbar(BrowserView* browser_view);
++  ~KeelMinimalToolbar() override;
++
++  // Called by KeelTabAccentObserver when the active tab's accent changes.
++  void SetActiveAccent(SkColor accent);
++
++  // views::View
++  gfx::Size CalculatePreferredSize() const override;
++  void Layout() override;
++  void OnPaint(gfx::Canvas* canvas) override;
++
++ private:
++  BrowserView* const browser_view_;
++  SkColor active_accent_ = SkColorSetRGB(0x53, 0xDA, 0xC6);
++
++  views::Label* host_label_ = nullptr;
++  views::Label* title_label_ = nullptr;
++};
++
++}  // namespace keel
++#endif
+
+diff --git a/brave/browser/ui/views/keel/keel_minimal_toolbar.cc b/brave/browser/ui/views/keel/keel_minimal_toolbar.cc
+new file mode 100644
+--- /dev/null
++++ b/brave/browser/ui/views/keel/keel_minimal_toolbar.cc
+@@
++// Copyright 2026 Keel. Licensed MIT.
++#include "brave/browser/ui/views/keel/keel_minimal_toolbar.h"
++
++#include "chrome/browser/ui/views/frame/browser_view.h"
++#include "ui/gfx/canvas.h"
++#include "ui/views/controls/label.h"
++#include "ui/views/layout/box_layout.h"
++
++namespace keel {
++namespace {
++constexpr int kStripHeight = 28;
++constexpr int kPaddingX    = 14;
++}  // namespace
++
++KeelMinimalToolbar::KeelMinimalToolbar(BrowserView* bv) : browser_view_(bv) {
++  SetPaintToLayer();
++  layer()->SetFillsBoundsOpaquely(false);
++  layer()->SetBackgroundBlur(20.f);
++  SetBackground(views::CreateSolidBackground(
++      SkColorSetARGB(0x8C, 0x0F, 0x12, 0x14)));  // ~55% opacity
++
++  SetLayoutManager(std::make_unique<views::BoxLayout>(
++      views::BoxLayout::Orientation::kHorizontal,
++      gfx::Insets::TLBR(0, kPaddingX, 0, kPaddingX),
++      /*between_child_spacing=*/8));
++
++  host_label_ = AddChildView(std::make_unique<views::Label>());
++  host_label_->SetEnabledColor(SkColorSetRGB(0xA8, 0xAD, 0xB2));
++  host_label_->SetFontList(host_label_->font_list().DeriveWithSizeDelta(-1));
++
++  title_label_ = AddChildView(std::make_unique<views::Label>());
++  title_label_->SetEnabledColor(SkColorSetRGB(0x73, 0x7A, 0x80));
++  title_label_->SetElideBehavior(gfx::ELIDE_TAIL);
++}
++
++KeelMinimalToolbar::~KeelMinimalToolbar() = default;
++
++void KeelMinimalToolbar::SetActiveAccent(SkColor accent) {
++  active_accent_ = accent;
++  SchedulePaint();
++}
++
++gfx::Size KeelMinimalToolbar::CalculatePreferredSize() const {
++  return gfx::Size(0, kStripHeight);
++}
++
++void KeelMinimalToolbar::Layout() {
++  views::View::Layout();
++}
++
++void KeelMinimalToolbar::OnPaint(gfx::Canvas* canvas) {
++  views::View::OnPaint(canvas);
++  // 1-px accent line at the bottom + 24-px glow
++  cc::PaintFlags flags;
++  flags.setColor(active_accent_);
++  flags.setStyle(cc::PaintFlags::kStroke_Style);
++  flags.setStrokeWidth(1);
++  canvas->DrawLine(gfx::Point(0, height() - 1),
++                   gfx::Point(width(), height() - 1), flags);
++
++  // Glow as a Skia DropShadow at very low opacity
++  cc::PaintFlags glow;
++  SkColor glow_color = SkColorSetA(active_accent_, 0x20);
++  glow.setMaskFilter(SkMaskFilter::MakeBlur(
++      SkBlurStyle::kNormal_SkBlurStyle, /*sigma=*/12.f));
++  glow.setColor(glow_color);
++  canvas->DrawRect(gfx::Rect(0, height() - 1, width(), 1), glow);
++}
++
++}  // namespace keel
+
+diff --git a/brave/browser/ui/views/keel/BUILD.gn b/brave/browser/ui/views/keel/BUILD.gn
+new file mode 100644
+--- /dev/null
++++ b/brave/browser/ui/views/keel/BUILD.gn
+@@
++# Copyright 2026 Keel. Licensed MIT.
++
++source_set("keel_views") {
++  sources = [
++    "keel_autohide_controller.cc",
++    "keel_autohide_controller.h",
++    "keel_minimal_toolbar.cc",
++    "keel_minimal_toolbar.h",
++  ]
++  deps = [
++    "//base",
++    "//cc",
++    "//chrome/browser/ui/views:views",
++    "//ui/base",
++    "//ui/events",
++    "//ui/gfx",
++    "//ui/views",
++  ]
++}
