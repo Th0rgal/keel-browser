@@ -1,0 +1,37 @@
+From: Keel <ci@keel.invalid>
+Subject: [PATCH 0001/0006] keel: branding: override product strings to "Keel"
+
+Replaces the product-name string resources Brave inherits from Chromium with
+Keel's strings. Only display strings change — channel names, mojo IPC names,
+bundle IDs, profile dir, and the User-Agent brand token are deliberately
+NOT renamed (see ../branding/README.md for rationale).
+
+Context will drift between Brave releases. If `git apply --check` fails on
+this hunk after a rebase, re-locate `IDS_PRODUCT_NAME` (and the matching
+`IDS_SHORT_PRODUCT_NAME` and `IDS_PRODUCT_NAME_LONG`) in the current upstream
+strings file and update the patch.
+
+---
+ brave/app/brave_strings.grdp | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/brave/app/brave_strings.grdp b/brave/app/brave_strings.grdp
+--- a/brave/app/brave_strings.grdp
++++ b/brave/app/brave_strings.grdp
+@@
+   <message name="IDS_PRODUCT_NAME" desc="The Chrome application name">
+-    Brave
++    Keel
+   </message>
+   <message name="IDS_SHORT_PRODUCT_NAME" desc="The Chrome short application name">
+-    Brave
++    Keel
+   </message>
+   <message name="IDS_PRODUCT_NAME_LONG" desc="The Chrome long application name">
+-    Brave Browser
++    Keel Browser
+   </message>
+   <message name="IDS_ABOUT_VERSION_COMPANY_NAME" desc="Company name on the about page">
+-    Brave Software Inc.
++    Keel
+   </message>

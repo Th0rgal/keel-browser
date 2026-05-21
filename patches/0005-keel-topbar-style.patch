@@ -1,0 +1,38 @@
+From: Keel <ci@keel.invalid>
+Subject: [PATCH 0005/0006] keel: ui: Keel color tokens in ThemeProperties
+
+Plumbs Keel's dark/light palette through Brave's ThemeProperties so the tab
+strip, toolbar, and omnibox pick up Keel's background, surface, and border
+colors. The accent (#53DAC6) is used only for focus rings and the new-tab
+indicator dot — the rest is monochrome on purpose.
+
+Colors come from theme/tokens.json. Keep this patch and that file in sync.
+
+This patch only edits ThemeProperties — it does not change any rendering
+pipeline, GPU code, or compositor logic.
+
+---
+ brave/browser/themes/brave_dark_mode_theme_color_setter.cc | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/brave/browser/themes/brave_dark_mode_theme_color_setter.cc b/brave/browser/themes/brave_dark_mode_theme_color_setter.cc
+--- a/brave/browser/themes/brave_dark_mode_theme_color_setter.cc
++++ b/brave/browser/themes/brave_dark_mode_theme_color_setter.cc
+@@
+ void SetDarkThemeColors(ThemeProperties::ColorMap* map) {
+-  (*map)[ThemeProperties::COLOR_TOOLBAR] = SkColorSetRGB(0x18, 0x1A, 0x1C);
+-  (*map)[ThemeProperties::COLOR_TAB_BACKGROUND_ACTIVE_FRAME_ACTIVE] = SkColorSetRGB(0x22, 0x24, 0x26);
++  // keel: palette mirrors theme/tokens.json (dark)
++  (*map)[ThemeProperties::COLOR_FRAME_ACTIVE]                       = SkColorSetRGB(0x0B, 0x0D, 0x0E);
++  (*map)[ThemeProperties::COLOR_TOOLBAR]                            = SkColorSetRGB(0x0F, 0x12, 0x14);
++  (*map)[ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON]                = SkColorSetRGB(0xA8, 0xAD, 0xB2);
++  (*map)[ThemeProperties::COLOR_TAB_BACKGROUND_ACTIVE_FRAME_ACTIVE] = SkColorSetRGB(0x1A, 0x1E, 0x22);
++  (*map)[ThemeProperties::COLOR_TAB_BACKGROUND_INACTIVE_FRAME_ACTIVE] = SkColorSetRGB(0x0F, 0x12, 0x14);
++  (*map)[ThemeProperties::COLOR_TAB_FOREGROUND_ACTIVE_FRAME_ACTIVE] = SkColorSetRGB(0xF2, 0xF2, 0xEF);
++  (*map)[ThemeProperties::COLOR_TAB_FOREGROUND_INACTIVE_FRAME_ACTIVE] = SkColorSetRGB(0xA8, 0xAD, 0xB2);
++  (*map)[ThemeProperties::COLOR_OMNIBOX_BACKGROUND]                 = SkColorSetRGB(0x18, 0x1C, 0x1F);
++  (*map)[ThemeProperties::COLOR_OMNIBOX_TEXT]                       = SkColorSetRGB(0xF2, 0xF2, 0xEF);
++  (*map)[ThemeProperties::COLOR_OMNIBOX_TEXT_DIMMED]                = SkColorSetRGB(0xA8, 0xAD, 0xB2);
++  (*map)[ThemeProperties::COLOR_FRAME_INACTIVE]                     = SkColorSetRGB(0x0B, 0x0D, 0x0E);
++  (*map)[ThemeProperties::COLOR_TAB_GROUP_BLUE]                     = SkColorSetRGB(0x53, 0xDA, 0xC6);
+ }

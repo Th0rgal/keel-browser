@@ -1,0 +1,36 @@
+From: Keel <ci@keel.invalid>
+Subject: [PATCH 0003/0006] keel: ui: hide Rewards/Wallet/Leo toolbar surfaces
+
+Belt-and-suspenders for the managed policies — even if a Keel install ends up
+with a stale or missing policy file, the toolbar buttons for Rewards, Wallet,
+and Leo AI should never render. This patch turns the three `ShouldShow*Button`
+helpers into hard-`false` returns inside the Brave toolbar view.
+
+No effect on the underlying services (we don't disable them here — the
+managed-policy keys do that). This is purely visual suppression so the
+"hide it from the UI and document the limitation" half of the spec is
+honored when policy enforcement fails.
+
+---
+ brave/browser/ui/views/toolbar/brave_toolbar_view.cc | 21 ++++++---------------
+ 1 file changed, 6 insertions(+), 15 deletions(-)
+
+diff --git a/brave/browser/ui/views/toolbar/brave_toolbar_view.cc b/brave/browser/ui/views/toolbar/brave_toolbar_view.cc
+--- a/brave/browser/ui/views/toolbar/brave_toolbar_view.cc
++++ b/brave/browser/ui/views/toolbar/brave_toolbar_view.cc
+@@
+ bool BraveToolbarView::ShouldShowRewardsButton() {
+-  return brave_rewards::util::IsRewardsEnabled(profile_);
++  return false;  // keel: never show
+ }
+
+ bool BraveToolbarView::ShouldShowWalletButton() {
+-  return profile_->GetPrefs()->GetBoolean(kBraveWalletShowInToolbar);
++  return false;  // keel: never show
+ }
+
+ bool BraveToolbarView::ShouldShowAIChatButton() {
+-  return ai_chat::features::IsAIChatEnabled() &&
+-         profile_->GetPrefs()->GetBoolean(kShowAIChatButton);
++  return false;  // keel: never show
+ }

@@ -1,0 +1,42 @@
+From: Keel <ci@keel.invalid>
+Subject: [PATCH 0002/0006] keel: prefs: apply Keel defaults at profile creation
+
+Reads the Keel default-pref bundle (../policies/master_preferences.json,
+embedded at build time via the BUILD.gn rule added below) and applies it to
+the profile's PrefService on first run. The user can still change any of
+these after install — this only sets the *defaults*. Managed policies in
+../policies/linux/keel-managed-policy.json provide the non-overridable layer.
+
+This file lives entirely in the Brave layer, not Chromium. It does not touch
+PrefService internals or registration — only initial values.
+
+---
+ brave/browser/brave_browser_main_parts.cc | 12 ++++++++++++
+ brave/browser/BUILD.gn                    |  1 +
+ 2 files changed, 13 insertions(+)
+
+diff --git a/brave/browser/brave_browser_main_parts.cc b/brave/browser/brave_browser_main_parts.cc
+--- a/brave/browser/brave_browser_main_parts.cc
++++ b/brave/browser/brave_browser_main_parts.cc
+@@
+ #include "brave/browser/brave_browser_main_parts.h"
++#include "brave/browser/keel/keel_default_prefs.h"
+
+ void BraveBrowserMainParts::PostProfileInit(Profile* profile,
+                                             bool is_initial_profile) {
+   ChromeBrowserMainPartsLinux::PostProfileInit(profile, is_initial_profile);
++  if (is_initial_profile) {
++    keel::ApplyKeelDefaultPrefs(profile);
++  }
+ }
+
+diff --git a/brave/browser/BUILD.gn b/brave/browser/BUILD.gn
+--- a/brave/browser/BUILD.gn
++++ b/brave/browser/BUILD.gn
+@@
+ source_set("browser_process") {
+   sources = [
+     "brave_browser_main_parts.cc",
++    "keel/keel_default_prefs.cc",
+   ]
+ }

@@ -1,0 +1,51 @@
+From: Keel <ci@keel.invalid>
+Subject: [PATCH 0006/0006] keel: ntp: replace new tab WebUI with Keel bundle
+
+Adds the Keel new-tab static bundle (../newtab/) as a Chromium WebUI resource
+and points BraveNewTabUI's data source at it. We do this rather than disabling
+the existing Brave new tab so that the new-tab keyboard shortcut, the "open in
+new tab" affordances, and session restore continue to land on something
+sensible.
+
+If you'd prefer the policy-only path (set `NewTabPageLocation` to a local
+URL), skip applying this patch — the policy in
+../policies/linux/keel-managed-policy.json can deliver an equivalent UX
+without any source changes.
+
+---
+ brave/browser/ui/webui/new_tab_page/brave_new_tab_ui.cc | 12 +++++++++---
+ brave/browser/resources/keel_newtab/keel_newtab.gni     | 14 ++++++++++++++
+ 2 files changed, 23 insertions(+), 3 deletions(-)
+
+diff --git a/brave/browser/ui/webui/new_tab_page/brave_new_tab_ui.cc b/brave/browser/ui/webui/new_tab_page/brave_new_tab_ui.cc
+--- a/brave/browser/ui/webui/new_tab_page/brave_new_tab_ui.cc
++++ b/brave/browser/ui/webui/new_tab_page/brave_new_tab_ui.cc
+@@
+-content::WebUIDataSource* CreateNewTabHTMLSource(Profile* profile) {
+-  auto* source = content::WebUIDataSource::CreateAndAdd(
+-      profile, chrome::kChromeUINewTabHost);
+-  webui::SetupWebUIDataSource(source, base::span(kBraveNewTabPageResources),
+-                              IDR_BRAVE_NEW_TAB_HTML);
++content::WebUIDataSource* CreateNewTabHTMLSource(Profile* profile) {
++  // keel: serve the Keel static bundle instead of Brave's NTP. The bundle
++  // is generated from ../../../newtab/ at build time (see
++  // brave/browser/resources/keel_newtab/keel_newtab.gni).
++  auto* source = content::WebUIDataSource::CreateAndAdd(
++      profile, chrome::kChromeUINewTabHost);
++  webui::SetupWebUIDataSource(source, base::span(kKeelNewTabPageResources),
++                              IDR_KEEL_NEW_TAB_HTML);
+   return source;
+ }
+
+diff --git a/brave/browser/resources/keel_newtab/keel_newtab.gni b/brave/browser/resources/keel_newtab/keel_newtab.gni
+new file mode 100644
+--- /dev/null
++++ b/brave/browser/resources/keel_newtab/keel_newtab.gni
+@@
++# keel: package the static bundle in ../../../newtab/ as a WebUI resource.
++# Add the resulting target to BraveNewTabUI deps.
++keel_newtab_grd_deps = [
++  "//keel/newtab:keel_newtab_resources",
++]
++
++keel_newtab_grd = "${root_gen_dir}/keel/newtab/keel_newtab_resources.grd"
