@@ -16,10 +16,21 @@ Windows Registry Editor Version 5.00
 "BraveSpeedreaderEnabled"=dword:00000000
 
 "MetricsReportingEnabled"=dword:00000000
+"DeviceMetricsReportingEnabled"=dword:00000000
+"ReportUploadFrequency"=dword:00000000
+
 "SafeBrowsingEnabled"=dword:00000001
 "SafeBrowsingProtectionLevel"=dword:00000001
 "SafeBrowsingExtendedReportingEnabled"=dword:00000000
+"SafeBrowsingDeepScanningEnabled"=dword:00000000
+"SafeBrowsingProxiedRealTimeChecksAllowed"=dword:00000000
+
 "UrlKeyedAnonymizedDataCollectionEnabled"=dword:00000000
+"UserFeedbackAllowed"=dword:00000000
+"FeedbackSurveysEnabled"=dword:00000000
+
+"ChromeVariations"=dword:00000001
+
 "SearchSuggestEnabled"=dword:00000000
 "NetworkPredictionOptions"=dword:00000002
 "TranslateEnabled"=dword:00000000

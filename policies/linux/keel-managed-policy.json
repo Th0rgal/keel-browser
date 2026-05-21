@@ -12,11 +12,32 @@
   "BraveSyncUrl": "",
 
   "MetricsReportingEnabled": false,
+  "DeviceMetricsReportingEnabled": false,
+  "ReportDeviceUsers": false,
+  "ReportDeviceVersionInfo": false,
+  "ReportDeviceActivityTimes": false,
+  "ReportDeviceBootMode": false,
+  "ReportDeviceLocation": false,
+  "ReportDeviceNetworkInterfaces": false,
+  "ReportDeviceHardwareStatus": false,
+  "ReportDeviceSessionStatus": false,
+  "ReportUploadFrequency": 0,
+
   "SafeBrowsingEnabled": true,
   "SafeBrowsingProtectionLevel": 1,
   "SafeBrowsingExtendedReportingEnabled": false,
+  "SafeBrowsingDeepScanningEnabled": false,
+  "SafeBrowsingProxiedRealTimeChecksAllowed": false,
   "ChromeCleanupReportingEnabled": false,
+  "ChromeCleanupEnabled": false,
+
   "UrlKeyedAnonymizedDataCollectionEnabled": false,
+  "UserFeedbackAllowed": false,
+  "FeedbackSurveysEnabled": false,
+  "HelpMenuAllowed": false,
+
+  "ChromeVariations": 1,
+
   "SearchSuggestEnabled": false,
   "NetworkPredictionOptions": 2,
   "SpellcheckEnabled": true,
@@ -68,9 +89,10 @@
 
   "_keel_notes": {
     "rewards_wallet_vpn_leo_talk": "Disabled via Brave policy keys. These prevent feature surfaces from appearing in the UI.",
-    "safe_browsing": "Kept ON. Extended reporting OFF for privacy. Standard protection level (1) avoids sending hashes for unrequested checks.",
+    "safe_browsing": "Kept ON. Extended reporting + deep scanning OFF for privacy. Standard protection level (1) avoids sending hashes for unrequested checks.",
     "https_only": "Force-enabled at policy level so the user cannot accidentally browse plaintext.",
-    "metrics": "All telemetry/usage pings disabled where the policy permits.",
+    "metrics": "All Chromium telemetry/usage pings disabled. Brave-specific P3A/stats/ads/perf telemetry disabled via master_preferences (see docs/no-analytics.md).",
+    "ChromeVariations_1": "Value 1 = 'allow critical fixes only' — the variations service can still ship urgent security mitigations but not feature experiments. 0 = full block; we deliberately keep critical fixes.",
     "search": "Default kept as Brave Search (privacy-preserving, configurable by user).",
     "extensions": "Allowed but not pre-installed. ExtensionAllowedTypes restricts to extensions/themes only.",
     "component_updates": "Kept ON. These deliver security fixes (cert revocation, Subresource Filter, etc.)."

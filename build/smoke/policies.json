@@ -128,6 +128,14 @@
     "status": "OK"
   },
   {
+    "name": "ChromeVariations",
+    "value": "1",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
     "name": "ComponentUpdatesEnabled",
     "value": "true",
     "source": "Platform",
@@ -232,6 +240,14 @@
     "status": "OK"
   },
   {
+    "name": "FeedbackSurveysEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
     "name": "HideWebStoreIcon",
     "value": "false",
     "source": "Platform",
@@ -312,6 +328,14 @@
     "status": "OK"
   },
   {
+    "name": "SafeBrowsingDeepScanningEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
     "name": "SafeBrowsingEnabled",
     "value": "true",
     "source": "Platform",
@@ -330,6 +354,14 @@
   {
     "name": "SafeBrowsingProtectionLevel",
     "value": "1",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "SafeBrowsingProxiedRealTimeChecksAllowed",
+    "value": "false",
     "source": "Platform",
     "scope": "Machine",
     "level": "Mandatory",
@@ -400,8 +432,112 @@
     "status": "OK"
   },
   {
+    "name": "UserFeedbackAllowed",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "ChromeCleanupEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
     "name": "ChromeCleanupReportingEnabled",
     "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "DeviceMetricsReportingEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "HelpMenuAllowed",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "ReportDeviceActivityTimes",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "ReportDeviceBootMode",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "ReportDeviceHardwareStatus",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "ReportDeviceLocation",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "ReportDeviceNetworkInterfaces",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "ReportDeviceSessionStatus",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "ReportDeviceUsers",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "ReportDeviceVersionInfo",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "ReportUploadFrequency",
+    "value": "0",
     "source": "Platform",
     "scope": "Machine",
     "level": "Mandatory",
@@ -425,7 +561,7 @@
   },
   {
     "name": "_keel_notes",
-    "value": "{\"component_updates\":\"Kept ON. These deliver security fixes (cert revocation, Subresource Filter, etc.).\",\"extensions\":\"Allowed but not pre-installed. ExtensionAllowedTypes restricts to extensions/themes only.\",\"https_only\":\"Force-enabled at policy level s…",
+    "value": "{\"ChromeVariations_1\":\"Value 1 = 'allow critical fixes only' — the variations service can still ship urgent security mitigations but not feature experiments. 0 = full block; we deliberately keep critical fixes.\",\"component_updates\":\"Kept ON. These deliver …",
     "source": "Platform",
     "scope": "Machine",
     "level": "Mandatory",
@@ -1105,14 +1241,6 @@
   },
   {
     "name": "ChromeForTestingAllowed",
-    "value": "",
-    "source": "",
-    "scope": "",
-    "level": "",
-    "status": "Not set."
-  },
-  {
-    "name": "ChromeVariations",
     "value": "",
     "source": "",
     "scope": "",
@@ -2065,14 +2193,6 @@
   },
   {
     "name": "ExternalProtocolDialogShowAlwaysOpenCheckbox",
-    "value": "",
-    "source": "",
-    "scope": "",
-    "level": "",
-    "status": "Not set."
-  },
-  {
-    "name": "FeedbackSurveysEnabled",
     "value": "",
     "source": "",
     "scope": "",
@@ -3888,22 +4008,6 @@
     "status": "Not set."
   },
   {
-    "name": "SafeBrowsingDeepScanningEnabled",
-    "value": "",
-    "source": "",
-    "scope": "",
-    "level": "",
-    "status": "Not set."
-  },
-  {
-    "name": "SafeBrowsingProxiedRealTimeChecksAllowed",
-    "value": "",
-    "source": "",
-    "scope": "",
-    "level": "",
-    "status": "Not set."
-  },
-  {
     "name": "SafeBrowsingSurveysEnabled",
     "value": "",
     "source": "",
@@ -4353,14 +4457,6 @@
   },
   {
     "name": "UserDataSnapshotRetentionLimit",
-    "value": "",
-    "source": "",
-    "scope": "",
-    "level": "",
-    "status": "Not set."
-  },
-  {
-    "name": "UserFeedbackAllowed",
     "value": "",
     "source": "",
     "scope": "",

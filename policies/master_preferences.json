@@ -99,12 +99,49 @@
       "no_script_value": "block_third_party"
     },
     "stats": {
-      "reporting_enabled": false
+      "reporting_enabled": false,
+      "first_run": false,
+      "last_check_ymd": "",
+      "last_check_woy": 0,
+      "last_check_month": 0,
+      "threshold_check_made": true,
+      "threshold_query_made": true
     },
     "p3a": {
+      "enabled": false,
+      "notice_acknowledged": true,
+      "rotation_time_stamp": "0",
+      "last_rotation_timestamp": "0"
+    },
+    "p3a_messages_seen": true,
+    "ads": {
+      "enabled": false,
+      "should_allow_ads_subdivision_targeting": false,
+      "ads_subdivision_targeting_code": "DISABLED",
+      "auto_detected_ads_subdivision_targeting_code": "DISABLED",
+      "supported_country_codes_last_schema_version": 0
+    },
+    "weekly_report": {
       "enabled": false
-    }
+    },
+    "core_metrics": {
+      "enabled": false
+    },
+    "misc_metrics": {
+      "enabled": false
+    },
+    "perf_predictor": {
+      "enabled": false
+    },
+    "uptime_tracker": {
+      "enabled": false
+    },
+    "welcome_page_v3_shown": true,
+    "welcome_page_shown": true,
+    "first_run_url_left": true
   },
+
+  "_keel_no_analytics_comment": "The block below disables every Brave-controlled telemetry endpoint we know about. Brave's P3A is opt-in but the prompt itself is a UX touchpoint; setting notice_acknowledged=true with enabled=false dismisses the prompt AND keeps the service off. weekly_report / core_metrics / misc_metrics / perf_predictor / uptime_tracker are the various P3A sub-channels. See docs/no-analytics.md.",
 
   "search": {
     "suggest_enabled": false
@@ -118,6 +155,28 @@
     "enabled": true,
     "scout_reporting_enabled": false,
     "extended_reporting_enabled": false
+  },
+
+  "user_experience_metrics": {
+    "reporting_enabled": false,
+    "report_crashes_enabled": false,
+    "client_id": "",
+    "client_id_timestamp": 0
+  },
+
+  "metrics": {
+    "reporting_enabled": false
+  },
+
+  "feedback_allowed": false,
+
+  "alternate_error_pages": {
+    "enabled": false,
+    "backup": false
+  },
+
+  "search_terms_replacer": {
+    "enabled": false
   },
 
   "https_only_mode_enabled": true,

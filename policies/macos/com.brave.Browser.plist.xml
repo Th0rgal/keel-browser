@@ -27,14 +27,32 @@
 
     <key>MetricsReportingEnabled</key>
     <false/>
+    <key>DeviceMetricsReportingEnabled</key>
+    <false/>
+    <key>ReportUploadFrequency</key>
+    <integer>0</integer>
+
     <key>SafeBrowsingEnabled</key>
     <true/>
     <key>SafeBrowsingProtectionLevel</key>
     <integer>1</integer>
     <key>SafeBrowsingExtendedReportingEnabled</key>
     <false/>
+    <key>SafeBrowsingDeepScanningEnabled</key>
+    <false/>
+    <key>SafeBrowsingProxiedRealTimeChecksAllowed</key>
+    <false/>
+
     <key>UrlKeyedAnonymizedDataCollectionEnabled</key>
     <false/>
+    <key>UserFeedbackAllowed</key>
+    <false/>
+    <key>FeedbackSurveysEnabled</key>
+    <false/>
+
+    <key>ChromeVariations</key>
+    <integer>1</integer>
+
     <key>SearchSuggestEnabled</key>
     <false/>
     <key>NetworkPredictionOptions</key>
