@@ -28,3 +28,4 @@ yarn-error.log
 Thumbs.db
 tests/package-lock.json
 upstream/
+brave-browser_*.deb
