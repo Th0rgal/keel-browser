@@ -59,7 +59,11 @@ jobs:
             gh issue edit "$NUM" --body "$BODY"
           fi
 
-          # If the lag is back to within SLA (status 0) and the body shows 0h, close the issue.
-          if [[ "$STATUS" == "0" ]] && echo "$REPORT" | grep -q "Security lag:.*0h" ; then
+          # If the lag is back to within SLA (status 0) and the body shows 0h, close the
+          # (pre-existing) tracking issue. If $NUM is empty here we just created the
+          # issue ourselves above — in that case there's nothing to close. We also leave
+          # the just-created "we are at 0h" issue open as a positive ack on the first run;
+          # subsequent runs see it, update it, and close it the moment the next lag hits.
+          if [[ -n "$NUM" ]] && [[ "$STATUS" == "0" ]] && echo "$REPORT" | grep -q "Security lag:.*0h" ; then
             gh issue close "$NUM" --comment "Lag returned to 0h."
           fi
