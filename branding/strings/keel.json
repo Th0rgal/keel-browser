@@ -1,0 +1,35 @@
+{
+  "_comment": "Keel product-string overrides. Applied via patches/0001-keel-branding.patch and the build-time substitutions in scripts/apply-branding.sh. Internal identifiers (channel names, mojo interfaces, scheme names, profile dir on disk) are intentionally NOT renamed to avoid making rebases harder.",
+
+  "product": {
+    "name":           "Keel",
+    "name_long":      "Keel Browser",
+    "company":        "Keel",
+    "copyright":      "Built on Brave, which is built on Chromium. See about://credits.",
+    "homepage_url":   "https://github.com/th0rgal/keel-browser",
+    "feedback_url":   "https://github.com/th0rgal/keel-browser/issues",
+    "tagline":        "A calm browser for deep work.",
+    "tagline_short":  "Calm. Quiet. Yours."
+  },
+
+  "ui_strings": {
+    "IDS_PRODUCT_NAME":              "Keel",
+    "IDS_SHORT_PRODUCT_NAME":        "Keel",
+    "IDS_PRODUCT_NAME_LONG":         "Keel Browser",
+    "IDS_ABOUT_VERSION_COMPANY_NAME":"Keel",
+    "IDS_DEFAULT_TAB_TITLE":         "New tab",
+    "IDS_NEW_TAB_TITLE":             "New tab"
+  },
+
+  "do_not_rename": {
+    "_comment": "Things we DO NOT touch. Renaming these makes rebases painful and risks breaking the Brave update channel.",
+    "profile_dir_name":     "BraveSoftware/Brave-Browser",
+    "binary_name":          "brave",
+    "bundle_id_macos":      "com.brave.Browser",
+    "scheme":               "chrome",
+    "internal_url_host":    "brave",
+    "channel_names":        ["stable", "beta", "dev", "nightly"],
+    "user_agent_brand":     "Brave",
+    "rationale":            "Keep upstream identifiers so Brave's updater, mojo IPC, profile migrations, and Safe Browsing component updates keep working unchanged."
+  }
+}

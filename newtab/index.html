@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="referrer" content="no-referrer" />
+  <title>New tab</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="../branding/icons/keel.svg" type="image/svg+xml" />
+</head>
+<body>
+  <main class="ntp" role="main">
+    <header class="ntp__clock" aria-hidden="true">
+      <time id="clock" datetime=""></time>
+    </header>
+
+    <form class="ntp__search" id="search" role="search" action="https://search.brave.com/search" method="GET" autocomplete="off">
+      <label class="visually-hidden" for="q">Search the web</label>
+      <input
+        id="q"
+        name="q"
+        type="search"
+        inputmode="search"
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off"
+        autocorrect="off"
+        placeholder="Search or enter address"
+        aria-label="Search the web"
+        enterkeyhint="search"
+      />
+    </form>
+
+    <nav class="ntp__pinned" id="pinned" aria-label="Pinned sites">
+      <!-- Populated by script.js if the user has any pinned sites. -->
+    </nav>
+  </main>
+
+  <footer class="ntp__footer" aria-label="New tab options">
+    <button type="button" class="ntp__chip" id="toggle-theme" title="Toggle theme">
+      <span aria-hidden="true">◐</span>
+      <span class="visually-hidden">Toggle theme</span>
+    </button>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

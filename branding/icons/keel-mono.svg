@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Monochrome variant: toolbar / menubar / tray. Uses currentColor so it inherits the host theme. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-label="Keel">
+  <path d="M12 3
+           C 12 3, 8 8, 8 14
+           C 8 17, 9.4 19.2, 12 20.5
+           C 14.6 19.2, 16 17, 16 14
+           C 16 8, 12 3, 12 3 Z"
+        fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Keel app icon.
+  Mark: a single keel (the vertical structural fin of a ship), rendered as a calm
+  vertical sweep with a quiet horizontal waterline. No gloss, no gradients, no
+  noise. Reads as a serious tool at small sizes.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Keel">
+  <defs>
+    <clipPath id="rounded">
+      <rect x="0" y="0" width="256" height="256" rx="56" ry="56"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <rect width="256" height="256" fill="#0B0D0E"/>
+    <rect x="0" y="172" width="256" height="2" fill="#252A2E"/>
+    <path d="M128 40
+             C 128 40, 96 96, 96 152
+             C 96 176, 110 196, 128 204
+             C 146 196, 160 176, 160 152
+             C 160 96, 128 40, 128 40 Z"
+          fill="none" stroke="#F2F2EF" stroke-width="6" stroke-linejoin="round"/>
+    <circle cx="128" cy="220" r="3" fill="#53DAC6"/>
+  </g>
+</svg>
