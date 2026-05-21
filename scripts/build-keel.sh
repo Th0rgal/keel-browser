@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Build Keel from source. Wraps the brave-core build flow with sccache and
+# Build Keel from source. Wraps the brave-core build flow with ccache and
 # Keel patch application. Idempotent — second run reuses the source tree
-# and the sccache cache.
+# and the ccache cache.
 #
 # Usage:
 #   scripts/build-keel.sh                  dev build (component, fastest iteration)
 #   scripts/build-keel.sh --release        release build (non-official, produces .deb)
-#   scripts/build-keel.sh --restore-cache  download sccache snapshot before building
+#   scripts/build-keel.sh --restore-cache  download ccache snapshot before building
 
 . "$(dirname "$0")/_lib.sh"
 need git
@@ -28,9 +28,12 @@ BRAVE_SRC="$BUILD_ROOT/src/brave"
 OUT_DIR="out/Component"
 [[ "$MODE" == "release" ]] && OUT_DIR="out/Release"
 
-export SCCACHE_DIR="${SCCACHE_DIR:-$KEEL_ROOT/../.sccache}"
-export SCCACHE_CACHE_SIZE="${SCCACHE_CACHE_SIZE:-40G}"
-sccache --start-server 2>/dev/null || true
+# NOTE: ccache, not sccache. sccache rejects ~90% of Chromium compile calls
+# because of -Xclang flags it can't parse (find-bad-constructs plugin, etc.).
+# ccache passes everything through transparently and got 100% cacheable in
+# the v0.1.0-prerelease build.
+export CCACHE_DIR="${CCACHE_DIR:-$KEEL_ROOT/../.sccache}"
+ccache --set-config max_size=40G 2>/dev/null || true
 
 # ---- ALL THE WORKAROUNDS REQUIRED FOR A FRESH BUILD ----------------------
 # Discovered while bootstrapping the v0.1.0-prerelease build. Without these,
@@ -40,10 +43,10 @@ export PIP_BREAK_SYSTEM_PACKAGES=1       # Ubuntu 24.04 PEP 668 lockdown
 export GCLIENT_SUPPRESS_GIT_VERSION_WARNING=1
 
 if [[ "$RESTORE" == "1" ]]; then
-  log "Restoring sccache snapshot from latest release..."
-  TMPF="$(mktemp -d)/sccache.tar.zst"
+  log "Restoring ccache snapshot from latest release..."
+  TMPF="$(mktemp -d)/ccache.tar.zst"
   curl -fsSL -o "$TMPF" \
-    "https://github.com/Th0rgal/keel-browser/releases/latest/download/sccache-cache.tar.zst"
+    "https://github.com/Th0rgal/keel-browser/releases/latest/download/ccache-cache.tar.zst"
   mkdir -p "$SCCACHE_DIR"
   zstd -d "$TMPF" -c | tar -xC "$SCCACHE_DIR"
   ok "Cache restored to $SCCACHE_DIR"
@@ -96,16 +99,18 @@ cat "$KEEL_ROOT/build/patch_status.txt" | sed 's/^/  /'
 # Brave hard-enforces on official builds.
 log "Running gn gen $OUT_DIR..."
 GN_ARGS=(
-  --gn=cc_wrapper:sccache
+  --gn=cc_wrapper:ccache
   --gn=use_remoteexec:false
   --gn=is_official_build:false
   --gn=enable_brave_rewards:false
+  --gn=use_clang_modules:false
   "--gn=is_component_build:$([[ "$MODE" == release ]] && echo false || echo true)"
+  --force_gn_gen
 )
 
 (cd "$BRAVE_SRC" && yes y | npm run build -- "${OUT_DIR##*/}" "${GN_ARGS[@]}" --offline)
 
-sccache --show-stats | head -10
+ccache --show-stats | head -10
 ok "Build complete: $BUILD_ROOT/src/$OUT_DIR/brave"
 
 if [[ "$MODE" == "release" ]]; then

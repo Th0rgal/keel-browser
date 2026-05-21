@@ -24,30 +24,30 @@ nvm install 24            # Brave 1.90+ requires Node 24
 
 Brave's own `install-build-deps.sh` (run automatically by `npm run init`) pulls the OS-level deps for Chromium itself.
 
-### 2. Install sccache
+### 2. Install ccache
 
-[`sccache`](https://github.com/mozilla/sccache) is the iteration multiplier — it caches compiled object files keyed by preprocessed source hash. Without it, every clean build is a cold build.
+[`ccache`](https://ccache.dev/) is the iteration multiplier — it caches compiled object files keyed by preprocessed source hash. Without it, every clean build is a cold build.
+
+We use **ccache** rather than sccache because sccache rejects ~90% of Chromium's compile calls (it can't parse Chromium's `-Xclang find-bad-constructs` plugin args, even with `clang_use_chrome_plugins=false`). ccache passes everything through transparently — verified 100% cacheable in the v0.1.0-prerelease build.
 
 ```sh
-curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz | tar -xz -C /tmp
-install -m 0755 /tmp/sccache-*/sccache /usr/local/bin/sccache
-
-mkdir -p ~/.sccache
-export SCCACHE_DIR=~/.sccache
-export SCCACHE_CACHE_SIZE=40G
+sudo apt-get install -y ccache
+mkdir -p ~/.cache/ccache
+export CCACHE_DIR=~/.cache/ccache
+ccache --set-config max_size=40G
 ```
 
-Set those two `SCCACHE_*` env vars in your shell rc so every shell gets them.
+Set `CCACHE_DIR` in your shell rc so every shell gets it.
 
 ### 3. Restore the prebuilt cache (optional but recommended)
 
-We ship a tarball of the sccache directory with every Keel release. Download it once and you skip the 3-6h cold build.
+We ship a tarball of the ccache directory with every Keel release. Download it once and you skip the 3-6h cold build.
 
 ```sh
 # In a fresh setup
-gh release download v0.1.0-prerelease --repo Th0rgal/keel-browser --pattern 'sccache-cache.tar.zst'
-zstd -d sccache-cache.tar.zst -c | tar -x -C ~/
-sccache --show-stats
+gh release download v0.1.0-prerelease --repo Th0rgal/keel-browser --pattern 'ccache-cache.tar.zst'
+mkdir -p $CCACHE_DIR && zstd -d ccache-cache.tar.zst -c | tar -x -C $CCACHE_DIR
+ccache -s
 ```
 
 After the restore, the next clean build is a chain of cache hits — typically 5-15 minutes instead of 3-6 hours.
