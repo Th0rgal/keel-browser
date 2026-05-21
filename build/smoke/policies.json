@@ -1,0 +1,4666 @@
+[
+  {
+    "name": "AlternateErrorPagesEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "AutofillAddressEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "AutofillCreditCardEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BackgroundModeEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BlockThirdPartyCookies",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BookmarkBarEnabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BraveAIChatEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BraveRewardsDisabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BraveSpeedreaderEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BraveSyncUrl",
+    "value": "",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BraveTalkDisabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BraveVPNDisabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BraveWalletDisabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BrowserAddPersonEnabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BrowserGuestModeEnabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "BrowserSignin",
+    "value": "0",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "ComponentUpdatesEnabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "DefaultBrowserSettingEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "DefaultCookiesSetting",
+    "value": "1",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "DefaultSearchProviderEnabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "DefaultSearchProviderKeyword",
+    "value": "brave",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "DefaultSearchProviderName",
+    "value": "Brave Search",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "DefaultSearchProviderSearchURL",
+    "value": "https://search.brave.com/search?q={searchTerms}",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "DefaultSearchProviderSuggestURL",
+    "value": "https://search.brave.com/api/suggest?q={searchTerms}",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "DnsOverHttpsMode",
+    "value": "automatic",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "ExtensionAllowedTypes",
+    "value": "[\"extension\",\"theme\"]",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "ExtensionInstallAllowlist",
+    "value": "[]",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "ExtensionInstallBlocklist",
+    "value": "[]",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "ExtensionSettings",
+    "value": "{\"*\":{\"installation_mode\":\"allowed\"}}",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "HideWebStoreIcon",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "HomepageIsNewTabPage",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "HttpsOnlyMode",
+    "value": "force_enabled",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "MetricsReportingEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "NetworkPredictionOptions",
+    "value": "2",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "PasswordLeakDetectionEnabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "PasswordManagerEnabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "PaymentMethodQueryEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "PromotionalTabsEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error, Deprecated"
+  },
+  {
+    "name": "PromotionsEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "SafeBrowsingEnabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error, Deprecated"
+  },
+  {
+    "name": "SafeBrowsingExtendedReportingEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "SafeBrowsingProtectionLevel",
+    "value": "1",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "SearchSuggestEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "ShowAppsShortcutInBookmarkBar",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "ShowHomeButton",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "SpellCheckServiceEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "SpellcheckEnabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "TorDisabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "TranslateEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "UrlKeyedAnonymizedDataCollectionEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "OK"
+  },
+  {
+    "name": "ChromeCleanupReportingEnabled",
+    "value": "false",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "WebTorrentDisabled",
+    "value": "true",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "_comment",
+    "value": "Keel managed policies for Brave/Chromium on Linux. Install to /etc/brave/policies/managed/keel-managed-policy.json. These are enforced and cannot be overridden by the end user. Documentation: https://chromeenterprise.google/policies/ and https://github.com…",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "_keel_notes",
+    "value": "{\"component_updates\":\"Kept ON. These deliver security fixes (cert revocation, Subresource Filter, etc.).\",\"extensions\":\"Allowed but not pre-installed. ExtensionAllowedTypes restricts to extensions/themes only.\",\"https_only\":\"Force-enabled at policy level s…",
+    "source": "Platform",
+    "scope": "Machine",
+    "level": "Mandatory",
+    "status": "Error"
+  },
+  {
+    "name": "AIModeSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AbusiveExperienceInterventionEnforce",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AccessCodeCastDeviceDuration",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AccessCodeCastEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AccessControlAllowMethodsInCORSPreflightSpecConformant",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AccessibilityImageLabelsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AdditionalDnsQueryTypesEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AdsSettingForIntrusiveAdsSites",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AdvancedProtectionAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AllHttpAuthSchemesAllowedForOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AllowBackForwardCacheForCacheControlNoStorePageEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AllowCrossOriginAuthPrompt",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AllowDeletingBrowserHistory",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AllowDinosaurEasterEgg",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AllowFileSelectionDialogs",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AllowSystemNotifications",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AllowWebAuthnWithBrokenTlsCerts",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AllowedDomainsForApps",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AllowedDomainsForAppsList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AlternativeBrowserParameters",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AlternativeBrowserPath",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AlwaysOpenPdfExternally",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AmbientAuthenticationInPrivateModesEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AudioCaptureAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AudioCaptureAllowedUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AudioSandboxEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AuthNegotiateDelegateAllowlist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AuthNegotiateDelegateByKdcPolicy",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AuthSchemes",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AuthServerAllowlist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AutoFillEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AutoLaunchProtocolsFromOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AutoOpenAllowedForURLs",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AutoOpenFileTypes",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AutoSelectCertificateForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AutofillPredictionSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AutomatedPasswordChangeSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AutomaticFullscreenAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AutomaticFullscreenBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AutoplayAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "AutoplayAllowlist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BasicAuthOverHttpEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BatterySaverModeAvailability",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BlockExternalExtensions",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveDeAmpEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveDebouncingEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveGlobalPrivacyControlEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveNewsDisabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveP3AEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BravePlaylistEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveReduceLanguageEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveShieldsDisabledForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveShieldsEnabledForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveStatsPingEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveTrackingQueryParametersFilteringEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveWaybackMachineEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BraveWebDiscoveryEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserContextAwareAccessSignalsAllowlist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserGuestModeEnforced",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserLabsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserNetworkTimeQueriesEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserSwitcherDelay",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserSwitcherEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserSwitcherExternalGreylistUrl",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserSwitcherExternalSitelistUrl",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserSwitcherKeepLastChromeTab",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserSwitcherParsingMode",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserSwitcherUrlGreylist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserSwitcherUrlList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowserThemeColor",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BrowsingDataLifetime",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BuiltInAIAPIsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "BuiltInDnsClientEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CACertificateManagementAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CACertificates",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CACertificatesWithConstraints",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CADistrustedCertificates",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CAHintCertificates",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CAPlatformIntegrationEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CORSNonWildcardRequestHeadersSupport",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CacheEncryptionEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CertificateTransparencyEnforcementDisabledForCas",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CertificateTransparencyEnforcementDisabledForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ChromeDataRegionSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ChromeForTestingAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ChromeVariations",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ClearBrowsingDataOnExitList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ClearWindowNameForNewBrowsingContextGroup",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ClickToCallEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ClipboardAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ClipboardBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CloudExtensionRequestEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CloudManagementEnrollmentMandatory",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CloudManagementEnrollmentToken",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CloudPolicyOverridesPlatformPolicy",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CloudProfileReportingEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CloudReportingEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CloudReportingUploadFrequency",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CloudUserPolicyMerge",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CloudUserPolicyOverridesCloudMachinePolicy",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CoalesceH2ConnectionsWithClientCertificatesForHosts",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CommandLineFlagSecurityWarningsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CompressionDictionaryTransportEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ControlledFrameAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ControlledFrameBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CookiesAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CookiesBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CookiesSessionOnlyForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CopyPreventionSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CreateThemesSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DNSInterceptionChecksEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DataControlsRules",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DataURLWhitespacePreservationEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DataUrlInSvgUseEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultBraveAdblockSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultBraveFingerprintingV2Setting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultBraveHttpsUpgradeSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultBraveReferrersSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultBraveRemember1PStorageSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultClipboardSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultControlledFrameSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultDirectSocketsPrivateNetworkAccessSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultDirectSocketsSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultDownloadDirectory",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultFileSystemReadGuardSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultFileSystemWriteGuardSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultGeolocationSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultIdleDetectionSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultImagesSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultInsecureContentSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultJavaScriptJitSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultJavaScriptOptimizerSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultJavaScriptSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultLocalFontsSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultMediaStreamSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultNotificationsSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultPopupsSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultPrinterSelection",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultSearchProviderAlternateURLs",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultSearchProviderContextMenuAccessAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultSearchProviderEncodings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultSearchProviderImageURL",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultSearchProviderImageURLPostParams",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultSearchProviderNewTabURL",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultSearchProviderSearchURLPostParams",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultSearchProviderSuggestURLPostParams",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultSensorsSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultSerialGuardSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultWebBluetoothGuardSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultWebHidGuardSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultWebUsbGuardSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultWindowManagementSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DefaultWindowPlacementSetting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DeletingUndecryptablePasswordsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DesktopSharingHubEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DevToolsGenAiSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DevToolsGoogleDeveloperProgramProfileAvailability",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DeveloperToolsAvailability",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DeveloperToolsAvailabilityAllowlist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DeveloperToolsAvailabilityBlocklist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DeveloperToolsDisabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DirectSocketsAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DirectSocketsBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DirectSocketsPrivateNetworkAccessAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DirectSocketsPrivateNetworkAccessBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "Disable3DAPIs",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DisableAuthNegotiateCnameLookup",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DisablePrintPreview",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DisableSafeBrowsingProceedAnyway",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DisableScreenshots",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DisabledSchemes",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DiskCacheDir",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DiskCacheSize",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DnsOverHttpsTemplates",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DomainReliabilityAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DownloadDirectory",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "DownloadRestrictions",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EditBookmarksEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnableAuthNegotiatePort",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnableExperimentalPolicies",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnableMediaRouter",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnableOnlineRevocationChecks",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnableProxyOverrideRulesForAllUsers",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnableUnsafeSwiftShader",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EncryptedClientHelloEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnterpriseCustomLabel",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnterpriseCustomLabelForBrowser",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnterpriseHardwarePlatformAPIEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnterpriseLogoUrl",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnterpriseLogoUrlForBrowser",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnterpriseProfileBadgeToolbarSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnterpriseProfileCreationKeepBrowsingData",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnterpriseRealTimeUrlCheckMode",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "EnterpriseSearchAggregatorSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ExemptDomainFileTypePairsFromFileTypeDownloadWarnings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ExplicitlyAllowedNetworkPorts",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ExtensionDOMActivityLoggingEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ExtensionDeveloperModeSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ExtensionExtendedBackgroundLifetimeForPortConnectionsToUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ExtensionInstallCloudPolicyChecksEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ExtensionInstallForcelist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ExtensionInstallSources",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ExtensionInstallTypeBlocklist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ExtensionUnpublishedAvailability",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ExternalProtocolDialogShowAlwaysOpenCheckbox",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "FeedbackSurveysEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "FetchKeepaliveDurationSecondsOnShutdown",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "FileOrDirectoryPickerWithoutGestureAllowedForOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "FileSystemReadAskForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "FileSystemReadBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "FileSystemWriteAskForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "FileSystemWriteBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "FirstPartySetsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "FirstPartySetsOverrides",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ForceBrowserSignin",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ForceEphemeralProfiles",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ForceForegroundPriorityForAllTabs",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ForceGoogleSafeSearch",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ForcePermissionPolicyUnloadDefaultEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ForceSafeSearch",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ForceYouTubeRestrict",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ForceYouTubeSafetyMode",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ForcedLanguages",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "FullscreenAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "GSSAPILibraryName",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "GeminiActOnWebAllowedForURLs",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "GeminiActOnWebBlockedForURLs",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "GeminiActOnWebSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "GeminiSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "GenAILocalFoundationalModelSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "GenAiDefaultSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "GeolocationBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "GloballyScopeHTTPAuthCacheEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "GoogleSearchSidePanelEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "HSTSPolicyBypassList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "HappyEyeballsV3Enabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "HardwareAccelerationModeEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "HeadlessMode",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "HelpMeWriteSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "HighEfficiencyModeEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "HistoryClustersVisible",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "HistorySearchSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "HomepageLocation",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "HttpAllowlist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "HttpsUpgradesEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IPFSEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IPv6ReachabilityOverrideEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IdleDetectionAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IdleDetectionBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IdleTimeout",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IdleTimeoutActions",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ImagesAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ImagesBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ImportAutofillFormData",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ImportBookmarks",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ImportHistory",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ImportHomepage",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ImportSavedPasswords",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ImportSearchEngine",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IncognitoEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IncognitoModeAvailability",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IncognitoModeUrlAllowlist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IncognitoModeUrlBlocklist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "InsecureContentAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "InsecureContentBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "InsecureFormsWarningsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IntensiveWakeUpThrottlingEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IntranetRedirectBehavior",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IsolateOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "IsolatedWebAppInstallForceList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "JavaScriptAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "JavaScriptBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "JavaScriptJitAllowedForSites",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "JavaScriptJitBlockedForSites",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "JavaScriptOptimizerAllowedForSites",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "JavaScriptOptimizerBlockedForSites",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "JavascriptEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LegacyCookieScopeEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LegacyCookieScopeEnabledForDomainList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LegacyTechReportAllowlist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LensDesktopNTPSearchEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LensOverlaySettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LensRegionSearchEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LiveCaptionEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LiveTranslateEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LocalFontsAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LocalFontsBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LocalNetworkAccessAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LocalNetworkAccessBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LocalNetworkAccessIpAddressSpaceOverrides",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LocalNetworkAccessPermissionsPolicyDefaultEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LocalNetworkAccessRestrictionsTemporaryOptOut",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LocalNetworkAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LocalNetworkBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LookalikeWarningAllowlistDomains",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LoopbackNetworkAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "LoopbackNetworkBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ManagedAccountsSigninRestriction",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ManagedBookmarks",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ManagedConfigurationPerOrigin",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "MandatoryExtensionsForIncognitoNavigation",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "MaxConnectionsPerProxy",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "MaxConnectionsPerProxyForWebSocket",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "MaxInvalidationFetchDelay",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "MediaRecommendationsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "MediaRouterCastAllowAllIPs",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "MemorySaverModeSavings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NTPCardsVisible",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NTPCustomBackgroundEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NTPFooterExtensionAttributionEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NTPFooterManagementNoticeEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NTPMiddleSlotAnnouncementVisible",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NTPOutlookCardVisible",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NTPSharepointCardVisible",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NTPShortcuts",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NativeMessagingAllowlist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NativeMessagingBlocklist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NativeMessagingUserLevelHosts",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NetworkServiceSandboxEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NewTabPageLocation",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NotificationsAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NotificationsBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "NtlmV2Enabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "OnBulkDataEntryEnterpriseConnector",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "OnFileAttachedEnterpriseConnector",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "OnFileDownloadedEnterpriseConnector",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "OnPrintEnterpriseConnector",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "OnSecurityEventEnterpriseConnector",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "OopPrintDriversAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "OriginAgentClusterDefaultEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "OriginKeyedProcessesEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "OutOfProcessSystemDnsResolutionEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "OverrideSecurityRestrictionsOnInsecureOrigin",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PartitionedBlobUrlUsage",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PasswordDismissCompromisedAlertEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PasswordManagerBlocklist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PasswordManagerPasskeysEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PasswordProtectionChangePasswordURL",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PasswordProtectionLoginURLs",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PasswordProtectionWarningTrigger",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PasswordSharingEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PdfAnnotationsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PdfLocalFileAccessAllowedForDomains",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PdfUseSkiaRendererEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PdfViewerOutOfProcessIframeEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PolicyAtomicGroupsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PolicyDictionaryMultipleSourceMergeList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PolicyListMultipleSourceMergeList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PolicyRefreshRate",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PolicyTestPageEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PopupsAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PopupsBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PreciseGeolocationAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PreferSlowCiphers",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PreferSlowKexAlgorithms",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrefetchWithServiceWorkerEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrintHeaderFooter",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrintPdfAsImageDefault",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrintPreviewUseSystemDefaultPrinter",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrintRasterizePdfDpi",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrinterTypeDenyList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrintingAllowedBackgroundGraphicsModes",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrintingBackgroundGraphicsDefault",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrintingEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrintingPaperSizeDefault",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrivacySandboxAdMeasurementEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrivacySandboxAdTopicsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrivacySandboxPromptEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PrivacySandboxSiteEnabledAdsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProfilePickerOnStartupAvailability",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProfileReauthPrompt",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProfileSeparationDataMigrationSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProfileSeparationDomainExceptionList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProfileSeparationSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PromptForDownloadLocation",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "PromptOnMultipleMatchingCertificates",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProvisionManagedClientCertificateForBrowser",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProvisionManagedClientCertificateForUser",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProxyBypassList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProxyMode",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProxyOverrideRules",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProxyPacUrl",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProxyServer",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProxyServerMode",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ProxySettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "QRCodeGeneratorEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "QuicAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ReduceAcceptLanguageEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RegisteredProtocolHandlers",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RelatedWebsiteSetsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RelatedWebsiteSetsOverrides",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RelaunchFastIfOutdated",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RelaunchNotification",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RelaunchNotificationPeriod",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RelaunchWindow",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostAllowClientPairing",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostAllowFileTransfer",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostAllowGnubbyAuth",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostAllowPinAuthentication",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostAllowRelayedConnection",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostAllowRemoteAccessConnections",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostAllowRemoteSupportConnections",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostAllowUrlForwarding",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostClientDomain",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostClientDomainList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostClipboardSizeBytes",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostDomain",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostDomainList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostEnableUserInterface",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostFirewallTraversal",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostMatchUsername",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostMaximumSessionDurationMinutes",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostRequireCurtain",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteAccessHostUdpPortRange",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RemoteDebuggingAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ReportExtensionsAndPluginsData",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ReportMachineIDData",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ReportPolicyData",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ReportUserIDData",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ReportVersionData",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RequireOnlineRevocationChecksForLocalAnchors",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RestoreOnStartup",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RestoreOnStartupURLs",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RestrictPdfSaveToGoogleDriveAccountsToPattern",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RestrictSigninToPattern",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RoamingProfileLocation",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "RoamingProfileSupportEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SSLErrorOverrideAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SSLErrorOverrideAllowedForOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SaasUsageReportingDomainUrlsForBrowsers",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SaasUsageReportingDomainUrlsForProfiles",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SafeBrowsingAllowlistDomains",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SafeBrowsingDeepScanningEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SafeBrowsingProxiedRealTimeChecksAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SafeBrowsingSurveysEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SafeSitesFilterBehavior",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SameOriginTabCaptureAllowedByOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SandboxExternalProtocolBlocked",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SavingBrowserHistoryDisabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ScreenCaptureAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ScreenCaptureAllowedByOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ScreenCaptureWithoutGestureAllowedForOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ScrollToTextFragmentEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SearchContentSharingSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SecurityKeyPermitAttestation",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SensorsAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SensorsBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SerialAllowAllPortsForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SerialAllowUsbDevicesForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SerialAskForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SerialBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ServiceWorkerAutoPreloadEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ServiceWorkerToControlSrcdocIframeEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SharedArrayBufferUnrestrictedAccessAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SharedClipboardEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SharedWorkerBlobURLFixEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SharedWorkerExtendedLifetimeEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ShoppingListEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ShowCastIconInToolbar",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ShowCastSessionsStartedByOtherDevices",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "ShowFullUrlsInAddressBar",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SideSearchEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SignedHTTPExchangeEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SigninAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SigninInterceptionEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SilentPrintingEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SitePerProcess",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SiteSearchSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SpellcheckLanguage",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SpellcheckLanguageBlocklist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "StandardizedBrowserZoomEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "StaticStorageQuotaEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "StrictMimetypeCheckForWorkerScriptsEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SuppressDifferentOriginSubframeDialogs",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SuppressUnsupportedOSWarning",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SyncDisabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "SyncTypesListDisabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "TLS13EarlyDataEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "TabCaptureAllowedByOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "TabCompareSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "TabDiscardingExceptions",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "TabGroupSharingSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "TaskManagerEndProcessEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "TranslatorAPIAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "URLAllowlist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "URLBlocklist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "UnmanagedDeviceSignalsConsentFlowEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "UnsafelyTreatInsecureOriginAsSecure",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "UrlKeyedMetricsAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "UserContextAwareAccessSignalsAllowlist",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "UserDataSnapshotRetentionLimit",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "UserFeedbackAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "UserSecurityAuthenticatedReporting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "UserSecuritySignalsReporting",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "VariationsRestrictParameter",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "VideoCaptureAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "VideoCaptureAllowedUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WPADQuickCheckEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WatermarkStyle",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebAppInstallByUserEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebAppInstallForceList",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebAppSettings",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebAudioOutputBufferingEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebAuthenticationRemoteDesktopAllowedOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebAuthenticationRemoteProxiedRequestsAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebHidAllowAllDevicesForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebHidAllowDevicesForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebHidAllowDevicesWithHidUsagesForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebHidAskForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebHidBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebRtcDiagnosticLogCollectionAllowedForOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebRtcEventLogCollectionAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebRtcIPHandling",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebRtcIPHandlingUrl",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebRtcLocalIpsAllowedUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebRtcPostQuantumKeyAgreement",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebRtcTextLogCollectionAllowed",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebRtcUdpPortRange",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebUsbAllowDevicesForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebUsbAskForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WebUsbBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WindowCaptureAllowedByOrigins",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WindowManagementAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WindowManagementBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WindowPlacementAllowedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "WindowPlacementBlockedForUrls",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "XSLTEnabled",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CloudPolicyOverridesPlatformPolicy",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  },
+  {
+    "name": "CloudUserPolicyOverridesCloudMachinePolicy",
+    "value": "",
+    "source": "",
+    "scope": "",
+    "level": "",
+    "status": "Not set."
+  }
+]

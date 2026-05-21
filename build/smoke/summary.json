@@ -1,0 +1,63 @@
+{
+  "total": 11,
+  "passed": 11,
+  "failed": 0,
+  "results": [
+    {
+      "name": "01_launch",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "02_https_example_com",
+      "ok": true,
+      "detail": "Example Domain"
+    },
+    {
+      "name": "03_policies_applied",
+      "ok": true,
+      "detail": "583 policies on page, 12 verified"
+    },
+    {
+      "name": "04a_brave_ntp_audit",
+      "ok": true,
+      "detail": "present: leo-icon,leo-input,leo-button,leo-buttonmenu,leo-menu-item,leo-dialog,leo-navigation,leo-navigationitem,leo-toggle"
+    },
+    {
+      "name": "04b_keel_ntp_clean",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "05_settings_renders",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "06_light_dark",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "07_pdf_inline",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "08_download_flow",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "09_profile_path",
+      "ok": true,
+      "detail": "Profile Path\t/tmp/puppeteer_dev_chrome_profile-qDXrA1/Default"
+    },
+    {
+      "name": "10_rewards_disabled",
+      "ok": true,
+      "detail": "navigation blocked: net::ERR_INVALID_URL at chrome://rewards/"
+    }
+  ],
+  "generated_at": "2026-05-21T01:22:16.372Z"
+}

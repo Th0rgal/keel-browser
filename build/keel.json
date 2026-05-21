@@ -1,0 +1,9 @@
+{
+  "_comment": "Pinned Brave version this Keel build wraps. Updated by scripts/sync-upstream.sh + apply-patches.sh on each rebase. Format must stay stable — scripts/security-lag.sh and ci/workflows/security-lag.yml both read this.",
+  "keel_version": "1.90.124-keel.1",
+  "brave_version": "1.90.124",
+  "brave_tag": "v1.90.124",
+  "patch_status": "clean",
+  "build_status": "passing",
+  "pinned_at": "2026-05-21T01:12:00Z"
+}

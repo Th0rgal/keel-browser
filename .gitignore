@@ -1,7 +1,12 @@
-# Build artifacts
-build/smoke/*.png
-build/smoke/*.json
-build/smoke/*.html
+# Build artifacts. Most smoke output is regeneratable, but a curated subset
+# is committed under build/smoke/ for the README and audit trail; ignore
+# the rest.
+build/smoke/01_*.png
+build/smoke/02_*.png
+build/smoke/06_*.png
+build/smoke/07_*.png
+build/smoke/*_view.png
+build/smoke/policy-dom.html
 build/preview/*_view.png
 
 # Upstream tree (cloned on demand by scripts/clone-upstream.sh)
