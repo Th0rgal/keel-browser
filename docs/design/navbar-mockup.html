@@ -91,10 +91,10 @@
     .ribbon {
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 46px;
+      height: 40px;
       display: flex; align-items: center;
-      padding: 0 18px;
-      gap: 4px;
+      padding: 0 16px;
+      gap: 3px;
       z-index: 10;
       pointer-events: none;
       background: var(--scrim-bg, linear-gradient(180deg, rgba(245,246,248,0.88) 0%, rgba(245,246,248,0.82) 78%, rgba(245,246,248,0) 100%));
@@ -124,10 +124,10 @@
 
     .icon-group { display: inline-flex; align-items: center; gap: 2px; }
     .icon {
-      width: 30px; height: 30px;
+      width: 28px; height: 28px;
       border: none; background: transparent;
       color: var(--icon-fg, #1d1d1f);
-      border-radius: 8px; cursor: pointer;
+      border-radius: 7px; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center;
       font-size: 14px; opacity: 0.72;
       transition: background 120ms ease, opacity 120ms ease;
@@ -135,10 +135,10 @@
     .icon:hover { opacity: 1; background: var(--icon-hover, rgba(0,0,0,0.06)); }
 
     .url-pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      height: 28px; min-width: 280px; max-width: 440px;
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 26px; min-width: 280px; max-width: 440px;
       padding: 0 12px;
-      border-radius: 8px;
+      border-radius: 7px;
       background: var(--url-bg, rgba(255,255,255,0.55));
       color: var(--url-fg, #1d1d1f);
       box-shadow: inset 0 0 0 0.5px var(--url-border, rgba(0,0,0,0.08));

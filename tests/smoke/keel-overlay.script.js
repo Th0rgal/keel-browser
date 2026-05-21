@@ -134,11 +134,11 @@
        contains the page content beneath. Pills float inside. */
     .ribbon {
       position: fixed; top: 0; left: 0; right: 0;
-      height: 46px;
+      height: 40px;
       z-index: 2147483647;
       display: flex; align-items: center;
-      padding: 0 18px;
-      gap: 4px;
+      padding: 0 16px;
+      gap: 3px;
       font: 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
       pointer-events: none;
       transform: translateY(-100%);
@@ -194,10 +194,10 @@
 
     /* Naked icon — no pill background, just hoverable. Safari-style. */
     .icon {
-      width: 30px; height: 30px;
+      width: 28px; height: 28px;
       border: none; background: transparent;
       color: ${isLight ? '#1d1d1f' : '#e9ebef'};
-      border-radius: 8px;
+      border-radius: 7px;
       font-size: 14px;
       display: inline-flex; align-items: center; justify-content: center;
       cursor: pointer;
@@ -211,9 +211,9 @@
        the scrim underline, so no duplicate inset here. */
     .url-pill {
       display: inline-flex; align-items: center; gap: 8px;
-      height: 28px; min-width: 240px; max-width: 440px;
+      height: 26px; min-width: 240px; max-width: 440px;
       padding: 0 12px;
-      border-radius: 8px;
+      border-radius: 7px;
       background: ${isLight ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.06)'};
       color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
       box-shadow: inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.07)'};
