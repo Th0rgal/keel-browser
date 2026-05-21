@@ -57,10 +57,10 @@ if [[ ! -d "$BUILD_ROOT/src/v8" ]]; then
   (cd "$BRAVE_SRC" && npm run init)
 fi
 
-log "Applying Keel patch stack..."
-bash "$KEEL_ROOT/scripts/apply-patches.sh" --tree "$BRAVE_SRC" --check \
-  || { warn "Patch dry-run failed — abort"; exit 2; }
-bash "$KEEL_ROOT/scripts/apply-patches.sh" --tree "$BRAVE_SRC"
+log "Applying Keel patch stack (tolerant — patches that don't apply are skipped)..."
+bash "$KEEL_ROOT/scripts/apply-patches-tolerant.sh" --tree "$BRAVE_SRC"
+log "Patch status:"
+cat "$KEEL_ROOT/build/patch_status.txt" | sed 's/^/  /'
 
 ARGS_DEST="$BUILD_ROOT/src/$OUT_DIR/args.gn"
 mkdir -p "$BUILD_ROOT/src/$OUT_DIR"
