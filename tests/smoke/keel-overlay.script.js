@@ -226,6 +226,12 @@
       letter-spacing: -0.005em;
     }
     .url-pill .lock { opacity: 0.42; flex: 0 0 auto; }
+    .url-pill .favicon {
+      width: 14px; height: 14px;
+      flex: 0 0 auto;
+      object-fit: contain;
+      border-radius: 2px;
+    }
     .url-pill .right-icons { display: flex; align-items: center; gap: 0; margin-right: -6px; }
     .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
 
@@ -295,13 +301,48 @@
     iconBtn("forward", "Forward"),
   ]);
 
+  // Find a favicon URL from the page's link tags. Apple-touch-icon or 32×32
+  // takes precedence; fall back to /favicon.ico. If none load, the URL pill
+  // shows the lock SVG instead.
+  function findFaviconHref() {
+    const links = [...document.querySelectorAll('link[rel*="icon"]')];
+    const score = l => {
+      const rel = (l.getAttribute("rel") || "").toLowerCase();
+      const sizes = (l.getAttribute("sizes") || "").toLowerCase();
+      let s = 0;
+      if (rel.includes("apple-touch-icon")) s += 5;
+      if (rel === "icon") s += 1;
+      if (sizes.includes("32")) s += 3;
+      if (sizes.includes("64") || sizes.includes("96") || sizes.includes("128")) s += 4;
+      if (sizes.includes("192") || sizes.includes("256")) s += 2;
+      return s;
+    };
+    links.sort((a, b) => score(b) - score(a));
+    if (links[0]) {
+      const href = links[0].getAttribute("href");
+      if (href) return new URL(href, location.href).toString();
+    }
+    return location.origin + "/favicon.ico";
+  }
+
+  const faviconEl = document.createElement("img");
+  faviconEl.className = "favicon";
+  faviconEl.alt = "";
+  faviconEl.referrerPolicy = "no-referrer";
+  faviconEl.src = findFaviconHref();
+  faviconEl.addEventListener("error", () => {
+    // Swap to lock SVG if the favicon failed to load.
+    const lock = svgIcon("lock", { cls: "lock", size: 11 });
+    faviconEl.replaceWith(lock);
+  });
+
   const urlPill = el("div", { class: "url-pill", title: title }, [
     el("span", { class: "text" }, [host]),
     el("div", { class: "right-icons" }, [
       iconBtn("reload", "Reload", { size: 13 }),
     ]),
   ]);
-  urlPill.insertBefore(svgIcon("lock", { cls: "lock", size: 11 }), urlPill.firstChild);
+  urlPill.insertBefore(faviconEl, urlPill.firstChild);
 
   // Right side: just share + tab overview. New-tab moves to Ctrl/Cmd-T —
   // having three icons here always collides with site CTAs (Sign up, Try X,
