@@ -241,6 +241,9 @@
       font-size: 13px;
       font-weight: 500;
       letter-spacing: -0.01em;
+      /* Offset text slightly left to optically center it against the
+         favicon's left-of-center weight. */
+      padding-right: 15px;
       /* Tiny text-shadow softens edges against the translucent glass and
          improves legibility when the scrim is busy (gradient sites). */
       text-shadow: ${isLight
@@ -358,11 +361,11 @@
     faviconEl.replaceWith(lock);
   });
 
+  // URL pill is now [favicon] [host] only — no inline reload button.
+  // Reload is Cmd/Ctrl-R from the keyboard (already wired in patches/0004),
+  // matching real Safari. This makes the URL pill maximally clean.
   const urlPill = el("div", { class: "url-pill", title: title }, [
     el("span", { class: "text" }, [host]),
-    el("div", { class: "right-icons" }, [
-      iconBtn("reload", "Reload", { size: 13 }),
-    ]),
   ]);
   urlPill.insertBefore(faviconEl, urlPill.firstChild);
 
