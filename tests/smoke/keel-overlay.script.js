@@ -238,13 +238,18 @@
       font-size: 13px;
       font-weight: 500;
       letter-spacing: -0.01em;
+      /* Tiny text-shadow softens edges against the translucent glass and
+         improves legibility when the scrim is busy (gradient sites). */
+      text-shadow: ${isLight
+        ? '0 1px 0 rgba(255,255,255,0.4)'
+        : '0 1px 0 rgba(0,0,0,0.25)'};
     }
     .url-pill .lock { opacity: 0.42; flex: 0 0 auto; }
     .url-pill .favicon {
-      width: 14px; height: 14px;
+      width: 15px; height: 15px;
       flex: 0 0 auto;
       object-fit: contain;
-      border-radius: 2px;
+      border-radius: 3px;
     }
     .url-pill .right-icons { display: flex; align-items: center; gap: 0; margin-right: -6px; }
     .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
