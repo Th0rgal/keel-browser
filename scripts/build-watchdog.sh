@@ -45,13 +45,14 @@ while true; do
 
   (
     cd "$BRAVE_SRC"
+    # No cc_wrapper override — let Brave's default redirect_cc handle the
+    # chromium_src override system. Trade: no ccache during compile, but
+    # the build actually succeeds.
     yes y | npm run build -- Release \
-      --gn=cc_wrapper:ccache \
       --gn=use_remoteexec:false \
       --gn=is_official_build:false \
       --gn=enable_brave_rewards:false \
       --gn=is_component_build:false \
-      --gn=use_clang_modules:false \
       --offline 2>&1
   ) >> "$LOG" 2>&1 &
   disown $!

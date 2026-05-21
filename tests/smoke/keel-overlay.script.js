@@ -1,14 +1,18 @@
-// Keel chrome overlay — standalone IIFE injected into the page via CDP.
-// Reads optional params from window.__keelParams__ but defaults to detecting
-// everything off the page itself (host, title, accent).
+// Keel chrome overlay — Safari-style floating segmented pills.
+// Injected into the page via CDP/Runtime.evaluate when Brave is launched in
+// --app mode (no native tab strip / address bar). The overlay paints a 60px
+// transparent ribbon at the top with the page color bleeding through, and
+// four separate rounded-white capsules floating on top of it.
 //
-// This script paints the 28-px peek strip and the summoned single-row bar on
-// top of the live page. It's the same shape as patches/0004 + 0005, but as
-// CSS in a Shadow Root instead of Chromium Views — for sandbox preview only.
+// Layout (from left to right):
+//   [traffic lights]   [sidebar ▾]   [⟨ ⟩]   ...space...   [host pill]   ...space...   [⇪ ⊕ ⌐]
+//
+// All capsules are 32px tall, ~14-16px border-radius, glass / blurred,
+// with a single soft drop shadow. The strip itself has no background — the
+// page color tints the area via the standard browser page background.
 
 (() => {
   if (document.getElementById("__keel_chrome__")) return;
-
   const P = window.__keelParams__ || {};
 
   // ---- accent extraction (mirrors KeelTabAccent::GetAccentFor) -------------
@@ -24,7 +28,6 @@
     if (!m) return null;
     return { r: +m[1], g: +m[2], b: +m[3] };
   }
-
   function rgbToHsl(r, g, b) {
     r /= 255; g /= 255; b /= 255;
     const max = Math.max(r,g,b), min = Math.min(r,g,b);
@@ -42,12 +45,10 @@
     }
     return [h, s, l];
   }
-
   function hslToCss(h, s, l) {
     let r, g, b;
-    if (s === 0) {
-      r = g = b = l;
-    } else {
+    if (s === 0) { r = g = b = l; }
+    else {
       const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       const p = 2 * l - q;
       function f(t) {
@@ -62,7 +63,6 @@
     }
     return "rgb(" + Math.round(r*255) + "," + Math.round(g*255) + "," + Math.round(b*255) + ")";
   }
-
   function pageAccent() {
     const metas = [...document.querySelectorAll('meta[name="theme-color"]')];
     const chosen =
@@ -79,86 +79,163 @@
         }
       }
     }
-    return P.accent || "#53DAC6";
+    return P.accent || "#2F9D8C";
+  }
+
+  // Sample the page's near-edge background color to tint the ribbon.
+  function pageTint() {
+    const bg = getComputedStyle(document.documentElement).backgroundColor
+            || getComputedStyle(document.body).backgroundColor || "rgb(247,246,242)";
+    return bg;
   }
 
   const accent = pageAccent();
   const host  = (P.host  || location.host).replace(/</g, "&lt;");
   const title = (P.title || document.title || "").replace(/</g, "&lt;");
+  const tint  = pageTint();
 
   const root = document.createElement("div");
   root.id = "__keel_chrome__";
   document.documentElement.appendChild(root);
-
   const shadow = root.attachShadow({ mode: "open" });
 
-  // Build via DOM rather than string concat to avoid escape issues
-  const style = document.createElement("style");
-  style.textContent = [
-    ":host { all: initial; }",
-    ".strip {",
-    "  position: fixed; top: 0; left: 0; right: 0;",
-    "  height: 28px; z-index: 2147483646;",
-    "  display: flex; align-items: center; padding: 0 14px;",
-    "  font: 12px -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;",
-    "  color: rgba(242,242,239,0.85);",
-    "  background: rgba(15,18,20,0.55);",
-    "  -webkit-backdrop-filter: blur(20px) saturate(160%);",
-    "  backdrop-filter: blur(20px) saturate(160%);",
-    "  border-bottom: 1px solid rgba(255,255,255,0.04);",
-    "  box-shadow: 0 1px 0 0 " + accent + " inset, 0 0 24px -20px " + accent + ";",
-    "  transition: opacity 180ms ease, transform 180ms ease;",
-    "}",
-    ".favicon { width:14px; height:14px; border-radius:4px; background:" + accent + "; margin-right:8px; box-shadow: 0 0 0 1px rgba(255,255,255,0.06) inset; }",
-    ".host  { color: rgba(168,173,178,0.95); margin-right: 8px; white-space: nowrap; }",
-    ".title { color: rgba(115,122,128,0.95); flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }",
-    ".traffic { display:flex; gap:8px; align-items:center; flex:0 0 auto; margin-left: 8px; }",
-    ".traffic .dot { width:12px; height:12px; border-radius:50%; background:#3a3d40; }",
-    ".strip:hover .traffic .dot:nth-child(1) { background:#ED6B5F; }",
-    ".strip:hover .traffic .dot:nth-child(2) { background:#F5BD4F; }",
-    ".strip:hover .traffic .dot:nth-child(3) { background:#62C554; }",
+  const isLight = (() => {
+    // crude luminance check
+    const c = parseColor(tint) || { r: 247, g: 246, b: 242 };
+    return (0.2126*c.r + 0.7152*c.g + 0.0722*c.b) > 160;
+  })();
 
-    ".bar {",
-    "  position: fixed; top: 0; left: 0; right: 0;",
-    "  height: 38px; z-index: 2147483647;",
-    "  display: flex; align-items: center; gap: 12px; padding: 0 14px;",
-    "  font: 12px -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;",
-    "  color: rgba(242,242,239,0.95);",
-    "  background: rgba(15,18,20,0.78);",
-    "  -webkit-backdrop-filter: blur(28px) saturate(170%);",
-    "  backdrop-filter: blur(28px) saturate(170%);",
-    "  border-bottom: 1px solid rgba(255,255,255,0.05);",
-    "  transform: translateY(-100%); opacity: 0;",
-    "  transition: opacity 180ms ease, transform 180ms ease;",
-    "  box-shadow: 0 1px 0 0 color-mix(in srgb, " + accent + " 60%, transparent);",
-    "}",
-    ".group { display:flex; align-items:center; gap:6px; flex:0 0 auto; }",
-    ".traffic-inline { display:flex; gap:8px; padding-right:6px; margin-right:6px; border-right:1px solid #252A2E; }",
-    ".traffic-inline .dot { width:12px; height:12px; border-radius:50%; background:#3a3d40; }",
-    ".bar:hover .traffic-inline .dot:nth-child(1) { background:#ED6B5F; }",
-    ".bar:hover .traffic-inline .dot:nth-child(2) { background:#F5BD4F; }",
-    ".bar:hover .traffic-inline .dot:nth-child(3) { background:#62C554; }",
-    "button.icon { width:26px; height:26px; border:none; background:transparent; color:rgba(168,173,178,0.95); border-radius:6px; font-size:14px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }",
-    "button.icon:hover { background: rgba(255,255,255,0.05); color: #F2F2EF; }",
-    ".tabs { display:flex; align-items:center; gap:4px; min-width:0; max-width:320px; }",
-    ".tab { display:inline-flex; align-items:center; gap:6px; height:26px; padding:0 10px; border-radius:6px; color:#F2F2EF; background: color-mix(in srgb, " + accent + " 12%, rgba(255,255,255,0.04)); font-size:12px; border-left: 2px solid " + accent + "; max-width:220px; }",
-    ".tab .favicon { width:12px; height:12px; border-radius:3px; }",
-    ".tab span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }",
-    ".sep { width:1px; height:18px; background:#252A2E; flex:0 0 auto; }",
-    ".address { flex:1 1 auto; min-width:0; height:28px; display:flex; align-items:center; gap:8px; padding:0 12px; background:#181C1F; border-radius:8px; color:#F2F2EF; box-shadow: 0 1px 0 0 " + accent + " inset; }",
-    ".address .lock { color:#737A80; font-size:11px; }",
-    ".address .text { flex:1 1 auto; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }",
-    ":host([data-state='expanded']) .strip { opacity: 0; pointer-events: none; }",
-    ":host([data-state='expanded']) .bar   { transform: translateY(0); opacity: 1; }",
-    ".hotzone { position:fixed; top:0; left:0; right:0; height:60px; z-index: 2147483645; }",
-  ].join("\n");
+  // ---- styles --------------------------------------------------------------
+  const style = document.createElement("style");
+  style.textContent = `
+    :host { all: initial; }
+
+    /* The chrome ribbon — sits at top:0, lets the page background show through */
+    .ribbon {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 56px;
+      z-index: 2147483647;
+      display: flex; align-items: center;
+      padding: 0 18px;
+      gap: 10px;
+      font: 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+      pointer-events: none;
+      /* No background — the page provides the color */
+    }
+    .ribbon > * { pointer-events: auto; }
+
+    /* Traffic lights — standalone, no pill */
+    .traffic {
+      display: flex; gap: 8px; align-items: center;
+      padding-right: 4px;
+    }
+    .traffic .dot {
+      width: 13px; height: 13px; border-radius: 50%;
+      background: #c0c0c0;
+      transition: background 120ms;
+    }
+    .ribbon:hover .traffic .dot:nth-child(1) { background: #ED6B5F; }
+    .ribbon:hover .traffic .dot:nth-child(2) { background: #F5BD4F; }
+    .ribbon:hover .traffic .dot:nth-child(3) { background: #62C554; }
+
+    /* Pill base */
+    .pill {
+      display: inline-flex; align-items: center; gap: 0;
+      height: 32px;
+      padding: 0 8px;
+      border-radius: 16px;
+      background: ${isLight
+        ? 'rgba(255,255,255,0.78)'
+        : 'rgba(34,36,40,0.72)'};
+      box-shadow:
+        0 1px 0 0 ${isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.04)'} inset,
+        0 0 0 1px ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'},
+        0 4px 14px -6px rgba(0,0,0,0.18);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
+      transition: background 140ms ease, box-shadow 140ms ease;
+    }
+
+    /* Icon button inside a pill */
+    .icon {
+      width: 28px; height: 28px;
+      border: none; background: transparent;
+      color: inherit;
+      border-radius: 14px;
+      font-size: 13px;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      opacity: 0.78;
+    }
+    .icon:hover { opacity: 1; background: ${isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.08)'}; }
+    .caret {
+      width: 16px; height: 28px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 9px; opacity: 0.5;
+      margin-right: 2px;
+    }
+
+    /* URL pill — wider, centered */
+    .url-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 32px; min-width: 360px; max-width: 520px;
+      padding: 0 14px;
+      border-radius: 16px;
+      background: ${isLight ? 'rgba(255,255,255,0.86)' : 'rgba(34,36,40,0.78)'};
+      box-shadow:
+        0 1px 0 0 ${isLight ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.04)'} inset,
+        0 0 0 1px ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'},
+        0 4px 18px -6px rgba(0,0,0,0.22);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
+      /* per-tab tint — 1px accent line at the bottom-inside */
+      box-shadow:
+        0 1px 0 0 ${isLight ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.04)'} inset,
+        0 -1px 0 0 ${accent}50 inset,
+        0 0 0 1px ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'},
+        0 6px 18px -6px rgba(0,0,0,0.22);
+    }
+    .url-pill .text {
+      flex: 1 1 auto;
+      text-align: center;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+    }
+    .url-pill .lock { opacity: 0.45; font-size: 11px; }
+    .url-pill .right-icons { display: flex; align-items: center; gap: 4px; opacity: 0.6; }
+    .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; }
+
+    .spacer { flex: 1 1 auto; }
+
+    /* Hot-zone for cursor-summon (chrome auto-fades after idle) */
+    .hotzone {
+      position: fixed; top: 0; left: 0; right: 0; height: 80px;
+      pointer-events: none;
+      z-index: 2147483646;
+    }
+
+    :host([data-state="hidden"]) .ribbon {
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: transform 220ms ease, opacity 220ms ease;
+    }
+    :host([data-state="visible"]) .ribbon {
+      transform: translateY(0);
+      opacity: 1;
+      transition: transform 220ms ease, opacity 220ms ease;
+    }
+  `;
   shadow.appendChild(style);
 
+  // ---- DOM helper ----------------------------------------------------------
   function el(tag, attrs, kids) {
     const e = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs || {})) {
       if (k === "class") e.className = v;
-      else if (k === "id") e.id = v;
+      else if (k === "title") e.title = v;
       else e.setAttribute(k, v);
     }
     for (const k of (kids || [])) {
@@ -167,60 +244,72 @@
     }
     return e;
   }
-  function dot(cls) { return el("span", { class: cls }); }
 
-  const hotzone = el("div", { class: "hotzone", id: "hot" });
+  // ---- ribbon --------------------------------------------------------------
+  const traffic = el("div", { class: "traffic" }, [
+    el("div", { class: "dot" }),
+    el("div", { class: "dot" }),
+    el("div", { class: "dot" }),
+  ]);
+
+  const sidebarPill = el("div", { class: "pill" }, [
+    el("button", { class: "icon", title: "Sidebar" }, ["▥"]),
+    el("span", { class: "caret" }, ["▾"]),
+  ]);
+
+  const navPill = el("div", { class: "pill" }, [
+    el("button", { class: "icon", title: "Back" }, ["‹"]),
+    el("button", { class: "icon", title: "Forward" }, ["›"]),
+  ]);
+
+  const urlPill = el("div", { class: "url-pill", title: title }, [
+    el("span", { class: "lock" }, ["🔒"]),
+    el("span", { class: "text" }, [host]),
+    el("div", { class: "right-icons" }, [
+      el("button", { class: "icon", title: "Translate" }, ["⇪"]),
+      el("button", { class: "icon", title: "Reload" }, ["⟲"]),
+    ]),
+  ]);
+
+  const sharePill = el("div", { class: "pill" }, [
+    el("button", { class: "icon", title: "Share" }, ["⤴"]),
+    el("button", { class: "icon", title: "New tab" }, ["+"]),
+    el("button", { class: "icon", title: "Tab overview" }, ["▢"]),
+  ]);
+
+  const ribbon = el("div", { class: "ribbon" }, [
+    traffic,
+    sidebarPill,
+    navPill,
+    el("div", { class: "spacer" }),
+    urlPill,
+    el("div", { class: "spacer" }),
+    sharePill,
+  ]);
+
+  const hotzone = el("div", { class: "hotzone" });
+
   shadow.appendChild(hotzone);
+  shadow.appendChild(ribbon);
 
-  const strip = el("div", { class: "strip", id: "strip" }, [
-    el("div", { class: "favicon" }),
-    el("span", { class: "host" }, [host]),
-    el("span", { class: "title" }, [" · " + title]),
-    el("div", { class: "traffic" }, [dot("dot"), dot("dot"), dot("dot")]),
-  ]);
-  shadow.appendChild(strip);
+  // Reserve the top 56px so the page content isn't covered.
+  // Use scroll-padding + viewport height adjustment for sticky elements.
+  document.documentElement.style.scrollPaddingTop = "56px";
+  document.body.style.paddingTop = "56px";
 
-  const tabChip = el("div", { class: "tab" }, [
-    el("span", { class: "favicon" }),
-    el("span", null, [title || host]),
-  ]);
-  const bar = el("div", { class: "bar", id: "bar" }, [
-    el("div", { class: "traffic-inline" }, [dot("dot"), dot("dot"), dot("dot")]),
-    el("div", { class: "group" }, [
-      el("button", { class: "icon", title: "Back"    }, ["‹"]),
-      el("button", { class: "icon", title: "Forward" }, ["›"]),
-      el("button", { class: "icon", title: "Reload"  }, ["⟲"]),
-    ]),
-    el("div", { class: "group tabs" }, [tabChip]),
-    el("span", { class: "sep" }),
-    el("div", { class: "address group" }, [
-      el("span", { class: "lock" }, ["🔒"]),
-      el("span", { class: "text" }, [host]),
-    ]),
-    el("div", { class: "group" }, [
-      el("button", { class: "icon", title: "Extensions" }, ["🧩"]),
-      el("button", { class: "icon", title: "Menu"       }, ["☰"]),
-    ]),
-  ]);
-  shadow.appendChild(bar);
-
+  // Visibility state: visible by default; hide after 1.6s of no input,
+  // resummon on mouse-enter at top 80px or any keyboard event.
   const hostEl = shadow.host;
-  hostEl.dataset.state = "collapsed";
-
-  let dismiss;
-  function expand()   { hostEl.dataset.state = "expanded"; clearTimeout(dismiss); }
-  function collapse() { hostEl.dataset.state = "collapsed"; }
-  function deferredCollapse() {
-    clearTimeout(dismiss);
-    dismiss = setTimeout(collapse, 1200);
-  }
-  hotzone.addEventListener("mouseenter", expand);
-  bar.addEventListener("mouseenter", expand);
-  bar.addEventListener("mouseleave", deferredCollapse);
-  hotzone.addEventListener("mouseleave", deferredCollapse);
-
-  // Reserve 28 px at the top so the page isn't covered by the strip — same
-  // effect as BrowserView::Layout would have in the patched build.
-  document.documentElement.style.scrollPaddingTop = "28px";
-  document.body.style.paddingTop = "28px";
+  hostEl.dataset.state = "visible";
+  let idleT;
+  const reset = () => {
+    hostEl.dataset.state = "visible";
+    clearTimeout(idleT);
+    idleT = setTimeout(() => { hostEl.dataset.state = "hidden"; }, 1600);
+  };
+  reset();
+  document.addEventListener("mousemove", e => {
+    if (e.clientY < 80) reset();
+  }, { passive: true });
+  document.addEventListener("keydown", reset, { passive: true });
 })();
