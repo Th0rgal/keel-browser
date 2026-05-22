@@ -9,10 +9,11 @@
 //   traffic  left icons    URL pill (favicon +     right icons
 //                          host + reader badge)
 //
-// The ribbon is a 40-px translucent scrim with backdrop-filter blur(26)
-// saturate(180%), a per-tab accent gradient layer (~18-24% opacity), a
-// hairline border-bottom, a 1.5px accent stripe with a soft glow, and a
-// soft drop shadow under the scrim.
+// The ribbon is a 40-px translucent scrim with backdrop-filter blur(28)
+// saturate(200%), a per-tab accent gradient layer (~9-14% opacity), a
+// hairline border-bottom, a 1.5px accent stripe with a soft upward
+// glow, and a layered drop shadow (close-in + extended) under the
+// scrim for elevated-above-the-page depth.
 //
 // Per-tab identity (the chrome's signature):
 //   - meta[theme-color] (or mask-icon color, or sampled page-top color)
