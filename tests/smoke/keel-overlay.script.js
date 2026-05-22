@@ -320,6 +320,17 @@
       transform: translate(-50%, -50%) scale(0.99);
       transition-duration: 80ms;
     }
+    /* Keyboard focus ring — visible only when reached via Tab/Cmd-L, not
+       on mouse focus. Matches Safari's accessibility: 2px accent ring with
+       a 0.5px inset white separator. */
+    .url-pill:focus-visible {
+      outline: none;
+      box-shadow:
+        inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.13)' : 'rgba(255,255,255,0.10)'},
+        inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.10)'},
+        0 0 0 0.5px ${isLight ? '#fff' : '#000'},
+        0 0 0 2.5px ${accent}aa;
+    }
     .url-pill .text {
       flex: 1 1 auto;
       text-align: center;
@@ -510,7 +521,7 @@
   // URL pill is now [favicon] [host] only — no inline reload button.
   // Reload is Cmd/Ctrl-R from the keyboard (already wired in patches/0004),
   // matching real Safari. This makes the URL pill maximally clean.
-  const urlPill = el("div", { class: "url-pill", title: title }, [
+  const urlPill = el("div", { class: "url-pill", title: title, tabindex: "0", role: "textbox", "aria-label": "Address bar" }, [
     el("span", { class: "text" }, [host]),
   ]);
   urlPill.insertBefore(faviconEl, urlPill.firstChild);
