@@ -376,7 +376,10 @@
       display: inline-flex; align-items: center; justify-content: center;
       cursor: pointer;
       opacity: 0.62;
-      transition: background 120ms ease, opacity 120ms ease;
+      /* Asymmetric: 180ms when fading back to idle (slow, graceful
+         retreat), 90ms on hover-in (snappy "wake up"). Hover rule below
+         overrides during the cursor-in phase. */
+      transition: background 180ms ease, opacity 180ms ease;
     }
     /* Icon hover: mostly neutral fill with a tint of the per-tab accent
        layered in (~14%), so hovering an icon visually links it to the
@@ -390,6 +393,7 @@
       background:
         linear-gradient(${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}, ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}),
         linear-gradient(${accent}24, ${accent}24);
+      transition: background 90ms ease, opacity 90ms ease;
     }
     /* SVG inside icon grows subtly on hover for tactile feedback —
        mirrors macOS Dock-style icon-bounce, scaled way down. */
