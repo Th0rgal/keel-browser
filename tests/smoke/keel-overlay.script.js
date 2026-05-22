@@ -357,6 +357,8 @@
     .traffic {
       display: flex; gap: 8px; align-items: center;
       padding: 0 10px 0 2px;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .traffic .dot {
       width: 11px; height: 11px; border-radius: 50%;
@@ -397,6 +399,8 @@
       font-size: 14px;
       display: inline-flex; align-items: center; justify-content: center;
       cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
       opacity: 0.62;
       /* Asymmetric: 180ms when fading back to idle (slow, graceful
          retreat), 90ms on hover-in (snappy "wake up"). Hover rule below
