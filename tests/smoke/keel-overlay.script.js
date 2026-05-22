@@ -63,53 +63,90 @@
     }
     return "rgb(" + Math.round(r*255) + "," + Math.round(g*255) + "," + Math.round(b*255) + ")";
   }
-  function pageAccent() {
+  // Normalize an arbitrary color into a clamped accent (S <= 0.55,
+  // L in [0.40, 0.70]). Greys (low saturation) return null so the caller
+  // can fall through to the next signal instead of producing a dull accent.
+  function toAccent(c) {
+    if (!c) return null;
+    const max = Math.max(c.r, c.g, c.b), min = Math.min(c.r, c.g, c.b);
+    if ((max - min) / 255 < 0.10) return null;
+    let [h, s, l] = rgbToHsl(c.r, c.g, c.b);
+    s = Math.min(s, 0.55);
+    l = Math.min(Math.max(l, 0.40), 0.70);
+    return hslToCss(h, s, l);
+  }
+  function pageAccent(tintColor) {
+    // 1) Honour meta[name="theme-color"] if it's actually a color.
     const metas = [...document.querySelectorAll('meta[name="theme-color"]')];
     const chosen =
       metas.find(m => /dark/.test(m.getAttribute("media") || "")) || metas[0];
     if (chosen) {
-      const c = parseColor(chosen.getAttribute("content") || "");
-      if (c) {
-        const max = Math.max(c.r, c.g, c.b), min = Math.min(c.r, c.g, c.b);
-        if ((max - min) / 255 >= 0.10) {
-          let [h, s, l] = rgbToHsl(c.r, c.g, c.b);
-          s = Math.min(s, 0.55);
-          l = Math.min(Math.max(l, 0.40), 0.70);
-          return hslToCss(h, s, l);
-        }
-      }
+      const a = toAccent(parseColor(chosen.getAttribute("content") || ""));
+      if (a) return a;
     }
+    // 2) Try a link.rel=mask-icon color (Safari pinned-tab hint).
+    const maskIcon = document.querySelector('link[rel="mask-icon"][color]');
+    if (maskIcon) {
+      const a = toAccent(parseColor(maskIcon.getAttribute("color")));
+      if (a) return a;
+    }
+    // 3) Derive from the sampled page-top tint, which is always available.
+    //    Sites without theme-color (HN, Wikipedia, ...) get a chrome accent
+    //    that actually matches their visual identity instead of the default
+    //    teal. Greys still fall through to the static default.
+    const a = toAccent(parseColor(tintColor));
+    if (a) return a;
     return P.accent || "#2F9D8C";
   }
 
   // Sample the page's near-edge background color to tint the ribbon. Walks
-  // the DOM near the top viewport and picks the first opaque background it
-  // finds — this catches dark heroes / sticky nav bars that the page's
-  // <html>/<body> bg would otherwise miss (apple.com, arxiv.org).
+  // the DOM near the top viewport and picks the first opaque, *most saturated*
+  // background it finds. This catches dark heroes / sticky nav bars / colored
+  // table headers (HN's #ff6600) that the page's <html>/<body> bg would
+  // otherwise miss. The bias toward saturation lets a small colored band
+  // beat a large neutral background.
+  function colorSaturation(rgbString) {
+    const c = parseColor(rgbString);
+    if (!c) return -1;
+    const max = Math.max(c.r, c.g, c.b), min = Math.min(c.r, c.g, c.b);
+    return (max - min) / 255;
+  }
   function pageTint() {
     const samplePoints = [
-      [40,  20], [Math.floor(innerWidth/2), 20], [innerWidth - 40, 20],
+      [40,  10], [Math.floor(innerWidth/2), 10], [innerWidth - 40, 10],
+      [40,  24], [Math.floor(innerWidth/2), 24], [innerWidth - 40, 24],
       [40,  44], [Math.floor(innerWidth/2), 44], [innerWidth - 40, 44],
     ];
+    let best = null, bestSat = -1;
     for (const [x, y] of samplePoints) {
-      let el = document.elementFromPoint(x, y);
-      while (el && el !== document.documentElement) {
+      // elementsFromPoint returns the stack at this coordinate so we don't
+      // just get the topmost interactive element. Walk it from the most-
+      // ancestral to the most-specific and prefer saturated colors.
+      const stack = (document.elementsFromPoint ? document.elementsFromPoint(x, y) : [document.elementFromPoint(x, y)]).filter(Boolean);
+      for (const el of stack) {
         const bg = getComputedStyle(el).backgroundColor;
-        if (bg && !/rgba?\(.*?,\s*0\s*\)/.test(bg) && bg !== "transparent") return bg;
-        el = el.parentElement;
+        if (!bg || bg === "transparent" || /rgba?\(.*?,\s*0\s*\)/.test(bg)) continue;
+        const sat = colorSaturation(bg);
+        // Always keep the first opaque hit as a baseline so we don't fall
+        // through to neutral defaults. Replace it only if a more saturated
+        // candidate appears (within a small absolute threshold).
+        if (best === null || sat > bestSat + 0.05) {
+          best = bg; bestSat = sat;
+        }
       }
     }
+    if (best) return best;
     return getComputedStyle(document.documentElement).backgroundColor
         || getComputedStyle(document.body).backgroundColor || "rgb(247,246,242)";
   }
 
-  const accent = pageAccent();
   // Strip leading "www." for a cleaner read in the URL pill — matches Safari
   // and Arc. The full host is still in the tooltip via `title`.
   const rawHost = (P.host || location.host).replace(/</g, "&lt;");
   const host    = rawHost.replace(/^www\./i, "");
   const title   = (P.title || document.title || "").replace(/</g, "&lt;");
   const tint    = pageTint();
+  const accent  = pageAccent(tint);
 
   const root = document.createElement("div");
   root.id = "__keel_chrome__";
