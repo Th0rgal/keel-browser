@@ -50,6 +50,9 @@ const sites = [
   // Daily-use search/reference
   { name: "31-google",     url: "https://www.google.com",    theme: "light" },
   { name: "32-mdn",        url: "https://developer.mozilla.org", theme: "light" },
+  // Visually challenging — animated/colorful surfaces.
+  { name: "33-nextjs",     url: "https://nextjs.org",        theme: "dark"  },
+  { name: "34-svelte",     url: "https://svelte.dev",        theme: "light" },
 ];
 
 const isRoot = process.getuid && process.getuid() === 0;
