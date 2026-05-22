@@ -220,12 +220,13 @@
 
     /* URL pill — the only pill. Centered. The per-tab accent shows only as
        the scrim underline, so no duplicate inset here. Width range tuned
-       to Safari's actual URL bar proportions (280-520px). */
+       to Safari's actual URL bar proportions (280-520px). Border radius
+       9px matches macOS Safari's URL field. */
     .url-pill {
       display: inline-flex; align-items: center; gap: 8px;
       height: 27px; min-width: 280px; max-width: 520px;
       padding: 0 12px;
-      border-radius: 7px;
+      border-radius: 9px;
       background: ${isLight ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.06)'};
       color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
       box-shadow: inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.07)'};
@@ -258,7 +259,7 @@
       width: 15px; height: 15px;
       flex: 0 0 auto;
       object-fit: contain;
-      border-radius: 3px;
+      border-radius: 4px;
     }
     .url-pill .right-icons { display: flex; align-items: center; gap: 0; margin-right: -6px; }
     .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
