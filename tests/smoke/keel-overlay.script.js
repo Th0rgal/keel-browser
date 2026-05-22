@@ -770,6 +770,27 @@
         transition: opacity 120ms ease !important;
       }
       :host([data-state="visible"]) .ribbon { transform: none !important; }
+      /* Disable hover/active SVG transforms on icons + favicon — these
+         move/rotate/scale geometry which is exactly what reduced-motion
+         users want to avoid. Opacity / background hover changes still
+         apply, so icons still indicate hover state. */
+      .icon svg, .icon:hover svg, .icon:active svg,
+      .icon[title="Share"]:hover svg,
+      .icon[title="Tab overview"]:hover svg,
+      .icon[title="Back"]:hover svg,
+      .icon[title="Forward"]:hover svg,
+      .url-pill .favicon-holder:hover .favicon,
+      .url-pill .favicon-holder:hover .lock,
+      .url-pill:active .favicon { transform: none !important; }
+      /* Replace the favicon-arrive scale+fade with a pure opacity fade. */
+      .url-pill .favicon { animation: none !important; }
+      /* The loading-shimmer cycles a background-position translation
+         which can read as motion. Show a static, full-width accent
+         bar instead while loading. */
+      .url-pill.loading::before {
+        animation: none !important;
+        background-size: 100% 100% !important;
+      }
     }
 
     /* Don't print the chrome — useful for sites users save as PDF. */
