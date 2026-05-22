@@ -279,6 +279,12 @@
       transition: background 120ms ease, opacity 120ms ease;
     }
     .icon:hover { opacity: 1; background: ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}; }
+    .icon:focus-visible {
+      opacity: 1;
+      outline: none;
+      box-shadow: 0 0 0 0.5px ${isLight ? '#fff' : '#000'},
+                  0 0 0 2.5px ${accent}aa;
+    }
     .icon:active {
       background: ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.14)'};
       transform: scale(0.95);
@@ -527,7 +533,11 @@
     return s;
   }
   function iconBtn(name, title, opts) {
-    const b = el("button", { class: "icon", title: title }, []);
+    const b = el("button", {
+      class: "icon", title: title,
+      type: "button",
+      "aria-label": title,
+    }, []);
     b.appendChild(svgIcon(name, opts));
     return b;
   }
