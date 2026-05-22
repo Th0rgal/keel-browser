@@ -482,10 +482,13 @@
          present (already provides right-side weight). */
       padding-right: 15px;
       /* Tiny text-shadow softens edges against the translucent glass and
-         improves legibility when the scrim is busy (gradient sites). */
+         improves legibility when the scrim is busy (gradient sites).
+         Light mode uses a soft white outline so dark text reads on
+         busy gradient backgrounds (Stripe); dark mode uses a soft
+         black underline for the same legibility benefit. */
       text-shadow: ${isLight
-        ? '0 1px 0 rgba(255,255,255,0.4)'
-        : '0 1px 0 rgba(0,0,0,0.25)'};
+        ? '0 1px 0 rgba(255,255,255,0.5), 0 0 1px rgba(255,255,255,0.4)'
+        : '0 1px 0 rgba(0,0,0,0.3), 0 0 1px rgba(0,0,0,0.2)'};
     }
     .url-pill .lock {
       opacity: 0.42;
