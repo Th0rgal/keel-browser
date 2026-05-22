@@ -377,14 +377,18 @@
       opacity: 0.62;
       transition: background 120ms ease, opacity 120ms ease;
     }
-    /* Icon hover: mostly neutral fill with a faint tint of the per-tab
-       accent layered in (~12%), so hovering an icon visually links it
-       to the chrome's identity color without becoming garish. */
+    /* Icon hover: mostly neutral fill with a tint of the per-tab accent
+       layered in (~14%), so hovering an icon visually links it to the
+       chrome's identity color without becoming garish. The accent layer
+       is now actually painting post-v125 hex fix, so the previous 12%
+       calibration was slightly understated for sites with strong brand
+       colors — bumped to 14% to read clearly as "this hover belongs to
+       this tab's chrome." */
     .icon:hover {
       opacity: 1;
       background:
         linear-gradient(${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}, ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}),
-        linear-gradient(${accent}1f, ${accent}1f);
+        linear-gradient(${accent}24, ${accent}24);
     }
     /* SVG inside icon grows subtly on hover for tactile feedback —
        mirrors macOS Dock-style icon-bounce, scaled way down. */
