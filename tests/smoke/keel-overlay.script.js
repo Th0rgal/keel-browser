@@ -401,6 +401,10 @@
     .icon[title="Share"]:hover svg { transform: scale(1.10) translateY(-1px); }
     /* Tab overview gets a tiny rotation, suggesting "shuffle/see all". */
     .icon[title="Tab overview"]:hover svg { transform: scale(1.10) rotate(-6deg); }
+    /* Back/forward chevrons get a tiny directional nudge, so hovering
+       reads as "this will take you that direction." */
+    .icon[title="Back"]:hover svg    { transform: scale(1.10) translateX(-1px); }
+    .icon[title="Forward"]:hover svg { transform: scale(1.10) translateX(1px); }
     .icon:focus-visible {
       opacity: 1;
       outline: none;
