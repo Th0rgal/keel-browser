@@ -517,6 +517,13 @@
 
     .spacer { flex: 1 1 auto; }
 
+    /* Wide viewports (>1600px): widen the URL pill cap a bit so longer
+       URLs (article slugs, long subdomains) don't truncate prematurely
+       on big desktop displays where there's plenty of horizontal room. */
+    @media (min-width: 1600px) {
+      .url-pill { max-width: 620px; }
+    }
+
     /* Narrow viewports: shrink URL pill so traffic lights + icon groups
        still have breathing room. Below 600px, ditch the traffic lights
        too — Safari does the same in compact / mobile layouts. */
