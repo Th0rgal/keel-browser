@@ -277,10 +277,10 @@
     .ribbon::after {
       content: ""; position: absolute; left: 0; right: 0; bottom: 0;
       height: 1.5px;
-      background: linear-gradient(90deg, transparent 0%, ${accent}90 30%, ${accent}90 70%, transparent 100%);
-      opacity: 0.85;
+      background: linear-gradient(90deg, transparent 0%, ${accent}a0 25%, ${accent}a0 75%, transparent 100%);
+      opacity: 0.92;
       pointer-events: none;
-      box-shadow: 0 -6px 12px -2px ${accent}30;
+      box-shadow: 0 -6px 12px -2px ${accent}3a;
     }
 
     /* Steady-state hairline — present even when ribbon is hidden so the user
