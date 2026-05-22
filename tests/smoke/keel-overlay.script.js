@@ -249,11 +249,14 @@
       border-radius: 9px;
       /* Subtle internal gradient — slightly darker bottom for depth so the
          pill doesn't read as a perfectly flat fill. Mirrors Safari's URL
-         field which has a faint vertical gradient. */
+         field which has a faint vertical gradient. Layered over a very
+         faint (~6%) page accent tint so the pill quietly carries page
+         identity without overwhelming the host text. */
       background:
         ${isLight
-          ? 'linear-gradient(180deg, rgba(255,255,255,0.66) 0%, rgba(255,255,255,0.58) 100%)'
-          : 'linear-gradient(180deg, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.26) 100%)'};
+          ? 'linear-gradient(180deg, rgba(255,255,255,0.66) 0%, rgba(255,255,255,0.58) 100%),'
+          : 'linear-gradient(180deg, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.26) 100%),'}
+        ${accent}10;
       color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
       box-shadow:
         /* hairline border */
@@ -312,6 +315,20 @@
     .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
 
     .spacer { flex: 1 1 auto; }
+
+    /* Narrow viewports: shrink URL pill so traffic lights + icon groups
+       still have breathing room. Below 600px, ditch the traffic lights
+       too — Safari does the same in compact / mobile layouts. */
+    @media (max-width: 1000px) {
+      .url-pill { min-width: 220px; max-width: 360px; }
+    }
+    @media (max-width: 700px) {
+      .url-pill { min-width: 180px; max-width: 280px; }
+      .ribbon { padding: 0 10px; }
+    }
+    @media (max-width: 600px) {
+      .traffic { display: none; }
+    }
 
     :host([data-state="visible"]) .ribbon {
       transform: translateY(0) scale(1);
