@@ -273,8 +273,8 @@
          page's brand color without becoming garish. */
       background:
         ${isLight
-          ? 'radial-gradient(ellipse 320px 50px at 50% 60%, rgba(255,255,255,0.18), transparent 60%),'
-          : 'radial-gradient(ellipse 320px 50px at 50% 60%, rgba(255,255,255,0.08), transparent 60%),'}
+          ? 'radial-gradient(ellipse 320px 50px at 50% 60%, rgba(255,255,255,0.20), transparent 60%),'
+          : 'radial-gradient(ellipse 320px 50px at 50% 60%, rgba(255,255,255,0.12), transparent 60%),'}
         ${isLight
           ? 'linear-gradient(180deg, rgba(245,246,248,0.88) 0%, rgba(245,246,248,0.82) 78%, rgba(245,246,248,0) 100%),'
           : 'linear-gradient(180deg, rgba(22,23,26,0.85) 0%, rgba(22,23,26,0.78) 78%, rgba(22,23,26,0) 100%),'}
