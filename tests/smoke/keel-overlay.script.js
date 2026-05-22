@@ -332,7 +332,9 @@
                   0 0 0 2.5px ${accent}aa;
     }
     .icon:active {
-      background: ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.14)'};
+      background:
+        linear-gradient(${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.14)'}, ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.14)'}),
+        linear-gradient(${accent}33, ${accent}33);
       transform: scale(0.95);
       transition-duration: 50ms;
     }
