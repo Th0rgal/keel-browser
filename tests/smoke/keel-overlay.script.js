@@ -727,7 +727,7 @@
       border-bottom-left-radius: 9px;
       border-bottom-right-radius: 9px;
     }
-    /* Hovering the favicon area gives it a tiny lift — feedback that it's
+    /* Hovering the favicon area scales it up 10% — feedback that it's
        interactive (will reveal site info / certificate). The lock fallback
        gets the same treatment for consistency. Scale matches the toolbar
        icons' hover scale (1.10) so hover affordances feel uniform across
