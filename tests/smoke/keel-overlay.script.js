@@ -245,9 +245,21 @@
       background: ${isLight ? 'rgba(0,0,0,0.14)' : 'rgba(255,255,255,0.18)'};
       transition: background 120ms;
     }
-    .ribbon:hover .traffic .dot:nth-child(1) { background: #ED6B5F; }
-    .ribbon:hover .traffic .dot:nth-child(2) { background: #F5BD4F; }
-    .ribbon:hover .traffic .dot:nth-child(3) { background: #62C554; }
+    /* Traffic lights only color when the traffic *group* is hovered.
+       Previously hovering anywhere in the ribbon lit them up which
+       wasn't quite macOS-like — Safari/Finder only paint them when the
+       cursor is near the actual close/min/max region. */
+    .traffic:hover .dot:nth-child(1) { background: #ED6B5F; }
+    .traffic:hover .dot:nth-child(2) { background: #F5BD4F; }
+    .traffic:hover .dot:nth-child(3) { background: #62C554; }
+    /* But still light them up subtly when ribbon is hovered as a whole,
+       so the chrome looks "live" rather than greyed-out at rest. */
+    .ribbon:hover .traffic .dot {
+      background: ${isLight ? 'rgba(0,0,0,0.22)' : 'rgba(255,255,255,0.28)'};
+    }
+    .traffic:hover .dot {
+      transition: background 80ms ease;
+    }
 
     /* Naked icon — no pill background, just hoverable. Safari-style.
        Slightly more muted than v15 (0.72->0.62) to match Safari's neutral
@@ -493,10 +505,10 @@
   }
 
   // ---- ribbon --------------------------------------------------------------
-  const traffic = el("div", { class: "traffic" }, [
-    el("div", { class: "dot" }),
-    el("div", { class: "dot" }),
-    el("div", { class: "dot" }),
+  const traffic = el("div", { class: "traffic", role: "group", "aria-label": "Window controls" }, [
+    el("div", { class: "dot", title: "Close" }),
+    el("div", { class: "dot", title: "Minimize" }),
+    el("div", { class: "dot", title: "Zoom" }),
   ]);
 
   const leftIcons = el("div", { class: "icon-group" }, [
