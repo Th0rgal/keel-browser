@@ -771,11 +771,22 @@
   faviconImg.style.position = "absolute";
   faviconImg.style.inset = "0";
   faviconImg.addEventListener("load", () => {
+    // Sanity check: refuse to swap to favicon if it's a 1x1 transparent
+    // placeholder (some sites return this when no favicon is configured).
+    if (faviconImg.naturalWidth <= 1 || faviconImg.naturalHeight <= 1) {
+      // Treat as failure — keep the lock visible.
+      faviconImg.src = "";
+      return;
+    }
     faviconImg.style.opacity = "1";
     // The favicon now occupies the holder; hide the lock.
     lockGlyph.style.opacity = "0";
   });
   // On error, leave lock visible and never show the img.
+  faviconImg.addEventListener("error", () => {
+    // Lock SVG stays at opacity 1 since we never lowered it.
+    faviconImg.style.display = "none";
+  });
   faviconImg.src = findFaviconHref();
   faviconHolder.appendChild(faviconImg);
 
