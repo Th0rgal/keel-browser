@@ -182,17 +182,18 @@
 
   // Reserve 40px at the top of the page for the chrome — Safari-desktop
   // style. The chrome is always visible, so the page content always sits
-  // below it. Animate the initial 0 -> 40px shift on inject so pages
-  // don't snap-jump when the overlay first attaches.
-  //
-  // scroll-padding-top: 40px means #anchor links and Element.scrollIntoView
-  // land below the chrome rather than under it — matches real Safari.
+  // below it. We ADD 40px to whatever body padding-top already exists
+  // (instead of overwriting it) so pages with their own layout padding
+  // don't get squished. scroll-padding-top via CSS so #anchor links land
+  // below the chrome — matches real Safari.
   const pagePushStyle = document.createElement("style");
   pagePushStyle.id = "__keel_pagepush__";
+  const origPaddingTop = parseInt(
+    getComputedStyle(document.body).paddingTop, 10) || 0;
   pagePushStyle.textContent = `
     html { scroll-padding-top: 40px !important; }
     body {
-      padding-top: 40px !important;
+      padding-top: ${origPaddingTop + 40}px !important;
       transition: padding-top 220ms cubic-bezier(.16,.84,.20,1);
     }
   `;
