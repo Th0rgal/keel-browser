@@ -287,11 +287,15 @@
       backdrop-filter: blur(26px) saturate(180%);
       -webkit-backdrop-filter: blur(26px) saturate(180%);
       /* Soft drop-shadow under the scrim so the chrome reads as "floating
-         above the page" rather than painted on top. Falls off quickly.
+         above the page" rather than painted on top. Two layers for more
+         realistic depth: a close-in 2px shadow that defines the immediate
+         edge, plus a wider 20px shadow that fades into the page. Apple's
+         elevation system uses this same close+wide pairing.
          Plus a 0.5px top highlight for a glass-like reflection. */
       box-shadow:
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.06)'},
-        0 8px 20px -10px ${isLight ? 'rgba(0,0,0,0.22)' : 'rgba(0,0,0,0.55)'};
+        0 2px 4px -2px ${isLight ? 'rgba(0,0,0,0.10)' : 'rgba(0,0,0,0.30)'},
+        0 8px 20px -10px ${isLight ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.45)'};
       border-bottom: 0.5px solid ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)'};
     }
     .ribbon > * { pointer-events: auto; }
@@ -390,8 +394,6 @@
     .icon[title="Share"]:hover svg { transform: scale(1.10) translateY(-1px); }
     /* Tab overview gets a tiny rotation, suggesting "shuffle/see all". */
     .icon[title="Tab overview"]:hover svg { transform: scale(1.10) rotate(-6deg); }
-    /* Reload (if present) does a quarter-turn loop on hover. */
-    .icon[title="Reload"]:hover svg { transform: scale(1.10) rotate(45deg); }
     .icon:focus-visible {
       opacity: 1;
       outline: none;
@@ -702,7 +704,8 @@
     :host([data-scrolled="1"]) .ribbon {
       box-shadow:
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.06)'},
-        0 12px 28px -12px ${isLight ? 'rgba(0,0,0,0.32)' : 'rgba(0,0,0,0.65)'};
+        0 3px 6px -3px ${isLight ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.40)'},
+        0 12px 28px -12px ${isLight ? 'rgba(0,0,0,0.26)' : 'rgba(0,0,0,0.55)'};
       transition: box-shadow 220ms ease;
     }
     /* Accent line thickens to 2px when scrolled, becoming a slightly
