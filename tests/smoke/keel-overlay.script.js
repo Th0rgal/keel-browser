@@ -464,7 +464,7 @@
       font-size: 13px;
       font-weight: 500;
       letter-spacing: -0.005em;
-      line-height: 15px;
+      line-height: 16px;
       /* Tabular numerals so URLs with digits (ports, IPs, dates) align
          vertically when they change — no jitter as you navigate.
          Plus contextual alternates: lets the font pick better-shaped
