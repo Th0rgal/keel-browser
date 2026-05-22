@@ -610,11 +610,14 @@
          against the recessed dark well. Stroke matches the chrome's
          border hairline vocabulary so the favicon reads as a chrome
          element rather than an embedded image. On dark mode, the halo
-         picks up a hint of the per-tab accent so it carries identity. */
+         picks up a hint of the per-tab accent so it carries identity.
+         Light mode halo bumped from 0.06 -> 0.10 alpha + drop-shadow
+         from 0.10 -> 0.14 so favicons feel more lifted from the
+         (now recessed) light pill rather than disappearing into it. */
       filter: ${isLight
-        ? 'drop-shadow(0 0.5px 1px rgba(0,0,0,0.10))'
+        ? 'drop-shadow(0 0.5px 1px rgba(0,0,0,0.14))'
         : `drop-shadow(0 0 0.5px ${accent}66) drop-shadow(0 0.5px 1px rgba(0,0,0,0.30))`};
-      box-shadow: 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)'};
+      box-shadow: 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.05)'};
     }
     .url-pill .right-icons { display: flex; align-items: center; gap: 0; margin-right: -6px; }
     .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
