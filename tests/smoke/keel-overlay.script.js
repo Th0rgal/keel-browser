@@ -249,6 +249,12 @@
     .traffic .dot {
       width: 11px; height: 11px; border-radius: 50%;
       background: ${isLight ? 'rgba(0,0,0,0.14)' : 'rgba(255,255,255,0.18)'};
+      /* macOS-style inner shadow: 0.5px highlight at top, 0.5px shadow
+         at bottom. Gives the dots a faint dimensionality that reads
+         like a real traffic light pip rather than a flat disc. */
+      box-shadow:
+        inset 0 0.5px 0 ${isLight ? 'rgba(255,255,255,0.30)' : 'rgba(255,255,255,0.10)'},
+        inset 0 -0.5px 0 ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.25)'};
       transition: background 120ms;
     }
     /* Traffic lights only color when the traffic *group* is hovered.
