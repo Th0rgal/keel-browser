@@ -285,6 +285,13 @@
       position: fixed; top: 0; left: 0; right: 0;
       height: 40px;
       z-index: 2147483647;
+      /* Layout/style containment — tells the browser our ribbon doesn't
+         affect the document's layout/style outside its own bounds.
+         The chrome is fixed-positioned anyway so this is mostly a perf
+         hint, but it also gives the compositor permission to redraw
+         the chrome independently of page repaints (helpful on heavy
+         scroll-driven sites). */
+      contain: layout style;
       display: flex; align-items: center;
       /* Padding scales gently with viewport width (clamped 16-32px).
          Standard 1080p stays close to 16px; on ultra-wide / 4K displays
