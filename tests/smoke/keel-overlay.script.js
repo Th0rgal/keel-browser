@@ -183,6 +183,9 @@
       transform: translateY(-100%) scale(0.985);
       transform-origin: 50% 0;
       opacity: 0;
+      /* GPU-accelerate the transform + opacity. Apple does this for menu
+         bars to keep them buttery smooth even on lower-end hardware. */
+      will-change: transform, opacity;
       /* Exit (hidden state): faster, just retreat. Entrance overrides
          these in the :host([data-state="visible"]) rule below to spring
          in more deliberately — Apple uses asymmetric in/out timing on
