@@ -1096,9 +1096,12 @@
   // Keyboard shortcuts still work — F6/Cmd+L focus the URL pill, but
   // since the chrome stays visible permanently, there's no need to
   // summon it first. Just ensure it's visible if anything ever hid it.
+  // Match both metaKey (macOS Cmd) and ctrlKey (Linux/Windows) so the
+  // platform-native shortcut works regardless of host OS.
   document.addEventListener("keydown", e => {
-    if (e.key === "F6" || (e.ctrlKey && (e.key === "l" || e.key === "L")) ||
-        (e.ctrlKey && (e.key === "t" || e.key === "T"))) {
+    const accel = e.metaKey || e.ctrlKey;
+    if (e.key === "F6" || (accel && (e.key === "l" || e.key === "L")) ||
+        (accel && (e.key === "t" || e.key === "T"))) {
       show();
     }
   }, { passive: true });
