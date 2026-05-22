@@ -563,11 +563,13 @@
     }
     /* Hovering the favicon area gives it a tiny lift — feedback that it's
        interactive (will reveal site info / certificate). The lock fallback
-       gets the same treatment for consistency. */
+       gets the same treatment for consistency. Scale matches the toolbar
+       icons' hover scale (1.10) so hover affordances feel uniform across
+       the chrome. */
     .url-pill .favicon-holder:hover .favicon,
     .url-pill .favicon-holder:hover .lock {
-      transform: scale(1.08);
-      transition: transform 120ms ease;
+      transform: scale(1.10);
+      transition: transform 140ms cubic-bezier(.16,.84,.20,1);
     }
     /* When URL pill is being pressed/clicked, the favicon briefly scales
        down — tactile press feedback like macOS Dock icon bounce. */
@@ -1049,4 +1051,52 @@
   syncFocus();
   window.addEventListener("focus", syncFocus, { passive: true });
   window.addEventListener("blur", syncFocus, { passive: true });
+
+  // Push down position:fixed / position:sticky elements anchored at the
+  // viewport top — the body padding-top trick only pushes normal-flow
+  // content, so sticky/fixed headers (tailwindcss.com, supabase.com, many
+  // marketing pages) would otherwise sit underneath the chrome at the
+  // same viewport coordinates and overlap. We bump their top by 40px so
+  // they stack cleanly below the chrome band, matching the no-overlap
+  // promise that body padding-top already gives normal-flow pages.
+  //
+  // Heuristic: only nudge elements anchored within 5px of the viewport
+  // top. Higher offsets are deliberate (toasts at top:20, modals at
+  // top:50%, etc.) and should not be moved.
+  const KEEL_PUSH_FLAG = "__keelPushed__";
+  function nudgeIfTopAnchored(el) {
+    if (!el || el.nodeType !== 1) return;
+    if (el.id === "__keel_chrome__" || el.dataset[KEEL_PUSH_FLAG]) return;
+    const cs = getComputedStyle(el);
+    if (cs.position !== "fixed" && cs.position !== "sticky") return;
+    const topPx = parseFloat(cs.top);
+    if (isNaN(topPx) || topPx < 0 || topPx > 5) return;
+    // Preserve the inline-style top (if any) so we layer additively.
+    el.dataset[KEEL_PUSH_FLAG] = "1";
+    el.style.top = (topPx + 40) + "px";
+  }
+  function scanAndNudge(root) {
+    // Bounded scan: only elements actually present in the DOM at call time.
+    // 5000+ elements take <50ms; well within page-load budget.
+    const all = (root || document.body || document.documentElement).querySelectorAll("*");
+    for (const el of all) nudgeIfTopAnchored(el);
+  }
+  // First pass after initial styles settle.
+  setTimeout(() => scanAndNudge(), 100);
+  // Second pass for sites that mount sticky headers after first paint
+  // (Next.js hydration, late-loading nav frameworks, etc.).
+  setTimeout(() => scanAndNudge(), 1500);
+  // Catch dynamically inserted headers (SPA route changes, banner mounts).
+  const mo = new MutationObserver(muts => {
+    for (const m of muts) {
+      for (const node of m.addedNodes) {
+        if (node.nodeType !== 1) continue;
+        nudgeIfTopAnchored(node);
+        if (node.querySelectorAll) {
+          for (const child of node.querySelectorAll("*")) nudgeIfTopAnchored(child);
+        }
+      }
+    }
+  });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
