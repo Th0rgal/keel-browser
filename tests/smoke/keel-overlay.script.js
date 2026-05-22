@@ -297,12 +297,15 @@
          scroll-driven sites). */
       contain: layout style;
       display: flex; align-items: center;
-      /* Padding scales gently with viewport width (clamped 16-32px).
-         Standard 1080p stays close to 16px; on ultra-wide / 4K displays
-         the chrome breathes more, so the toolbar icons don't cluster
-         against the viewport edge. Narrow viewport overrides below
-         keep this from going below 10px on phones. */
-      padding: 0 clamp(16px, 1vw, 32px);
+      /* Padding scales with viewport width (clamped 16-36px, 1.25vw rate).
+         At 1080p (~1920px) padding lands around 24px — more breathing
+         than the flat 16px we had pre-v181. At 4K (~3840px) padding
+         clamps at 36px so toolbar icons don't drift toward the viewport
+         edge. Narrow-viewport overrides below take the chrome down to
+         10px on phones. The 1.25vw scaling rate (v195, up from 1vw)
+         gives a more noticeable transition between desktop and
+         large-monitor breakpoints. */
+      padding: 0 clamp(16px, 1.25vw, 36px);
       gap: 3px;
       font: 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Inter", system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
