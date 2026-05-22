@@ -655,15 +655,16 @@
       transition: transform 140ms cubic-bezier(.16,.84,.20,1);
     }
     /* Hovering anywhere on the pill nudges the favicon a hair (1.04) —
-       layered with the favicon-holder:hover 1.10. Cursor anywhere in
-       the pill wakes the favicon subtly; cursor specifically on the
-       favicon wakes it more. Two-stage affordance. */
+       layered with the favicon-holder:hover 1.10 above. Cursor anywhere
+       in the pill wakes the favicon subtly; cursor specifically on the
+       favicon wakes it more. Two-stage affordance — the more-specific
+       favicon-holder:hover selector naturally wins via cascade order
+       when both match. */
     .url-pill:hover .favicon,
     .url-pill:focus-visible .favicon {
       transform: scale(1.04);
       transition: transform 140ms cubic-bezier(.16,.84,.20,1);
     }
-    .url-pill .favicon-holder:hover .favicon { transform: scale(1.10); }
     /* When URL pill is being pressed/clicked, the favicon briefly scales
        down — tactile press feedback like macOS Dock icon bounce. Aligned
        to 0.94 (matches the toolbar icon active scale post-v164) — the
