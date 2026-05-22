@@ -363,9 +363,13 @@
       box-shadow: 0 -8px 14px -2px ${accent}48;
     }
 
-    /* Steady-state hairline — present even when ribbon is hidden so the user
-       has a discoverable handle. Picks up the per-tab accent at low
-       opacity, so the always-visible state quietly carries tab identity. */
+    /* Reserve hairline — preserved as a fallback indicator for the
+       rare state where the chrome retreats (currently only browser
+       fullscreen, where this is hidden too). Default opacity 0 (v176)
+       so it never flashes on inject. Kept available in case a future
+       hover-summon mode wants a discoverable handle to bring the
+       chrome back. Carries per-tab accent at low alpha if it ever
+       does show. */
     .peek {
       position: fixed; top: 0; left: 0; right: 0; height: 1.5px;
       pointer-events: none;
