@@ -455,9 +455,12 @@
       /* Tabular numerals so URLs with digits (ports, IPs, dates) align
          vertically when they change — no jitter as you navigate.
          Plus contextual alternates: lets the font pick better-shaped
-         glyph variants for sequences like "ll" or "tt" in URLs. */
+         glyph variants for sequences like "ll" or "tt" in URLs.
+         text-rendering hints the browser to prioritize legibility
+         (kerning, ligatures) over render speed at this small size. */
       font-variant-numeric: tabular-nums;
       font-feature-settings: "calt" 1, "ss01" 1;
+      text-rendering: optimizeLegibility;
       /* Soft fade at the edges so truncated URLs trail off rather than
          hitting a hard ellipsis. The mask reveals 100% of the text
          except a 4px fade zone on each side. */
