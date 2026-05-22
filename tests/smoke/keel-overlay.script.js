@@ -569,7 +569,7 @@
            (v201) for symmetric "settled in scrim" feel — the light pill
            is also recessed (v126) so the close-in halo helps define its
            bottom edge against the cream-tinted scrim. */
-        0 1px 2px -0.5px ${isLight ? 'rgba(0,0,0,0.10)' : 'rgba(0,0,0,0.32)'};
+        0 1px 3px -0.5px ${isLight ? 'rgba(0,0,0,0.10)' : 'rgba(0,0,0,0.32)'};
       transition: background 140ms ease, box-shadow 140ms ease,
                   border-radius 220ms cubic-bezier(.16,.84,.20,1),
                   min-width 220ms cubic-bezier(.16,.84,.20,1);
