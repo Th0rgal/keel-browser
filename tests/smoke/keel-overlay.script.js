@@ -281,7 +281,7 @@
       display: flex; align-items: center;
       padding: 0 16px;
       gap: 3px;
-      font: 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+      font: 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Inter", system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       pointer-events: none;
