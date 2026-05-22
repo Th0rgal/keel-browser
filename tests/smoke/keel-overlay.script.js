@@ -721,6 +721,13 @@
     @media print {
       .ribbon, .peek { display: none !important; }
     }
+    /* In browser fullscreen mode, the chrome should retreat — let the
+       page have the whole viewport (Safari behavior on Cmd-Shift-F). */
+    :host-context(:fullscreen) .ribbon,
+    :host-context(:fullscreen) .peek {
+      transform: translateY(-100%) !important;
+      opacity: 0 !important;
+    }
   `;
   shadow.appendChild(style);
 
