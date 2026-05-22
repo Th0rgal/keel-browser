@@ -861,7 +861,8 @@
       .ribbon, .peek { display: none !important; }
     }
     /* In browser fullscreen mode, the chrome should retreat — let the
-       page have the whole viewport (Safari behavior on Cmd-Shift-F). */
+       page have the whole viewport (Safari on macOS: Cmd-Ctrl-F;
+       Windows/Linux: F11). */
     :host-context(:fullscreen) .ribbon,
     :host-context(:fullscreen) .peek {
       transform: translateY(-100%) !important;
