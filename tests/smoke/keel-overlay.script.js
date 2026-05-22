@@ -588,7 +588,12 @@
         0 2px 14px -4px ${accent}33;
     }
     .url-pill:active {
-      transform: translate(-50%, -50%) scale(0.99);
+      /* 0.985 (1.5% shrink) is slightly more pronounced than the prior
+         0.99 — the favicon inside scales to 0.94 (v166), so the pill's
+         tiny 1% shrink read as almost flat against the favicon's clearly-
+         pressed scale. 1.5% gives the pill body its own visible tactile
+         response while still letting the favicon dominate the press feel. */
+      transform: translate(-50%, -50%) scale(0.985);
       transition-duration: 80ms;
     }
     /* Keyboard focus ring — visible only when reached via Tab/Cmd-L, not
