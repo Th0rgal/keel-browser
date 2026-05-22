@@ -432,7 +432,11 @@
        mirrors macOS Dock-style icon-bounce, scaled way down. */
     .icon svg { transition: transform 140ms cubic-bezier(.16,.84,.20,1); }
     .icon:hover svg { transform: scale(1.10); }
-    .icon:active svg { transform: scale(0.94); }
+    /* Active: snap to compressed state in 50ms — matches the button-bg
+       50ms duration in .icon:active above. Without this, the bg flashed
+       in 50ms but the icon kept transitioning at the default 140ms,
+       which read as slightly disconnected. */
+    .icon:active svg { transform: scale(0.94); transition-duration: 50ms; }
     /* Share icon gets a tiny upward lift on hover, mirroring its
        "send up and out" affordance. */
     .icon[title="Share"]:hover svg { transform: scale(1.10) translateY(-1px); }
