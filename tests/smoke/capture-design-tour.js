@@ -70,23 +70,21 @@ for (const s of sites) {
     await page.goto(s.url, { waitUntil: "domcontentloaded", timeout: 25000 });
     await new Promise(r => setTimeout(r, 2200));
     await page.evaluate(overlay);
-    // Force hidden state for "steady" shot
+    // Force hidden state for "steady" shot (page is still pushed down — that
+    // 40px reserve is permanent, like Safari's chrome band).
     await new Promise(r => setTimeout(r, 2200)); // let initial flash fade
     await page.evaluate(() => {
       const k = document.getElementById("__keel_chrome__");
       if (k) k.dataset.state = "hidden";
-      delete document.documentElement.dataset.keelSummoned;
     });
-    await new Promise(r => setTimeout(r, 450));
+    await new Promise(r => setTimeout(r, 350));
     await page.screenshot({ path: path.join(OUT, `${s.name}_hidden.png`) });
-    // Now force visible state for "summoned" shot — also toggle the
-    // page-push attribute so body padding-top kicks in.
+    // Now force visible state for "summoned" shot.
     await page.evaluate(() => {
       const k = document.getElementById("__keel_chrome__");
       if (k) k.dataset.state = "visible";
-      document.documentElement.dataset.keelSummoned = "1";
     });
-    await new Promise(r => setTimeout(r, 450));
+    await new Promise(r => setTimeout(r, 350));
     await page.screenshot({ path: path.join(OUT, `${s.name}_summoned.png`) });
     console.log("ok", s.name);
     results.push({ name: s.name, ok: true });
