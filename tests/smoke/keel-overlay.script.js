@@ -622,6 +622,15 @@
       opacity: 1;
       transition-delay: 80ms;
     }
+    /* Stronger drop shadow when the user has scrolled — cues that there's
+       content above the chrome's band. Matches Safari's behavior on
+       scrolled pages. */
+    :host([data-scrolled="1"]) .ribbon {
+      box-shadow:
+        inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.06)'},
+        0 12px 28px -12px ${isLight ? 'rgba(0,0,0,0.32)' : 'rgba(0,0,0,0.65)'};
+      transition: box-shadow 220ms ease;
+    }
 
     /* Accessibility: honour prefers-reduced-motion. Replace the slide+scale
        with a simple opacity fade so the chrome still appears/disappears
@@ -895,4 +904,19 @@
       show();
     }
   }, { passive: true });
+
+  // Scroll-aware shadow: when the user has scrolled down, mark the
+  // host so the chrome can carry a slightly stronger drop shadow,
+  // indicating that there's content above the chrome boundary. Subtle
+  // but a nice "depth" cue that Safari uses too.
+  let lastScrolled = false;
+  function syncScrolled() {
+    const scrolled = window.scrollY > 4;
+    if (scrolled !== lastScrolled) {
+      hostEl.dataset.scrolled = scrolled ? "1" : "0";
+      lastScrolled = scrolled;
+    }
+  }
+  syncScrolled();
+  window.addEventListener("scroll", syncScrolled, { passive: true });
 })();
