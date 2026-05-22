@@ -643,8 +643,8 @@
       /* Soft fade at the edges so truncated URLs trail off rather than
          hitting a hard ellipsis. The mask reveals 100% of the text
          except a 6px fade zone on each side. */
-      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 6px), transparent 100%);
-      mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 6px), transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
       /* Subtle fade-in: URL text appears 80ms after the chrome arrives,
          creating a tiny layered presentation rather than everything
          showing simultaneously. The font-size + background + box-shadow
