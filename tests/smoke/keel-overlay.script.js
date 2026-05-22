@@ -823,6 +823,14 @@
       box-shadow: 0 0 0 0.5px ${isLight ? '#fff' : '#000'},
                   0 0 0 2px ${accent}cc;
     }
+    /* Active: badge compresses to 0.94 while keeping the hover lift —
+       reads as a pressed-lift (badge stays slightly raised but
+       shrinks to confirm the click). Same scale as the toolbar icons
+       and favicon (v164/v166). */
+    .url-pill .reader-badge:active {
+      transform: translateY(-0.5px) scale(0.94);
+      transition-duration: 50ms;
+    }
 
     .spacer { flex: 1 1 auto; }
 
@@ -924,7 +932,8 @@
       .url-pill:hover .favicon,
       .url-pill:focus-visible .favicon,
       .url-pill .reader-badge:hover,
-      .url-pill .reader-badge:focus-visible { transform: none !important; }
+      .url-pill .reader-badge:focus-visible,
+      .url-pill .reader-badge:active { transform: none !important; }
       /* Replace the favicon-arrive scale+fade with a pure opacity fade. */
       .url-pill .favicon { animation: none !important; }
       /* The loading-shimmer cycles a background-position translation
