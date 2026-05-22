@@ -221,6 +221,9 @@
   const style = document.createElement("style");
   style.textContent = `
     :host { all: initial; }
+    /* Defensive box-sizing inside the shadow root — prevents page CSS
+       that resets body { box-sizing: content-box } from interfering. */
+    * { box-sizing: border-box; }
 
     /* The chrome zone — translucent strip at top, blurred so it visually
        contains the page content beneath. Pills float inside. */
