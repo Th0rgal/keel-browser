@@ -595,7 +595,8 @@
       min-width: 360px;
       border-radius: 10px;
       transition: min-width 140ms cubic-bezier(.16,.84,.20,1),
-                  border-radius 140ms cubic-bezier(.16,.84,.20,1);
+                  border-radius 140ms cubic-bezier(.16,.84,.20,1),
+                  box-shadow 140ms cubic-bezier(.16,.84,.20,1);
     }
     .url-pill:hover .text,
     .url-pill:focus-visible .text {
