@@ -525,6 +525,14 @@
     @media (max-width: 600px) {
       .traffic { display: none; }
     }
+    /* Ultra-narrow (smartphone-like): hide back/forward + share icons too,
+       leaving sidebar + URL pill + tab overview as the minimal chrome. */
+    @media (max-width: 480px) {
+      .icon[title="Back"], .icon[title="Forward"], .icon[title="Share"] {
+        display: none;
+      }
+      .url-pill { min-width: 140px; max-width: 240px; }
+    }
 
     :host([data-state="visible"]) .ribbon {
       transform: translateY(0) scale(1);
