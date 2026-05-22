@@ -220,12 +220,18 @@
 
   // Print-mode: clear the body padding-top added by the chrome's
   // reserved band, so printed/saved-as-PDF pages don't have a 40px gap
-  // at the top where the chrome would have been.
+  // at the top where the chrome would have been. Same for browser
+  // fullscreen — the chrome retreats off-screen via :host-context
+  // (:fullscreen), so the page should reclaim that 40px band rather
+  // than leave an empty gap at the viewport top.
   const pagePrintStyle = document.createElement("style");
   pagePrintStyle.id = "__keel_pageprint__";
   pagePrintStyle.textContent = `
     @media print {
       body { padding-top: ${origPaddingTop}px !important; }
+    }
+    :fullscreen body, :-webkit-full-screen body {
+      padding-top: ${origPaddingTop}px !important;
     }
   `;
   document.head.appendChild(pagePrintStyle);
