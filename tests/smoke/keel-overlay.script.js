@@ -625,10 +625,11 @@
       letter-spacing: -0.02em;
       box-sizing: border-box;
       /* Match URL host text-shadow so the badge feels typographically
-         consistent with the host name beside it. */
+         consistent with the host name beside it. Dual-layer shadow
+         (matches v99 host treatment). */
       text-shadow: ${isLight
-        ? '0 1px 0 rgba(255,255,255,0.4)'
-        : '0 1px 0 rgba(0,0,0,0.25)'};
+        ? '0 1px 0 rgba(255,255,255,0.5), 0 0 1px rgba(255,255,255,0.4)'
+        : '0 1px 0 rgba(0,0,0,0.3), 0 0 1px rgba(0,0,0,0.2)'};
     }
     .url-pill .reader-badge:hover {
       opacity: 1;
