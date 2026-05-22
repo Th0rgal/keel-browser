@@ -959,12 +959,21 @@
 
   // SPA navigation: when popstate/hashchange fires, refresh the URL host
   // display. The favicon doesn't auto-refresh — that would require a new
-  // injection cycle.
+  // injection cycle. We also briefly dip the URL text opacity so the
+  // change is visible — without this, the text just snaps to the new
+  // host and the user might miss the transition. The dip-and-restore
+  // rides on the existing `transition: opacity 180ms` rule.
   function refreshUrl() {
     const newHost = location.host.replace(/^www\./i, "").replace(/</g, "&lt;");
     if (urlTextSpan.textContent !== newHost) {
-      urlTextSpan.textContent = newHost;
-      urlPill.title = document.title || newHost;
+      urlTextSpan.style.opacity = "0.4";
+      requestAnimationFrame(() => {
+        urlTextSpan.textContent = newHost;
+        urlPill.title = document.title || newHost;
+        // Restore on the next frame so the fade-down completes briefly
+        // before the fade-up starts — feels like a real "page changed".
+        setTimeout(() => { urlTextSpan.style.opacity = "1"; }, 90);
+      });
     }
   }
   window.addEventListener("popstate", refreshUrl, { passive: true });
