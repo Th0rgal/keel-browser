@@ -353,7 +353,7 @@
        has a discoverable handle. Picks up the per-tab accent at low
        opacity, so the always-visible state quietly carries tab identity. */
     .peek {
-      position: fixed; top: 0; left: 0; right: 0; height: 2px;
+      position: fixed; top: 0; left: 0; right: 0; height: 1.5px;
       pointer-events: none;
       z-index: 2147483646;
       background:
