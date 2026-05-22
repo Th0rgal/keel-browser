@@ -620,8 +620,6 @@
         : `drop-shadow(0 0 0.5px ${accent}66) drop-shadow(0 0.5px 1px rgba(0,0,0,0.30))`};
       box-shadow: 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.05)'};
     }
-    .url-pill .right-icons { display: flex; align-items: center; gap: 0; margin-right: -6px; }
-    .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
     /* Safari-style Reader Mode badge — only appears for article-shaped pages.
        Hairline border + subtle accent text-color so the badge reads as
        a distinct interactive affordance rather than a passive label. */
