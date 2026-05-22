@@ -75,15 +75,18 @@ for (const s of sites) {
     await page.evaluate(() => {
       const k = document.getElementById("__keel_chrome__");
       if (k) k.dataset.state = "hidden";
+      delete document.documentElement.dataset.keelSummoned;
     });
-    await new Promise(r => setTimeout(r, 350));
+    await new Promise(r => setTimeout(r, 450));
     await page.screenshot({ path: path.join(OUT, `${s.name}_hidden.png`) });
-    // Now force visible state for "summoned" shot
+    // Now force visible state for "summoned" shot — also toggle the
+    // page-push attribute so body padding-top kicks in.
     await page.evaluate(() => {
       const k = document.getElementById("__keel_chrome__");
       if (k) k.dataset.state = "visible";
+      document.documentElement.dataset.keelSummoned = "1";
     });
-    await new Promise(r => setTimeout(r, 350));
+    await new Promise(r => setTimeout(r, 450));
     await page.screenshot({ path: path.join(OUT, `${s.name}_summoned.png`) });
     console.log("ok", s.name);
     results.push({ name: s.name, ok: true });

@@ -177,6 +177,23 @@
   document.documentElement.appendChild(root);
   const shadow = root.attachShadow({ mode: "open" });
 
+  // Push the page body down when the chrome is summoned (Safari-style).
+  // The page content sits BELOW the chrome, not under it. A document-level
+  // stylesheet (not in shadow root) is needed to affect the host body.
+  // Transitions smoothly on summon/dismiss matching the chrome's timing.
+  const pagePushStyle = document.createElement("style");
+  pagePushStyle.id = "__keel_pagepush__";
+  pagePushStyle.textContent = `
+    html[data-keel-summoned="1"] body {
+      padding-top: 40px !important;
+      transition: padding-top 220ms cubic-bezier(.16,.84,.20,1);
+    }
+    html:not([data-keel-summoned="1"]) body {
+      transition: padding-top 160ms cubic-bezier(.5,0,.85,.4);
+    }
+  `;
+  document.head.appendChild(pagePushStyle);
+
   const isLight = (() => {
     // crude luminance check
     const c = parseColor(tint) || { r: 247, g: 246, b: 242 };
@@ -833,10 +850,17 @@
   // 1.8s so users get a chance to see the favicon load (favicon HTTP
   // fetch can take 300-600ms on slow connections, and we want the
   // identification animation to be observable, not blink past).
+  const setSummoned = (on) => {
+    hostEl.dataset.state = on ? "visible" : "hidden";
+    // Mirror on documentElement so the page-body padding-top kicks in.
+    // Safari-style: page sits BELOW the chrome (pushed down), not under it.
+    if (on) document.documentElement.dataset.keelSummoned = "1";
+    else delete document.documentElement.dataset.keelSummoned;
+  };
   const show = (holdMs = 1200) => {
-    hostEl.dataset.state = "visible";
+    setSummoned(true);
     clearTimeout(idleT);
-    idleT = setTimeout(() => { hostEl.dataset.state = "hidden"; }, holdMs);
+    idleT = setTimeout(() => { setSummoned(false); }, holdMs);
   };
 
   // Cursor proximity (Safari-style) — require 200ms dwell in top 60px to
