@@ -335,7 +335,7 @@
         /* recessed well bottom shadow (dark mode only) */
         ${isLight ? '' : 'inset 0 -0.5px 0 0 rgba(0,0,0,0.20),'}
         /* outer soft halo to seat the pill in the scrim */
-        0 1px 1px -0.5px ${isLight ? 'rgba(0,0,0,0.04)' : 'rgba(0,0,0,0.25)'};
+        0 1px 2px -0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.30)'};
       transition: background 140ms ease, box-shadow 140ms ease,
                   min-width 220ms cubic-bezier(.16,.84,.20,1);
     }
