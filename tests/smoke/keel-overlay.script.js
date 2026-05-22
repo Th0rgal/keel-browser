@@ -581,7 +581,7 @@
       unicode-bidi: isolate;
       font-size: 13px;
       font-weight: 500;
-      letter-spacing: -0.005em;
+      letter-spacing: -0.008em;
       line-height: 16px;
       /* Tabular numerals so URLs with digits (ports, IPs, dates) align
          vertically when they change — no jitter as you navigate.
