@@ -494,9 +494,15 @@
     .url-pill:focus-visible {
       /* Bumps min-width on hover/focus to subtly hint at edit-on-click —
          Safari grows the URL bar slightly when focused. Border-radius
-         also nudges slightly larger for an "expand" feel. */
+         also nudges slightly larger for an "expand" feel. Snap-in faster
+         (140ms) than the default 220ms hover-out — matches the
+         "snappy in / graceful out" pattern used elsewhere (v149, v150,
+         v155). The pill's default transition rule provides the slower
+         hover-out timing automatically. */
       min-width: 360px;
       border-radius: 10px;
+      transition: min-width 140ms cubic-bezier(.16,.84,.20,1),
+                  border-radius 140ms cubic-bezier(.16,.84,.20,1);
     }
     .url-pill:hover .text,
     .url-pill:focus-visible .text {
