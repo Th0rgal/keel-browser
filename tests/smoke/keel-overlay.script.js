@@ -396,6 +396,7 @@
       border: none; background: transparent;
       color: ${isLight ? '#1d1d1f' : '#e9ebef'};
       border-radius: 7px;
+      font: inherit;
       font-size: 14px;
       display: inline-flex; align-items: center; justify-content: center;
       cursor: pointer;
