@@ -836,7 +836,10 @@
     links.sort((a, b) => score(b) - score(a));
     if (links[0]) {
       const href = links[0].getAttribute("href");
-      if (href) return new URL(href, location.href).toString();
+      // Use document.baseURI so <base href> tags are respected when the
+      // favicon href is relative. Falls back to location.href if baseURI
+      // is somehow unset.
+      if (href) return new URL(href, document.baseURI || location.href).toString();
     }
     return location.origin + "/favicon.ico";
   }
