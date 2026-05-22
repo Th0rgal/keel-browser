@@ -549,7 +549,7 @@
       box-shadow:
         inset 0 0 0 0.5px ${accent}70,
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.10)'},
-        0 2px 10px -4px ${accent}33;
+        0 2px 14px -4px ${accent}33;
     }
     .url-pill:active {
       transform: translate(-50%, -50%) scale(0.99);
