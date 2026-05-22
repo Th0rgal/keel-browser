@@ -201,7 +201,9 @@
     .ribbon:hover .traffic .dot:nth-child(2) { background: #F5BD4F; }
     .ribbon:hover .traffic .dot:nth-child(3) { background: #62C554; }
 
-    /* Naked icon — no pill background, just hoverable. Safari-style. */
+    /* Naked icon — no pill background, just hoverable. Safari-style.
+       Slightly more muted than v15 (0.72->0.62) to match Safari's neutral
+       graphite icons rather than its sharp button icons. */
     .icon {
       width: 28px; height: 28px;
       border: none; background: transparent;
@@ -210,17 +212,18 @@
       font-size: 14px;
       display: inline-flex; align-items: center; justify-content: center;
       cursor: pointer;
-      opacity: 0.72;
+      opacity: 0.62;
       transition: background 120ms ease, opacity 120ms ease;
     }
     .icon:hover { opacity: 1; background: ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}; }
     .icon-group { display: inline-flex; align-items: center; gap: 2px; }
 
     /* URL pill — the only pill. Centered. The per-tab accent shows only as
-       the scrim underline, so no duplicate inset here. */
+       the scrim underline, so no duplicate inset here. Width range tuned
+       to Safari's actual URL bar proportions (280-520px). */
     .url-pill {
       display: inline-flex; align-items: center; gap: 8px;
-      height: 26px; min-width: 240px; max-width: 440px;
+      height: 27px; min-width: 280px; max-width: 520px;
       padding: 0 12px;
       border-radius: 7px;
       background: ${isLight ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.06)'};
