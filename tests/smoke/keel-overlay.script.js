@@ -596,7 +596,7 @@
        URLs (article slugs, long subdomains) don't truncate prematurely
        on big desktop displays where there's plenty of horizontal room. */
     @media (min-width: 1600px) {
-      .url-pill { max-width: 620px; }
+      .url-pill { min-width: 320px; max-width: 620px; }
     }
 
     /* Narrow viewports: shrink URL pill so traffic lights + icon groups
