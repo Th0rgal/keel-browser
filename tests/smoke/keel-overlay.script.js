@@ -141,10 +141,13 @@
       gap: 3px;
       font: 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
       pointer-events: none;
-      transform: translateY(-100%);
+      transform: translateY(-100%) scale(0.985);
+      transform-origin: 50% 0;
       opacity: 0;
       /* Spring-like ease: quick entrance, soft settle. Closer to Apple's
-         native swipe-in feel than a flat cubic-bezier. */
+         native swipe-in feel than a flat cubic-bezier. The subtle scale
+         from 0.985 -> 1.0 gives a gentle puff that lands the chrome
+         rather than hard-stopping at its final position. */
       transition: transform 260ms cubic-bezier(.16,.84,.20,1), opacity 180ms ease-out;
       /* The scrim base is light/dark neutral; the per-tab accent shows
          through as a very subtle (~8%) tint via a second layer. Matches
@@ -295,7 +298,7 @@
     .spacer { flex: 1 1 auto; }
 
     :host([data-state="visible"]) .ribbon {
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
       opacity: 1;
     }
   `;
