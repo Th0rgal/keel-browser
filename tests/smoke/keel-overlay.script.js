@@ -296,6 +296,11 @@
         linear-gradient(${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}, ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}),
         linear-gradient(${accent}1f, ${accent}1f);
     }
+    /* SVG inside icon grows subtly on hover for tactile feedback —
+       mirrors macOS Dock-style icon-bounce, scaled way down. */
+    .icon svg { transition: transform 140ms cubic-bezier(.16,.84,.20,1); }
+    .icon:hover svg { transform: scale(1.08); }
+    .icon:active svg { transform: scale(0.92); }
     .icon:focus-visible {
       opacity: 1;
       outline: none;
