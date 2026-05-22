@@ -453,7 +453,7 @@
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
       font-size: 13px;
       font-weight: 500;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.005em;
       line-height: 15px;
       /* Tabular numerals so URLs with digits (ports, IPs, dates) align
          vertically when they change — no jitter as you navigate.
