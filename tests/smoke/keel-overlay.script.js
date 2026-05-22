@@ -700,12 +700,15 @@
       transition: height 220ms ease;
     }
     /* Unfocused window: chrome subtly dims, traffic lights desaturate.
-       Matches macOS native chrome behavior. */
+       Matches macOS native chrome behavior. Smooth ~250ms transition
+       so the focus shift feels considered rather than abrupt. */
     :host([data-unfocused="1"]) .ribbon { opacity: 0.85; }
     :host([data-unfocused="1"]) .url-pill { filter: saturate(0.6); }
     :host([data-unfocused="1"]) .icon { opacity: 0.45; }
     :host([data-unfocused="1"]) .ribbon::after { opacity: 0.5; }
     :host([data-unfocused="1"]) .favicon { filter: saturate(0.7); }
+    /* Add filter transitions to elements that change saturate on focus. */
+    .url-pill, .favicon, .ribbon::after { transition: filter 250ms ease, opacity 250ms ease; }
 
     /* Accessibility: honour prefers-reduced-motion. Replace the slide+scale
        with a simple opacity fade so the chrome still appears/disappears
