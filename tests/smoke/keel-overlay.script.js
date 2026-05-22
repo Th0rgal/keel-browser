@@ -625,7 +625,11 @@
     const score = l => {
       const rel = (l.getAttribute("rel") || "").toLowerCase();
       const sizes = (l.getAttribute("sizes") || "").toLowerCase();
+      const type = (l.getAttribute("type") || "").toLowerCase();
+      const href = (l.getAttribute("href") || "").toLowerCase();
       let s = 0;
+      // SVG favicons scale crisply at 15x15 — prefer over raster when offered.
+      if (type === "image/svg+xml" || href.endsWith(".svg")) s += 8;
       if (rel.includes("apple-touch-icon")) s += 5;
       if (rel === "icon") s += 1;
       if (sizes.includes("32")) s += 3;
