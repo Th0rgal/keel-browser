@@ -336,7 +336,7 @@
     }
     .traffic .dot {
       width: 11px; height: 11px; border-radius: 50%;
-      background: ${isLight ? 'rgba(0,0,0,0.14)' : 'rgba(255,255,255,0.18)'};
+      background: ${isLight ? 'rgba(0,0,0,0.18)' : 'rgba(255,255,255,0.22)'};
       /* macOS-style inner shadow: 0.5px highlight at top, 0.5px shadow
          at bottom. Gives the dots a faint dimensionality that reads
          like a real traffic light pip rather than a flat disc. */
