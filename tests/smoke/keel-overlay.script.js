@@ -553,8 +553,10 @@
     :host([data-state="visible"]) .ribbon {
       transform: translateY(0) scale(1);
       opacity: 1;
-      /* Entrance: spring-like, slightly longer than the exit. */
-      transition: transform 260ms cubic-bezier(.16,.84,.20,1), opacity 180ms ease-out;
+      /* Entrance: spring-like. 220ms feels noticeably snappier than the
+         previous 260ms — chrome arrives immediately on summon, lands
+         with the same gentle settle. */
+      transition: transform 220ms cubic-bezier(.16,.84,.20,1), opacity 160ms ease-out;
     }
     :host([data-state="visible"]) .url-pill .text {
       opacity: 1;
