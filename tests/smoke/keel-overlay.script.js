@@ -930,10 +930,24 @@
   // URL pill: [favicon] [host] with optional [Aa Reader badge] on the right.
   // Reload is Cmd/Ctrl-R from the keyboard (already wired in patches/0004),
   // matching real Safari.
+  const urlTextSpan = el("span", { class: "text" }, [host]);
   const urlPill = el("div", { class: "url-pill", title: title, tabindex: "0", role: "textbox", "aria-label": "Address bar" }, [
-    el("span", { class: "text" }, [host]),
+    urlTextSpan,
   ]);
   urlPill.insertBefore(faviconHolder, urlPill.firstChild);
+
+  // SPA navigation: when popstate/hashchange fires, refresh the URL host
+  // display. The favicon doesn't auto-refresh — that would require a new
+  // injection cycle.
+  function refreshUrl() {
+    const newHost = location.host.replace(/^www\./i, "").replace(/</g, "&lt;");
+    if (urlTextSpan.textContent !== newHost) {
+      urlTextSpan.textContent = newHost;
+      urlPill.title = document.title || newHost;
+    }
+  }
+  window.addEventListener("popstate", refreshUrl, { passive: true });
+  window.addEventListener("hashchange", refreshUrl, { passive: true });
 
   if (isArticleShaped()) {
     const readerBadge = el("button", {
