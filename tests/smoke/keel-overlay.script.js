@@ -40,6 +40,13 @@
 // The URL pill is tabbable (role=textbox), icons have aria-labels +
 // keyboard focus rings (2.5px accent ring at 80% alpha). Print media
 // hides the chrome entirely.
+//
+// Interaction rhythm: hover affordances throughout follow a "snappy in,
+// graceful out" timing — cursor entry wakes the element in ~90-140ms,
+// cursor leave settles back over ~180-220ms with a spring curve. Press
+// (active) states snap in under 80ms for tactile feedback. Smaller
+// elements (traffic dots) use tighter timings (~80/120ms) than larger
+// ones (URL pill: 140/220ms) so all motion feels proportional to scale.
 
 (() => {
   if (document.getElementById("__keel_chrome__")) return;
