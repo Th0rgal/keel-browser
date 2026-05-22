@@ -411,6 +411,9 @@
       font-weight: 500;
       letter-spacing: -0.01em;
       line-height: 15px;
+      /* Tabular numerals so URLs with digits (ports, IPs, dates) align
+         vertically when they change — no jitter as you navigate. */
+      font-variant-numeric: tabular-nums;
       /* Soft fade at the edges so truncated URLs trail off rather than
          hitting a hard ellipsis. The mask reveals 100% of the text
          except a 4px fade zone on each side. */
