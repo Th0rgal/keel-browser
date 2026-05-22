@@ -438,6 +438,11 @@
     /* When Reader badge is present, drop the text padding-right since the
        badge itself provides right-side visual weight. */
     .url-pill:has(.reader-badge) .text { padding-right: 0; }
+    /* Hovering the favicon area gives it a tiny lift — feedback that it's
+       interactive (will reveal site info / certificate). */
+    .url-pill .favicon-holder:hover .favicon {
+      transform: scale(1.08);
+    }
     /* Fixed-size holder so layout never jiggles when the favicon swaps in
        over the lock placeholder. */
     .url-pill .favicon-holder {
@@ -460,7 +465,7 @@
       width: 15px; height: 15px;
       object-fit: contain;
       border-radius: 4px;
-      transition: opacity 160ms ease;
+      transition: opacity 160ms ease, transform 120ms ease;
       animation: favicon-arrive 320ms cubic-bezier(.16,.84,.20,1) backwards;
       animation-delay: 160ms;
       /* Hairline halo + 1px soft drop shadow: gives the favicon a faint
