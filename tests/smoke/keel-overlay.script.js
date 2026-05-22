@@ -412,11 +412,20 @@
     .url-pill .favicon-holder .lock {
       transition: opacity 160ms ease;
     }
+    /* Initial favicon appearance: a tiny shimmer (scale 0.85 -> 1.0)
+       to signal the chrome has loaded and identified the page. Only
+       fires on initial inject. */
+    @keyframes favicon-arrive {
+      from { transform: scale(0.85); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
     .url-pill .favicon {
       width: 15px; height: 15px;
       object-fit: contain;
       border-radius: 4px;
       transition: opacity 160ms ease;
+      animation: favicon-arrive 320ms cubic-bezier(.16,.84,.20,1) backwards;
+      animation-delay: 160ms;
       /* Hairline halo + 1px soft drop shadow: gives the favicon a faint
          "app icon" depth (Arc browser does this very subtly). Halo also
          protects dark-on-dark favicons (linear's circle, pitchfork's dot)
