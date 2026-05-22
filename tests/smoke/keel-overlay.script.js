@@ -20,7 +20,9 @@
 //     becomes the page accent
 //   - accent tints the scrim base, the bottom stripe, the URL pill bg,
 //     the icon-hover background, and the URL-pill hover border
-//   - the favicon (15x15, SVG preferred) carries visual brand
+//   - the favicon (16x16, SVG preferred) carries visual brand
+//   - meta[theme-color] selection is media-aware (matches the chrome's
+//     light/dark paint mode rather than always picking the first meta)
 //   - clamped HSL: saturation ≤ 0.55, lightness ∈ [0.40, 0.70]
 //
 // Layout: the chrome occupies a permanent 40-px band at the top of the
