@@ -870,10 +870,13 @@
     }
     /* In browser fullscreen mode, the chrome should retreat — let the
        page have the whole viewport (Safari on macOS: Cmd-Ctrl-F;
-       Windows/Linux: F11). */
+       Windows/Linux: F11). The transform matches the chrome's initial
+       inject state (translateY(-100%) scale(0.985)) so entering and
+       exiting fullscreen feel like the chrome's own arrive/retreat
+       animation, not a separate hide/show motion. */
     :host-context(:fullscreen) .ribbon,
     :host-context(:fullscreen) .peek {
-      transform: translateY(-100%) !important;
+      transform: translateY(-100%) scale(0.985) !important;
       opacity: 0 !important;
     }
   `;
