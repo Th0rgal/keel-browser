@@ -47,6 +47,9 @@ const sites = [
   { name: "28-cron",       url: "https://cal.com",           theme: "light" },
   { name: "29-mux",        url: "https://www.mux.com",       theme: "dark"  },
   { name: "30-readwise",   url: "https://readwise.io",       theme: "light" },
+  // Daily-use search/reference
+  { name: "31-google",     url: "https://www.google.com",    theme: "light" },
+  { name: "32-mdn",        url: "https://developer.mozilla.org", theme: "light" },
 ];
 
 const isRoot = process.getuid && process.getuid() === 0;
