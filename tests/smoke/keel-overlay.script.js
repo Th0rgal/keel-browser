@@ -836,6 +836,14 @@
         ? '0 1px 0 rgba(255,255,255,0.5), 0 0 1px rgba(255,255,255,0.4)'
         : '0 1px 0 rgba(0,0,0,0.3), 0 0 1px rgba(0,0,0,0.2)'};
     }
+    /* On pill-level hover (cursor anywhere in the URL pill), the badge
+       lifts to opacity 0.85 — a subtle "secondary wake" that lets the
+       badge participate in the pill's hover state without becoming as
+       prominent as the direct badge-hover state (which goes to 1.0). */
+    .url-pill:hover .reader-badge,
+    .url-pill:focus-visible .reader-badge {
+      opacity: 0.85;
+    }
     .url-pill .reader-badge:hover,
     .url-pill .reader-badge:focus-visible {
       opacity: 1;
