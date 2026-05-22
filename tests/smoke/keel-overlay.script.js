@@ -393,27 +393,32 @@
     }
     .url-pill .right-icons { display: flex; align-items: center; gap: 0; margin-right: -6px; }
     .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
-    /* Safari-style Reader Mode badge — only appears for article-shaped pages */
+    /* Safari-style Reader Mode badge — only appears for article-shaped pages.
+       Hairline border + subtle accent text-color so the badge reads as
+       a distinct interactive affordance rather than a passive label. */
     .url-pill .reader-badge {
       flex: 0 0 auto;
       margin-right: -6px;
       width: 22px; height: 18px;
-      border: none;
-      background: ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.10)'};
+      background: ${isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.06)'};
       color: ${isLight ? '#1d1d1f' : '#e9ebef'};
+      border: 0.5px solid ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'};
       border-radius: 4px;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
       font-weight: 600;
       font-size: 10px;
       cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 120ms ease, background 120ms ease;
+      opacity: 0.75;
+      transition: opacity 120ms ease, background 120ms ease, border-color 120ms ease, color 120ms ease;
       display: inline-flex; align-items: center; justify-content: center;
       letter-spacing: -0.02em;
+      box-sizing: border-box;
     }
     .url-pill .reader-badge:hover {
       opacity: 1;
-      background: ${isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.16)'};
+      background: ${accent}22;
+      color: ${accent};
+      border-color: ${accent}66;
     }
 
     .spacer { flex: 1 1 auto; }
