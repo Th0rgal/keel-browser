@@ -42,6 +42,11 @@ const sites = [
   { name: "24-reddit",     url: "https://www.reddit.com",    theme: "dark"  },
   { name: "25-bbc",        url: "https://www.bbc.com",       theme: "light" },
   { name: "26-substack",   url: "https://substack.com",      theme: "light" },
+  // Design-forward / portfolio / experimental
+  { name: "27-rauno",      url: "https://rauno.me",          theme: "light" },
+  { name: "28-cron",       url: "https://cal.com",           theme: "light" },
+  { name: "29-mux",        url: "https://www.mux.com",       theme: "dark"  },
+  { name: "30-readwise",   url: "https://readwise.io",       theme: "light" },
 ];
 
 const isRoot = process.getuid && process.getuid() === 0;
