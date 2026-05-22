@@ -374,8 +374,9 @@
       transition: background 140ms ease, box-shadow 140ms ease,
                   min-width 220ms cubic-bezier(.16,.84,.20,1);
     }
-    .url-pill:hover {
-      /* Bumps min-width on hover to subtly hint at edit-on-click —
+    .url-pill:hover,
+    .url-pill:focus-visible {
+      /* Bumps min-width on hover/focus to subtly hint at edit-on-click —
          Safari grows the URL bar slightly when focused. */
       min-width: 360px;
       background:
