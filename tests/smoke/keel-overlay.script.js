@@ -839,6 +839,10 @@
         display: none;
       }
       .url-pill { min-width: 140px; max-width: 240px; }
+      /* Reader badge shrinks slightly on phone-sized viewports — at this
+         scale the standard 20x16 badge starts to feel disproportionately
+         large against the 140-240px pill. */
+      .url-pill .reader-badge { width: 18px; height: 14px; font-size: 9px; }
     }
 
     :host([data-state="visible"]) .ribbon {
