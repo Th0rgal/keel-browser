@@ -663,15 +663,20 @@
     const main = document.querySelector("main, [role=main]");
     const container = article || main;
     if (!container) return false;
-    // Within that container, demand a lot of textual content.
     const ps = container.querySelectorAll("p");
-    if (ps.length < 6) return false;
-    let textHeavy = 0;
+    if (ps.length < 8) return false;
+    // Count "long" paragraphs (>150 chars). Articles have many; marketing
+    // copy with stylized paragraphs rarely crosses 150 chars per <p>.
+    let longPs = 0, totalLen = 0;
     for (const p of ps) {
-      if (p.textContent.trim().length > 120) textHeavy++;
+      const len = p.textContent.trim().length;
+      totalLen += len;
+      if (len > 150) longPs++;
     }
-    // At least 5 paragraphs of substantial prose.
-    return textHeavy >= 5;
+    // At least 5 long-form (>150 char) paragraphs AND average paragraph
+    // length > 160. Pitch's marketing fails this — paragraphs are bigger
+    // headings/CTAs, not flowing prose. Articles satisfy both.
+    return longPs >= 5 && totalLen / ps.length > 160;
   }
 
   // URL pill: [favicon] [host] with optional [Aa Reader badge] on the right.
