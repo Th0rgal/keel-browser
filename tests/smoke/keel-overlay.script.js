@@ -363,6 +363,28 @@
     }
     .url-pill .right-icons { display: flex; align-items: center; gap: 0; margin-right: -6px; }
     .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
+    /* Safari-style Reader Mode badge — only appears for article-shaped pages */
+    .url-pill .reader-badge {
+      flex: 0 0 auto;
+      margin-right: -6px;
+      width: 22px; height: 18px;
+      border: none;
+      background: ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.10)'};
+      color: ${isLight ? '#1d1d1f' : '#e9ebef'};
+      border-radius: 4px;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 10px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 120ms ease, background 120ms ease;
+      display: inline-flex; align-items: center; justify-content: center;
+      letter-spacing: -0.02em;
+    }
+    .url-pill .reader-badge:hover {
+      opacity: 1;
+      background: ${isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.16)'};
+    }
 
     .spacer { flex: 1 1 auto; }
 
@@ -518,13 +540,49 @@
     faviconEl.replaceWith(lock);
   });
 
-  // URL pill is now [favicon] [host] only — no inline reload button.
+  // Detect if the page is "article-shaped" — significant article/main
+  // element, multiple paragraphs, headings. If so, the URL pill shows a
+  // Safari-style "Aa" Reader Mode badge.
+  function isArticleShaped() {
+    const article = document.querySelector("article");
+    if (article) {
+      const ps = article.querySelectorAll("p");
+      if (ps.length >= 3) return true;
+    }
+    const main = document.querySelector("main, [role=main]");
+    if (main) {
+      const ps = main.querySelectorAll("p");
+      if (ps.length >= 5) return true;
+    }
+    // Wikipedia / NYT / similar: heavy <p> content + a heading.
+    const h1 = document.querySelector("h1");
+    const ps = document.querySelectorAll("p");
+    if (h1 && ps.length >= 8) {
+      let textHeavy = 0;
+      for (let i = 0; i < Math.min(ps.length, 12); i++) {
+        if (ps[i].textContent.trim().length > 80) textHeavy++;
+      }
+      if (textHeavy >= 3) return true;
+    }
+    return false;
+  }
+
+  // URL pill: [favicon] [host] with optional [Aa Reader badge] on the right.
   // Reload is Cmd/Ctrl-R from the keyboard (already wired in patches/0004),
-  // matching real Safari. This makes the URL pill maximally clean.
+  // matching real Safari.
   const urlPill = el("div", { class: "url-pill", title: title, tabindex: "0", role: "textbox", "aria-label": "Address bar" }, [
     el("span", { class: "text" }, [host]),
   ]);
   urlPill.insertBefore(faviconEl, urlPill.firstChild);
+
+  if (isArticleShaped()) {
+    const readerBadge = el("button", {
+      class: "reader-badge",
+      title: "Show Reader",
+      "aria-label": "Show Reader",
+    }, ["Aa"]);
+    urlPill.appendChild(readerBadge);
+  }
 
   // Right side: just share + tab overview. New-tab moves to Ctrl/Cmd-T —
   // having three icons here always collides with site CTAs (Sign up, Try X,
