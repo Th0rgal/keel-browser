@@ -477,6 +477,7 @@
     }
     @media (max-width: 700px) {
       .url-pill { min-width: 180px; max-width: 280px; }
+      .url-pill .text { font-size: 12px; line-height: 14px; }
       .ribbon { padding: 0 10px; }
     }
     @media (max-width: 600px) {
