@@ -342,7 +342,7 @@
       font-size: 14px;
       display: inline-flex; align-items: center; justify-content: center;
       cursor: pointer;
-      opacity: 0.62;
+      opacity: 0.58;
       transition: background 120ms ease, opacity 120ms ease;
     }
     /* Icon hover: mostly neutral fill with a faint tint of the per-tab
