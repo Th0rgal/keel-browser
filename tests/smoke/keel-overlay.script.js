@@ -210,13 +210,16 @@
     .ribbon > * { pointer-events: auto; }
     /* Tint accent — a thin colored under-line that scrolls with the chrome.
        This is the ONLY per-tab tint indicator; the URL pill no longer
-       carries its own inset to avoid double-marking the accent. */
+       carries its own inset to avoid double-marking the accent. A 6px
+       soft glow above it (box-shadow) softens the transition into the
+       page so the line doesn't read as a hard edge cut. */
     .ribbon::after {
       content: ""; position: absolute; left: 0; right: 0; bottom: 0;
       height: 1.5px;
       background: linear-gradient(90deg, transparent 0%, ${accent}90 30%, ${accent}90 70%, transparent 100%);
       opacity: 0.85;
       pointer-events: none;
+      box-shadow: 0 -6px 12px -2px ${accent}30;
     }
 
     /* Steady-state hairline — present even when ribbon is hidden so the user
