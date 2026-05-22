@@ -708,7 +708,10 @@
     }
     /* Initial favicon appearance: a tiny shimmer (scale 0.85 -> 1.0)
        to signal the chrome has loaded and identified the page. Only
-       fires on initial inject. */
+       fires on initial inject. Times itself to land after the chrome
+       has finished entering (~220ms) and the URL text has faded in
+       (~260ms), so the favicon is the final element to arrive in
+       the layered entrance sequence. */
     @keyframes favicon-arrive {
       from { transform: scale(0.85); opacity: 0; }
       to   { transform: scale(1);    opacity: 1; }
