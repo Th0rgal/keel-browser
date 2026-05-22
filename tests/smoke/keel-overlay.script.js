@@ -22,10 +22,13 @@
 //   - the favicon (15x15, SVG preferred) carries visual brand
 //   - clamped HSL: saturation ≤ 0.55, lightness ∈ [0.40, 0.70]
 //
-// Steady state: hidden. A 2-px hairline at the very top with the per-tab
-// accent at low opacity is the only thing visible. Cursor-dwell (200ms
-// in top 60px) summons the chrome with a spring-like translateY + scale;
-// auto-hide 1.2s after the cursor leaves the top area.
+// Layout: the chrome occupies a permanent 40-px band at the top of the
+// window, with page content pushed below via body padding-top. Mirrors
+// macOS Safari's desktop chrome — chrome and page never overlap.
+//
+// State: visible by default. The chrome stays on top, no auto-hide.
+// F11/fullscreen will hide it; keyboard shortcuts (F6, Cmd-L, Cmd-T)
+// call show() to bring it back if hidden.
 //
 // A11y: prefers-reduced-motion swaps animations for opacity fades; the
 // URL pill is tabbable (role=textbox), icons have aria-labels + focus
