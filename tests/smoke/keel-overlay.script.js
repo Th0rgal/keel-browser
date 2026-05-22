@@ -221,21 +221,27 @@
     /* URL pill — the only pill. Centered. The per-tab accent shows only as
        the scrim underline, so no duplicate inset here. Width range tuned
        to Safari's actual URL bar proportions (280-520px). Border radius
-       9px matches macOS Safari's URL field. */
+       9px matches macOS Safari's URL field.
+       Dark mode: pill is *darker* than scrim, like Safari's recessed
+       well effect (not raised glass). The 0.5px top inset highlight
+       still gives it dimension. */
     .url-pill {
       display: inline-flex; align-items: center; gap: 8px;
       height: 27px; min-width: 280px; max-width: 520px;
       padding: 0 12px;
       border-radius: 9px;
-      background: ${isLight ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.06)'};
+      background: ${isLight ? 'rgba(255,255,255,0.62)' : 'rgba(0,0,0,0.22)'};
       color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
-      box-shadow: inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.07)'};
+      box-shadow:
+        inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.09)' : 'rgba(255,255,255,0.04)'},
+        inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.06)'};
       transition: background 140ms ease, box-shadow 140ms ease;
     }
     .url-pill:hover {
-      background: ${isLight ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.10)'};
+      background: ${isLight ? 'rgba(255,255,255,0.82)' : 'rgba(0,0,0,0.30)'};
       box-shadow:
-        inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'},
+        inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.13)' : 'rgba(255,255,255,0.10)'},
+        inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.10)'},
         0 2px 8px -4px rgba(0,0,0,0.15);
     }
     .url-pill .text {
