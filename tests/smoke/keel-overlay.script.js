@@ -650,7 +650,10 @@
       font-size: 10px;
       cursor: pointer;
       opacity: 0.75;
-      transition: opacity 120ms ease, background 120ms ease, border-color 120ms ease, color 120ms ease;
+      /* Asymmetric like the toolbar icons (v149): slow graceful retreat
+         (180ms) when cursor leaves, snappy wake (90ms) on hover-in
+         via the :hover rule. */
+      transition: opacity 180ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease;
       display: inline-flex; align-items: center; justify-content: center;
       letter-spacing: -0.02em;
       box-sizing: border-box;
@@ -666,6 +669,7 @@
       background: ${accent}22;
       color: ${accent};
       border-color: ${accent}66;
+      transition: opacity 90ms ease, background 90ms ease, border-color 90ms ease, color 90ms ease;
     }
 
     .spacer { flex: 1 1 auto; }
