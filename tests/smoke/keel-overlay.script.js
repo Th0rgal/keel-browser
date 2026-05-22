@@ -203,7 +203,7 @@
         ${isLight
           ? 'linear-gradient(180deg, rgba(245,246,248,0.88) 0%, rgba(245,246,248,0.82) 78%, rgba(245,246,248,0) 100%),'
           : 'linear-gradient(180deg, rgba(22,23,26,0.82) 0%, rgba(22,23,26,0.74) 78%, rgba(22,23,26,0) 100%),'}
-        linear-gradient(180deg, ${accent}18 0%, ${accent}10 60%, transparent 100%);
+        linear-gradient(180deg, ${accent}${isLight ? '18' : '24'} 0%, ${accent}${isLight ? '10' : '18'} 60%, transparent 100%);
       backdrop-filter: blur(26px) saturate(180%);
       -webkit-backdrop-filter: blur(26px) saturate(180%);
       /* Soft drop-shadow under the scrim so the chrome reads as "floating
