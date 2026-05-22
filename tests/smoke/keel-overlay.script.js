@@ -525,9 +525,12 @@
       border-bottom-right-radius: 9px;
     }
     /* Hovering the favicon area gives it a tiny lift — feedback that it's
-       interactive (will reveal site info / certificate). */
-    .url-pill .favicon-holder:hover .favicon {
+       interactive (will reveal site info / certificate). The lock fallback
+       gets the same treatment for consistency. */
+    .url-pill .favicon-holder:hover .favicon,
+    .url-pill .favicon-holder:hover .lock {
       transform: scale(1.08);
+      transition: transform 120ms ease;
     }
     /* When URL pill is being pressed/clicked, the favicon briefly scales
        down — tactile press feedback like macOS Dock icon bounce. */
