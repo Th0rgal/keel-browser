@@ -360,11 +360,22 @@
         : '0 1px 0 rgba(0,0,0,0.25)'};
     }
     .url-pill .lock { opacity: 0.42; flex: 0 0 auto; }
-    .url-pill .favicon {
+    /* Fixed-size holder so layout never jiggles when the favicon swaps in
+       over the lock placeholder. */
+    .url-pill .favicon-holder {
+      position: relative;
       width: 15px; height: 15px;
       flex: 0 0 auto;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .url-pill .favicon-holder .lock {
+      transition: opacity 160ms ease;
+    }
+    .url-pill .favicon {
+      width: 15px; height: 15px;
       object-fit: contain;
       border-radius: 4px;
+      transition: opacity 160ms ease;
       /* Hairline halo + 1px soft drop shadow: gives the favicon a faint
          "app icon" depth (Arc browser does this very subtly). Halo also
          protects dark-on-dark favicons (linear's circle, pitchfork's dot)
@@ -541,42 +552,50 @@
     return location.origin + "/favicon.ico";
   }
 
-  const faviconEl = document.createElement("img");
-  faviconEl.className = "favicon";
-  faviconEl.alt = "";
-  faviconEl.referrerPolicy = "no-referrer";
-  faviconEl.src = findFaviconHref();
-  faviconEl.addEventListener("error", () => {
-    // Swap to lock SVG if the favicon failed to load.
-    const lock = svgIcon("lock", { cls: "lock", size: 11 });
-    faviconEl.replaceWith(lock);
+  // Start with the lock SVG visible immediately, then crossfade to the
+  // favicon when it's loaded successfully. Avoids the brief broken-image
+  // placeholder flash that some browsers show during image fetch.
+  const faviconHolder = document.createElement("span");
+  faviconHolder.className = "favicon-holder";
+  const lockGlyph = svgIcon("lock", { cls: "lock", size: 11 });
+  faviconHolder.appendChild(lockGlyph);
+
+  const faviconImg = document.createElement("img");
+  faviconImg.className = "favicon";
+  faviconImg.alt = "";
+  faviconImg.referrerPolicy = "no-referrer";
+  faviconImg.style.opacity = "0";
+  faviconImg.style.position = "absolute";
+  faviconImg.style.inset = "0";
+  faviconImg.addEventListener("load", () => {
+    faviconImg.style.opacity = "1";
+    // The favicon now occupies the holder; hide the lock.
+    lockGlyph.style.opacity = "0";
   });
+  // On error, leave lock visible and never show the img.
+  faviconImg.src = findFaviconHref();
+  faviconHolder.appendChild(faviconImg);
 
   // Detect if the page is "article-shaped" — significant article/main
   // element, multiple paragraphs, headings. If so, the URL pill shows a
   // Safari-style "Aa" Reader Mode badge.
+  // Returns true only when the page is clearly an article (not a docs
+  // landing page or a marketing page with paragraphs in the hero).
   function isArticleShaped() {
+    // Require at least one of the strong signals to be present.
     const article = document.querySelector("article");
-    if (article) {
-      const ps = article.querySelectorAll("p");
-      if (ps.length >= 3) return true;
-    }
     const main = document.querySelector("main, [role=main]");
-    if (main) {
-      const ps = main.querySelectorAll("p");
-      if (ps.length >= 5) return true;
+    const container = article || main;
+    if (!container) return false;
+    // Within that container, demand a lot of textual content.
+    const ps = container.querySelectorAll("p");
+    if (ps.length < 6) return false;
+    let textHeavy = 0;
+    for (const p of ps) {
+      if (p.textContent.trim().length > 120) textHeavy++;
     }
-    // Wikipedia / NYT / similar: heavy <p> content + a heading.
-    const h1 = document.querySelector("h1");
-    const ps = document.querySelectorAll("p");
-    if (h1 && ps.length >= 8) {
-      let textHeavy = 0;
-      for (let i = 0; i < Math.min(ps.length, 12); i++) {
-        if (ps[i].textContent.trim().length > 80) textHeavy++;
-      }
-      if (textHeavy >= 3) return true;
-    }
-    return false;
+    // At least 5 paragraphs of substantial prose.
+    return textHeavy >= 5;
   }
 
   // URL pill: [favicon] [host] with optional [Aa Reader badge] on the right.
@@ -585,7 +604,7 @@
   const urlPill = el("div", { class: "url-pill", title: title, tabindex: "0", role: "textbox", "aria-label": "Address bar" }, [
     el("span", { class: "text" }, [host]),
   ]);
-  urlPill.insertBefore(faviconEl, urlPill.firstChild);
+  urlPill.insertBefore(faviconHolder, urlPill.firstChild);
 
   if (isArticleShaped()) {
     const readerBadge = el("button", {
