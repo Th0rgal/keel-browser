@@ -13,6 +13,10 @@
 
 (() => {
   if (document.getElementById("__keel_chrome__")) return;
+  // Only inject into the top-level frame. Iframes shouldn't paint chrome;
+  // they share the parent's chrome instead. Prevents nested chromes when
+  // the overlay is naively dispatched into all frames.
+  try { if (window !== window.top) return; } catch (e) { return; }
   const P = window.__keelParams__ || {};
 
   // ---- accent extraction (mirrors KeelTabAccent::GetAccentFor) -------------
