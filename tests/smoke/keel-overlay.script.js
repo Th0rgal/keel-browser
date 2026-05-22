@@ -486,6 +486,13 @@
     .icon:focus-visible {
       opacity: 1;
       outline: none;
+      /* Apply the same hover background (neutral darken + accent tint)
+         so keyboard-focused icons look as "ready" as mouse-hovered ones,
+         not just outlined. Without this, focus-visible would override
+         hover state when both were active, losing the hover affordance. */
+      background:
+        linear-gradient(${isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.10)'}, ${isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.10)'}),
+        linear-gradient(${accent}24, ${accent}24);
       box-shadow: 0 0 0 0.5px ${isLight ? '#fff' : '#000'},
                   0 0 0 2.5px ${accent}cc;
     }
