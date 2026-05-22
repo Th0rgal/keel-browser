@@ -463,6 +463,11 @@
       display: inline-flex; align-items: center; justify-content: center;
       letter-spacing: -0.02em;
       box-sizing: border-box;
+      /* Match URL host text-shadow so the badge feels typographically
+         consistent with the host name beside it. */
+      text-shadow: ${isLight
+        ? '0 1px 0 rgba(255,255,255,0.4)'
+        : '0 1px 0 rgba(0,0,0,0.25)'};
     }
     .url-pill .reader-badge:hover {
       opacity: 1;
