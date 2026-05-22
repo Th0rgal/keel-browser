@@ -306,7 +306,12 @@
          gives a more noticeable transition between desktop and
          large-monitor breakpoints. */
       padding: 0 clamp(16px, 1.25vw, 36px);
-      gap: 3px;
+      /* Flex-gap between top-level chrome groups (traffic, leftIcons,
+         spacer, rightIcons). The spacer absorbs most space, so this
+         only matters at the traffic-to-leftIcons boundary. 4px gives
+         a hair more breathing than the previous 3px without changing
+         the cluster grouping. */
+      gap: 4px;
       font: 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Inter", system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
