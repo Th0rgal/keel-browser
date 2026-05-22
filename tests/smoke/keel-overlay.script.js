@@ -439,8 +439,14 @@
 
   // Cursor proximity (Safari-style) — require 200ms dwell in top 60px to
   // avoid accidental summons. After cursor leaves top area, auto-hide in 1.2s.
+  // In the 60-120px band, the peek line subtly brightens as proximity
+  // feedback — gives discoverability without summoning the full chrome.
   let dwellT, inTop = false;
   document.addEventListener("mousemove", e => {
+    // Proximity hint on peek line: 0..1 strength from 120px down to 0.
+    const prox = Math.max(0, Math.min(1, (120 - e.clientY) / 60));
+    peek.style.opacity = String(0.6 + 0.4 * prox);
+
     if (e.clientY < 60) {
       if (!inTop) {
         inTop = true;
