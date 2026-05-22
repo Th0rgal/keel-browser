@@ -797,10 +797,14 @@
   hostEl.dataset.state = "hidden";
 
   let idleT;
-  const show = () => {
+  // Default dwell-to-hide is 1.2s. The initial flash on inject extends to
+  // 1.8s so users get a chance to see the favicon load (favicon HTTP
+  // fetch can take 300-600ms on slow connections, and we want the
+  // identification animation to be observable, not blink past).
+  const show = (holdMs = 1200) => {
     hostEl.dataset.state = "visible";
     clearTimeout(idleT);
-    idleT = setTimeout(() => { hostEl.dataset.state = "hidden"; }, 1200);
+    idleT = setTimeout(() => { hostEl.dataset.state = "hidden"; }, holdMs);
   };
 
   // Cursor proximity (Safari-style) — require 200ms dwell in top 60px to
@@ -833,6 +837,7 @@
     }
   }, { passive: true });
 
-  // Brief flash on inject so the user sees the chrome exists, then auto-hide
-  show();
+  // Brief flash on inject so the user sees the chrome exists. Hold longer
+  // than the default so the favicon has time to fetch + animate in.
+  show(1800);
 })();
