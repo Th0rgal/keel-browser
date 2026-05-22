@@ -476,7 +476,7 @@
          compounding with the SVG's 0.92 to ~0.87 — too compressed. Dock-style
          press: button stays in place, icon inside presses into it. */
     }
-    .icon-group { display: inline-flex; align-items: center; gap: 3px; }
+    .icon-group { display: inline-flex; align-items: center; gap: 4px; }
 
     /* URL pill — the only pill. Geometrically centered in the viewport via
        position: absolute (not flex), since the icon groups on either side
