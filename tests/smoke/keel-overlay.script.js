@@ -203,6 +203,12 @@
   // would now show content that was previously off-screen. Capture and
   // restore scroll Y so the page visually doesn't jump.
   const scrollY = window.scrollY;
+  // Defensive: if a page has no <head> (rare, possible for some early
+  // injection points), create one. Otherwise the appendChild would throw.
+  if (!document.head) {
+    const h = document.createElement("head");
+    document.documentElement.insertBefore(h, document.documentElement.firstChild);
+  }
   document.head.appendChild(pagePushStyle);
   if (scrollY > 0) {
     requestAnimationFrame(() => window.scrollTo({ top: scrollY + 40, behavior: "instant" }));
