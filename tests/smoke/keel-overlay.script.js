@@ -670,7 +670,7 @@
       color: ${isLight ? '#1d1d1f' : '#e9ebef'};
       border: 0.5px solid ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'};
       border-radius: 4px;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Inter", system-ui, sans-serif;
       font-weight: 600;
       font-size: 10px;
       cursor: pointer;
