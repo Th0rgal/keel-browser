@@ -705,6 +705,7 @@
     :host([data-unfocused="1"]) .url-pill { filter: saturate(0.6); }
     :host([data-unfocused="1"]) .icon { opacity: 0.45; }
     :host([data-unfocused="1"]) .ribbon::after { opacity: 0.5; }
+    :host([data-unfocused="1"]) .favicon { filter: saturate(0.7); }
 
     /* Accessibility: honour prefers-reduced-motion. Replace the slide+scale
        with a simple opacity fade so the chrome still appears/disappears
