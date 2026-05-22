@@ -336,6 +336,17 @@
       /* Entrance: spring-like, slightly longer than the exit. */
       transition: transform 260ms cubic-bezier(.16,.84,.20,1), opacity 180ms ease-out;
     }
+
+    /* Accessibility: honour prefers-reduced-motion. Replace the slide+scale
+       with a simple opacity fade so the chrome still appears/disappears
+       but without animated movement that could trigger vestibular issues. */
+    @media (prefers-reduced-motion: reduce) {
+      .ribbon {
+        transform: none !important;
+        transition: opacity 120ms ease !important;
+      }
+      :host([data-state="visible"]) .ribbon { transform: none !important; }
+    }
   `;
   shadow.appendChild(style);
 
