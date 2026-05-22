@@ -32,9 +32,14 @@
 // via a :host-context(:fullscreen) rule; the page gets the full
 // viewport. Exiting fullscreen brings the chrome back automatically.
 //
-// A11y: prefers-reduced-motion swaps animations for opacity fades; the
-// URL pill is tabbable (role=textbox), icons have aria-labels + focus
-// rings. Print media hides the chrome entirely.
+// A11y: prefers-reduced-motion disables all geometric motion — chrome
+// entrance translate, favicon-arrive scale, hover/active SVG scale +
+// rotate + translate transforms, and the loading shimmer's background-
+// position cycle. Opacity / background-color transitions still apply,
+// so the chrome remains visually responsive without animating motion.
+// The URL pill is tabbable (role=textbox), icons have aria-labels +
+// keyboard focus rings (2.5px accent ring at 80% alpha). Print media
+// hides the chrome entirely.
 
 (() => {
   if (document.getElementById("__keel_chrome__")) return;
