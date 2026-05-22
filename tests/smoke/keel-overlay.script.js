@@ -505,6 +505,11 @@
       }
       :host([data-state="visible"]) .ribbon { transform: none !important; }
     }
+
+    /* Don't print the chrome — useful for sites users save as PDF. */
+    @media print {
+      .ribbon, .peek { display: none !important; }
+    }
   `;
   shadow.appendChild(style);
 
