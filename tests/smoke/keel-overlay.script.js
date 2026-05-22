@@ -109,11 +109,18 @@
     l = Math.min(Math.max(l, 0.40), 0.70);
     return hslToCss(h, s, l);
   }
-  function pageAccent(tintColor) {
+  function pageAccent(tintColor, prefersDark) {
     // 1) Honour meta[name="theme-color"] if it's actually a color.
+    //    Sites often ship two variants: <meta name="theme-color"
+    //    media="(prefers-color-scheme: dark)"> and a default one for
+    //    light. We pick the variant that matches the chrome's actual
+    //    paint mode (derived from page-top luminance) so the accent
+    //    matches the visual context, not just whatever was declared
+    //    first.
     const metas = [...document.querySelectorAll('meta[name="theme-color"]')];
-    const chosen =
-      metas.find(m => /dark/.test(m.getAttribute("media") || "")) || metas[0];
+    const chosen = prefersDark
+      ? (metas.find(m => /dark/.test(m.getAttribute("media") || "")) || metas[0])
+      : (metas.find(m => !/dark/.test(m.getAttribute("media") || "")) || metas[0]);
     if (chosen) {
       const a = toAccent(parseColor(chosen.getAttribute("content") || ""));
       if (a) return a;
@@ -180,7 +187,13 @@
   const host    = rawHost.replace(/^www\./i, "");
   const title   = (P.title || document.title || "").replace(/</g, "&lt;");
   const tint    = pageTint();
-  const accent  = pageAccent(tint);
+  // Compute the chrome's light/dark mode from the sampled tint first
+  // so theme-color selection can match the visual context.
+  const isLightForAccent = (() => {
+    const c = parseColor(tint) || { r: 247, g: 246, b: 242 };
+    return (0.2126*c.r + 0.7152*c.g + 0.0722*c.b) > 160;
+  })();
+  const accent  = pageAccent(tint, !isLightForAccent);
 
   const root = document.createElement("div");
   root.id = "__keel_chrome__";
@@ -239,11 +252,9 @@
     requestAnimationFrame(() => window.scrollTo({ top: scrollY + 40, behavior: "instant" }));
   }
 
-  const isLight = (() => {
-    // crude luminance check
-    const c = parseColor(tint) || { r: 247, g: 246, b: 242 };
-    return (0.2126*c.r + 0.7152*c.g + 0.0722*c.b) > 160;
-  })();
+  // Already computed above as isLightForAccent so theme-color selection
+  // could match the chrome's actual paint mode.
+  const isLight = isLightForAccent;
 
   // ---- styles --------------------------------------------------------------
   // 40-px translucent ribbon at the top of the viewport, always visible
