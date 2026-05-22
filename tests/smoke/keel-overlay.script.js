@@ -364,6 +364,11 @@
       font-weight: 500;
       letter-spacing: -0.01em;
       line-height: 15px;
+      /* Subtle fade-in: URL text appears 80ms after the chrome arrives,
+         creating a tiny layered presentation rather than everything
+         showing simultaneously. */
+      opacity: 0;
+      transition: opacity 180ms ease-out;
       /* Offset text slightly left to optically center it against the
          favicon's left-of-center weight. */
       padding-right: 15px;
@@ -449,6 +454,10 @@
       opacity: 1;
       /* Entrance: spring-like, slightly longer than the exit. */
       transition: transform 260ms cubic-bezier(.16,.84,.20,1), opacity 180ms ease-out;
+    }
+    :host([data-state="visible"]) .url-pill .text {
+      opacity: 1;
+      transition-delay: 80ms;
     }
 
     /* Accessibility: honour prefers-reduced-motion. Replace the slide+scale
