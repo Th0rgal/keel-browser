@@ -569,7 +569,7 @@
       background: linear-gradient(90deg, transparent 0%, ${accent}cc 50%, transparent 100%);
       background-size: 50% 100%;
       background-repeat: no-repeat;
-      animation: url-loading-shimmer 1.2s linear infinite;
+      animation: url-loading-shimmer 1.4s linear infinite;
       pointer-events: none;
       border-bottom-left-radius: 9px;
       border-bottom-right-radius: 9px;
