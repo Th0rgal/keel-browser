@@ -436,6 +436,12 @@
          also nudges slightly larger for an "expand" feel. */
       min-width: 360px;
       border-radius: 10px;
+    }
+    .url-pill:hover .text,
+    .url-pill:focus-visible .text {
+      /* Slight text size bump on hover — read as "zooming for input". */
+      font-size: 13.5px;
+      transition: font-size 180ms cubic-bezier(.16,.84,.20,1);
       background:
         ${isLight
           ? 'linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.78) 100%)'
