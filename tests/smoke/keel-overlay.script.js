@@ -222,6 +222,11 @@
       transition: background 120ms ease, opacity 120ms ease;
     }
     .icon:hover { opacity: 1; background: ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}; }
+    .icon:active {
+      background: ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.14)'};
+      transform: scale(0.95);
+      transition-duration: 50ms;
+    }
     .icon-group { display: inline-flex; align-items: center; gap: 2px; }
 
     /* URL pill — the only pill. Centered. The per-tab accent shows only as
@@ -249,6 +254,10 @@
         inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.13)' : 'rgba(255,255,255,0.10)'},
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.10)'},
         0 2px 8px -4px rgba(0,0,0,0.15);
+    }
+    .url-pill:active {
+      transform: scale(0.99);
+      transition-duration: 80ms;
     }
     .url-pill .text {
       flex: 1 1 auto;
