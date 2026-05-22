@@ -239,9 +239,9 @@
   })();
 
   // ---- styles --------------------------------------------------------------
-  // v5: Safari-style top "chrome zone" — when summoned, a 46px translucent
-  // strip with backdrop blur sits above the page, containing all pills as a
-  // single coherent bar. In hidden state, only a 2-px peek line remains.
+  // 40-px translucent ribbon at the top of the viewport, always visible
+  // (Safari-desktop layout). The .peek hairline is kept for the rare
+  // hidden state (e.g. browser fullscreen, where the chrome retreats).
   const style = document.createElement("style");
   style.textContent = `
     :host { all: initial; }
