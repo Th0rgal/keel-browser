@@ -342,11 +342,13 @@
       flex: 0 0 auto;
       object-fit: contain;
       border-radius: 4px;
-      /* Hairline halo for visibility against dark recessed wells with
-         dark-on-dark favicons (linear's circle, pitchfork's dot, etc.). */
+      /* Hairline halo + 1px soft drop shadow: gives the favicon a faint
+         "app icon" depth (Arc browser does this very subtly). Halo also
+         protects dark-on-dark favicons (linear's circle, pitchfork's dot)
+         against the recessed dark well. */
       filter: ${isLight
-        ? 'none'
-        : 'drop-shadow(0 0 0.5px rgba(255,255,255,0.20))'};
+        ? 'drop-shadow(0 0.5px 1px rgba(0,0,0,0.10))'
+        : 'drop-shadow(0 0 0.5px rgba(255,255,255,0.25)) drop-shadow(0 0.5px 1px rgba(0,0,0,0.30))'};
     }
     .url-pill .right-icons { display: flex; align-items: center; gap: 0; margin-right: -6px; }
     .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
