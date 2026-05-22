@@ -378,15 +378,15 @@
     /* SVG inside icon grows subtly on hover for tactile feedback —
        mirrors macOS Dock-style icon-bounce, scaled way down. */
     .icon svg { transition: transform 140ms cubic-bezier(.16,.84,.20,1); }
-    .icon:hover svg { transform: scale(1.08); }
+    .icon:hover svg { transform: scale(1.10); }
     .icon:active svg { transform: scale(0.92); }
     /* Share icon gets a tiny upward lift on hover, mirroring its
        "send up and out" affordance. */
-    .icon[title="Share"]:hover svg { transform: scale(1.08) translateY(-1px); }
+    .icon[title="Share"]:hover svg { transform: scale(1.10) translateY(-1px); }
     /* Tab overview gets a tiny rotation, suggesting "shuffle/see all". */
-    .icon[title="Tab overview"]:hover svg { transform: scale(1.08) rotate(-6deg); }
+    .icon[title="Tab overview"]:hover svg { transform: scale(1.10) rotate(-6deg); }
     /* Reload (if present) does a quarter-turn loop on hover. */
-    .icon[title="Reload"]:hover svg { transform: scale(1.08) rotate(45deg); }
+    .icon[title="Reload"]:hover svg { transform: scale(1.10) rotate(45deg); }
     .icon:focus-visible {
       opacity: 1;
       outline: none;
