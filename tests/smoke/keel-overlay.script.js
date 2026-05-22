@@ -296,7 +296,7 @@
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.06)'},
         0 2px 4px -2px ${isLight ? 'rgba(0,0,0,0.10)' : 'rgba(0,0,0,0.30)'},
         0 8px 20px -10px ${isLight ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.45)'};
-      border-bottom: 0.5px solid ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)'};
+      border-bottom: 0.5px solid ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.06)'};
     }
     .ribbon > * { pointer-events: auto; }
     /* Tint accent — a thin colored under-line that scrolls with the chrome.
