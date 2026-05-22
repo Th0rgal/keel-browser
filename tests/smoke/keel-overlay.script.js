@@ -353,6 +353,7 @@
       height: 27px; min-width: 280px; max-width: 520px;
       padding: 0 14px 0 10px;
       border-radius: 9px;
+      overflow: hidden; /* contain the loading shimmer pseudo-element */
       /* Subtle internal gradient — slightly darker bottom for depth so the
          pill doesn't read as a perfectly flat fill. Mirrors Safari's URL
          field which has a faint vertical gradient. Layered over a very
@@ -443,6 +444,23 @@
     /* When Reader badge is present, drop the text padding-right since the
        badge itself provides right-side visual weight. */
     .url-pill:has(.reader-badge) .text { padding-right: 0; }
+    /* Loading state: shimmering accent border slides across the bottom of
+       the URL pill while the page is still loading. */
+    @keyframes url-loading-shimmer {
+      0%   { background-position: 0% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .url-pill.loading::before {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, ${accent}cc 50%, transparent 100%);
+      background-size: 50% 100%;
+      background-repeat: no-repeat;
+      animation: url-loading-shimmer 1.2s linear infinite;
+      pointer-events: none;
+      border-bottom-left-radius: 9px;
+      border-bottom-right-radius: 9px;
+    }
     /* Hovering the favicon area gives it a tiny lift — feedback that it's
        interactive (will reveal site info / certificate). */
     .url-pill .favicon-holder:hover .favicon {
@@ -771,6 +789,16 @@
       "aria-label": "Show Reader",
     }, ["Aa"]);
     urlPill.appendChild(readerBadge);
+  }
+
+  // Loading state: if the page hasn't fully loaded yet, show a subtle
+  // shimmering border on the URL pill. Clears on window.load.
+  if (document.readyState !== "complete") {
+    urlPill.classList.add("loading");
+    const clearLoad = () => urlPill.classList.remove("loading");
+    window.addEventListener("load", clearLoad, { once: true });
+    // Fallback: if 'load' never fires (some SPAs), clear after 8s.
+    setTimeout(clearLoad, 8000);
   }
 
   // Right side: just share + tab overview. New-tab moves to Ctrl/Cmd-T —
