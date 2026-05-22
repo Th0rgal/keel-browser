@@ -361,9 +361,11 @@
          opacity 1 with state=visible overriding to 0, which caused a
          brief flash of the peek line during inject before the override
          applied. Invert: peek invisible by default, becomes visible
-         only when state is explicitly "hidden". */
+         only when state is explicitly "hidden". Snapped from 220ms to
+         180ms to better match the chrome's own retreat/arrive timing
+         (140-160ms range) — feels coordinated when state transitions. */
       opacity: 0;
-      transition: opacity 220ms;
+      transition: opacity 180ms ease;
     }
     :host([data-state="hidden"]) .peek { opacity: 1; }
 
