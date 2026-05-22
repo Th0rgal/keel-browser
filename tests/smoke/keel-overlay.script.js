@@ -513,8 +513,11 @@
            faint inset so the pill reads as recessed below the scrim
            plane (matches Safari light), not as an elevated white card. */
         inset 0 -0.5px 0 0 ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.20)'},
-        /* outer soft halo to seat the pill in the scrim */
-        0 1px 2px -0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.30)'};
+        /* outer soft halo to seat the pill in the scrim. Dark mode gets
+           a slightly stronger halo (0.32 vs the prior 0.30) so the
+           recessed pill reads as clearly "set into" the scrim against
+           the lighter accent tint that paints through post-v125. */
+        0 1px 2px -0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.32)'};
       transition: background 140ms ease, box-shadow 140ms ease,
                   border-radius 220ms cubic-bezier(.16,.84,.20,1),
                   min-width 220ms cubic-bezier(.16,.84,.20,1);
