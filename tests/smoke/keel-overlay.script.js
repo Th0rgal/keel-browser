@@ -636,7 +636,7 @@
          black underline for the same legibility benefit. */
       text-shadow: ${isLight
         ? '0 1px 0 rgba(255,255,255,0.5), 0 0 1px rgba(255,255,255,0.4)'
-        : '0 1px 0 rgba(0,0,0,0.3), 0 0 1px rgba(0,0,0,0.2)'};
+        : '0 1px 0 rgba(0,0,0,0.35), 0 0 1px rgba(0,0,0,0.25)'};
     }
     .url-pill .lock {
       opacity: 0.55;
