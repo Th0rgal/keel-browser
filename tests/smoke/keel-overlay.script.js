@@ -231,7 +231,7 @@
          Plus a 0.5px top highlight for a glass-like reflection. */
       box-shadow:
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.06)'},
-        0 6px 16px -10px ${isLight ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.55)'};
+        0 8px 20px -10px ${isLight ? 'rgba(0,0,0,0.22)' : 'rgba(0,0,0,0.55)'};
       border-bottom: 0.5px solid ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)'};
     }
     .ribbon > * { pointer-events: auto; }
