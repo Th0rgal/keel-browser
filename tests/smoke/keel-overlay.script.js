@@ -825,7 +825,7 @@
          :hover rule). The transform's added by hover (v161, -0.5px
          lift) gets the same 90ms in / 180ms out treatment via the
          transform property in this list. */
-      transition: opacity 180ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+      transition: opacity 180ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms cubic-bezier(.16,.84,.20,1);
       display: inline-flex; align-items: center; justify-content: center;
       letter-spacing: -0.02em;
       box-sizing: border-box;
