@@ -244,8 +244,14 @@
       background: ${isLight ? 'rgba(255,255,255,0.62)' : 'rgba(0,0,0,0.22)'};
       color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
       box-shadow:
+        /* hairline border */
         inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.09)' : 'rgba(255,255,255,0.04)'},
-        inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.06)'};
+        /* top reflection */
+        inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.06)'},
+        /* recessed well bottom shadow (dark mode only) */
+        ${isLight ? '' : 'inset 0 -0.5px 0 0 rgba(0,0,0,0.20),'}
+        /* outer soft halo to seat the pill in the scrim */
+        0 1px 1px -0.5px ${isLight ? 'rgba(0,0,0,0.04)' : 'rgba(0,0,0,0.25)'};
       transition: background 140ms ease, box-shadow 140ms ease;
     }
     .url-pill:hover {
