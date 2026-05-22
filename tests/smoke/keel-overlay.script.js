@@ -284,8 +284,8 @@
           ? 'linear-gradient(180deg, rgba(245,246,248,0.88) 0%, rgba(245,246,248,0.82) 78%, rgba(245,246,248,0) 100%),'
           : 'linear-gradient(180deg, rgba(22,23,26,0.85) 0%, rgba(22,23,26,0.78) 78%, rgba(22,23,26,0) 100%),'}
         linear-gradient(180deg, ${accent}${isLight ? '18' : '24'} 0%, ${accent}${isLight ? '10' : '18'} 60%, transparent 100%);
-      backdrop-filter: blur(26px) saturate(180%);
-      -webkit-backdrop-filter: blur(26px) saturate(180%);
+      backdrop-filter: blur(28px) saturate(200%);
+      -webkit-backdrop-filter: blur(28px) saturate(200%);
       /* Soft drop-shadow under the scrim so the chrome reads as "floating
          above the page" rather than painted on top. Two layers for more
          realistic depth: a close-in 2px shadow that defines the immediate
