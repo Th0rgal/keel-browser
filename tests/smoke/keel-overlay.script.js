@@ -625,9 +625,12 @@
       transition: transform 140ms cubic-bezier(.16,.84,.20,1);
     }
     /* When URL pill is being pressed/clicked, the favicon briefly scales
-       down — tactile press feedback like macOS Dock icon bounce. */
+       down — tactile press feedback like macOS Dock icon bounce. Aligned
+       to 0.94 (matches the toolbar icon active scale post-v164) — the
+       0.92 was slightly too compressed compound with the pill's 0.99
+       scale (final ~0.91 vs the icon's 0.94). */
     .url-pill:active .favicon {
-      transform: scale(0.92);
+      transform: scale(0.94);
       transition-duration: 80ms;
     }
     /* Fixed-size holder so layout never jiggles when the favicon swaps in
