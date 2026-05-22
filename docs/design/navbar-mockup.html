@@ -97,23 +97,33 @@
       gap: 3px;
       z-index: 10;
       pointer-events: none;
-      background: var(--scrim-bg, linear-gradient(180deg, rgba(245,246,248,0.88) 0%, rgba(245,246,248,0.82) 78%, rgba(245,246,248,0) 100%));
+      /* Layered: radial spotlight + neutral scrim + per-tab accent tint */
+      background:
+        radial-gradient(ellipse 320px 50px at 50% 60%, rgba(255,255,255,0.20), transparent 60%),
+        var(--scrim-bg, linear-gradient(180deg, rgba(245,246,248,0.88) 0%, rgba(245,246,248,0.82) 78%, rgba(245,246,248,0) 100%)),
+        linear-gradient(180deg, color-mix(in srgb, var(--accent) 18%, transparent) 0%, color-mix(in srgb, var(--accent) 10%, transparent) 60%, transparent 100%);
       backdrop-filter: blur(26px) saturate(180%);
       -webkit-backdrop-filter: blur(26px) saturate(180%);
       box-shadow:
         inset 0 0.5px 0 0 var(--scrim-highlight, rgba(255,255,255,0.45)),
-        0 6px 16px -10px var(--scrim-shadow, rgba(0,0,0,0.18));
+        0 8px 20px -10px var(--scrim-shadow, rgba(0,0,0,0.22));
       border-bottom: 0.5px solid var(--scrim-edge, rgba(0,0,0,0.06));
     }
     .ribbon > * { pointer-events: auto; }
-    /* Per-tab tint underline — the sole accent indicator (the URL pill no
-       longer carries a duplicate inset). */
+    /* Per-tab tint underline — the sole accent indicator. Wider colored
+       band with center peak + soft glow above. */
     .ribbon::after {
       content: ""; position: absolute; left: 0; right: 0; bottom: 0;
       height: 1.5px;
-      background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--accent) 75%, transparent) 30%, color-mix(in srgb, var(--accent) 75%, transparent) 70%, transparent 100%);
-      opacity: 0.85;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        color-mix(in srgb, var(--accent) 63%, transparent) 18%,
+        color-mix(in srgb, var(--accent) 72%, transparent) 50%,
+        color-mix(in srgb, var(--accent) 63%, transparent) 82%,
+        transparent 100%);
+      opacity: 0.92;
       pointer-events: none;
+      box-shadow: 0 -6px 12px -2px color-mix(in srgb, var(--accent) 23%, transparent);
     }
 
     .traffic { display: flex; gap: 7px; align-items: center; padding: 0 10px 0 2px; }
