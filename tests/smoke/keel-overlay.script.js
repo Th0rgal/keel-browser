@@ -497,7 +497,7 @@
     .url-pill:focus-visible .text {
       /* Slight text size bump on hover — read as "zooming for input". */
       font-size: 13.5px;
-      transition: font-size 180ms cubic-bezier(.16,.84,.20,1);
+      transition: font-size 140ms cubic-bezier(.16,.84,.20,1);
       background:
         ${isLight
           ? 'linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.78) 100%)'
@@ -552,9 +552,12 @@
       mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 6px), transparent 100%);
       /* Subtle fade-in: URL text appears 80ms after the chrome arrives,
          creating a tiny layered presentation rather than everything
-         showing simultaneously. */
+         showing simultaneously. Also smooth font-size transitions so
+         that on hover-out the text doesn't snap from 13.5px back to
+         13px (the :hover rule has its own snappy 140ms in-transition). */
       opacity: 0;
-      transition: opacity 180ms ease-out;
+      transition: opacity 180ms ease-out,
+                  font-size 220ms cubic-bezier(.16,.84,.20,1);
       /* Offset text slightly left to optically center against the
          favicon's left-of-center weight. Removed when Aa badge is
          present (already provides right-side weight). */
