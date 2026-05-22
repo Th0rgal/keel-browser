@@ -291,6 +291,11 @@
       flex: 0 0 auto;
       object-fit: contain;
       border-radius: 4px;
+      /* Hairline halo for visibility against dark recessed wells with
+         dark-on-dark favicons (linear's circle, pitchfork's dot, etc.). */
+      filter: ${isLight
+        ? 'none'
+        : 'drop-shadow(0 0 0.5px rgba(255,255,255,0.20))'};
     }
     .url-pill .right-icons { display: flex; align-items: center; gap: 0; margin-right: -6px; }
     .url-pill .right-icons .icon { width: 22px; height: 22px; font-size: 11px; opacity: 0.55; border-radius: 6px; }
@@ -321,27 +326,51 @@
 
   // ---- icon set (SVG, 16×16 viewBox, 1.5px stroke, rounded caps) -----------
   // Crisp on all OSes and trivially restyleable via currentColor.
-  // SF-Symbols-like icons: uniform 1.25px stroke, rounded caps, balanced
-  // visual weight. Tuned to read like Safari toolbar icons at 16x16.
+  // SF-Symbols-like icons. Each entry is a list of {tag, attrs} children to
+  // append to an <svg>. Built with createElementNS (no innerHTML/DOMParser)
+  // so we don't trip Trusted Types on sites like youtube.com.
+  const STROKE = { stroke: "currentColor", "stroke-width": "1.25",
+                   "stroke-linecap": "round", fill: "none" };
+  const STROKE_JOIN = Object.assign({}, STROKE, { "stroke-linejoin": "round" });
+  const STROKE_THICK = Object.assign({}, STROKE_JOIN, { "stroke-width": "1.4" });
   const ICONS = {
-    sidebar:  '<path d="M3 4.5h10M3 8h10M3 11.5h10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>',
-    back:     '<path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
-    forward:  '<path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
-    reload:   '<path d="M3.5 8a4.5 4.5 0 1 1 1.3 3.15" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" fill="none"/><path d="M3.2 4v3h3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
-    share:    '<path d="M8 2.5v8M5 5.5l3-3 3 3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M4 8.5v4a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" fill="none"/>',
-    plus:     '<path d="M8 3.5v9M3.5 8h9" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>',
-    grid:     '<rect x="3" y="3" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.1" fill="none"/><rect x="9" y="3" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.1" fill="none"/><rect x="3" y="9" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.1" fill="none"/><rect x="9" y="9" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.1" fill="none"/>',
-    lock:     '<path d="M3 6V4a3 3 0 1 1 6 0v2h.5A1.5 1.5 0 0 1 11 7.5v4A1.5 1.5 0 0 1 9.5 13h-7A1.5 1.5 0 0 1 1 11.5v-4A1.5 1.5 0 0 1 2.5 6H3zm1 0h4V4a2 2 0 1 0-4 0v2z" fill="currentColor"/>',
+    sidebar: [["path", Object.assign({ d: "M3 4.5h10M3 8h10M3 11.5h10" }, STROKE)]],
+    back:    [["path", Object.assign({ d: "M10 4l-4 4 4 4" }, STROKE_THICK)]],
+    forward: [["path", Object.assign({ d: "M6 4l4 4-4 4" }, STROKE_THICK)]],
+    reload:  [
+      ["path", Object.assign({ d: "M3.5 8a4.5 4.5 0 1 1 1.3 3.15" }, STROKE)],
+      ["path", Object.assign({ d: "M3.2 4v3h3" }, STROKE_JOIN)],
+    ],
+    share: [
+      ["path", Object.assign({ d: "M8 2.5v8M5 5.5l3-3 3 3" }, STROKE_JOIN)],
+      ["path", Object.assign({ d: "M4 8.5v4a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-4" }, STROKE)],
+    ],
+    plus: [["path", Object.assign({ d: "M8 3.5v9M3.5 8h9" }, STROKE)]],
+    grid: [
+      ["rect", { x: "3", y: "3", width: "4", height: "4", rx: "0.8", stroke: "currentColor", "stroke-width": "1.1", fill: "none" }],
+      ["rect", { x: "9", y: "3", width: "4", height: "4", rx: "0.8", stroke: "currentColor", "stroke-width": "1.1", fill: "none" }],
+      ["rect", { x: "3", y: "9", width: "4", height: "4", rx: "0.8", stroke: "currentColor", "stroke-width": "1.1", fill: "none" }],
+      ["rect", { x: "9", y: "9", width: "4", height: "4", rx: "0.8", stroke: "currentColor", "stroke-width": "1.1", fill: "none" }],
+    ],
+    lock: [["path", {
+      d: "M3 6V4a3 3 0 1 1 6 0v2h.5A1.5 1.5 0 0 1 11 7.5v4A1.5 1.5 0 0 1 9.5 13h-7A1.5 1.5 0 0 1 1 11.5v-4A1.5 1.5 0 0 1 2.5 6H3zm1 0h4V4a2 2 0 1 0-4 0v2z",
+      fill: "currentColor",
+    }]],
   };
   function svgIcon(name, opts) {
     opts = opts || {};
-    const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    const NS = "http://www.w3.org/2000/svg";
+    const s = document.createElementNS(NS, "svg");
     s.setAttribute("viewBox", name === "lock" ? "0 0 12 14" : "0 0 16 16");
     s.setAttribute("width",  String(opts.size || 16));
     s.setAttribute("height", String(opts.size || 16));
     s.setAttribute("aria-hidden", "true");
     if (opts.cls) s.setAttribute("class", opts.cls);
-    s.innerHTML = ICONS[name];
+    for (const [tag, attrs] of ICONS[name]) {
+      const child = document.createElementNS(NS, tag);
+      for (const k in attrs) child.setAttribute(k, attrs[k]);
+      s.appendChild(child);
+    }
     return s;
   }
   function iconBtn(name, title, opts) {

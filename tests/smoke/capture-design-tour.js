@@ -32,6 +32,11 @@ const sites = [
   { name: "16-supabase",   url: "https://supabase.com",      theme: "dark"  },
   { name: "17-readme",     url: "https://en.wikipedia.org/wiki/Mount_Everest", theme: "light" },
   { name: "18-news",       url: "https://news.ycombinator.com", theme: "light" },
+  // Diversity: rich app, social, marketplace, media.
+  { name: "19-youtube",    url: "https://www.youtube.com",   theme: "dark"  },
+  { name: "20-airbnb",     url: "https://www.airbnb.com",    theme: "light" },
+  { name: "21-spotify",    url: "https://www.spotify.com",   theme: "dark"  },
+  { name: "22-mozilla",    url: "https://www.mozilla.org",   theme: "light" },
 ];
 
 const isRoot = process.getuid && process.getuid() === 0;
