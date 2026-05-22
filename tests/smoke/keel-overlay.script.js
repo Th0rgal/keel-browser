@@ -788,13 +788,23 @@
         ? '0 1px 0 rgba(255,255,255,0.5), 0 0 1px rgba(255,255,255,0.4)'
         : '0 1px 0 rgba(0,0,0,0.3), 0 0 1px rgba(0,0,0,0.2)'};
     }
-    .url-pill .reader-badge:hover {
+    .url-pill .reader-badge:hover,
+    .url-pill .reader-badge:focus-visible {
       opacity: 1;
       background: ${accent}22;
       color: ${accent};
       border-color: ${accent}66;
       transform: translateY(-0.5px);
       transition: opacity 90ms ease, background 90ms ease, border-color 90ms ease, color 90ms ease, transform 90ms ease;
+    }
+    /* Reader badge focus-ring — matches the icon focus treatment (2.5px
+       accent ring + separator, post-v156) but slightly thinner (2px) since
+       the badge itself is a smaller surface. Keyboard-only via
+       :focus-visible. */
+    .url-pill .reader-badge:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 0.5px ${isLight ? '#fff' : '#000'},
+                  0 0 0 2px ${accent}cc;
     }
 
     .spacer { flex: 1 1 auto; }
@@ -892,7 +902,8 @@
       .url-pill:active .favicon,
       .url-pill:hover .favicon,
       .url-pill:focus-visible .favicon,
-      .url-pill .reader-badge:hover { transform: none !important; }
+      .url-pill .reader-badge:hover,
+      .url-pill .reader-badge:focus-visible { transform: none !important; }
       /* Replace the favicon-arrive scale+fade with a pure opacity fade. */
       .url-pill .favicon { animation: none !important; }
       /* The loading-shimmer cycles a background-position translation
