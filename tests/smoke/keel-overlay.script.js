@@ -472,10 +472,14 @@
   // SF-Symbols-like icons. Each entry is a list of {tag, attrs} children to
   // append to an <svg>. Built with createElementNS (no innerHTML/DOMParser)
   // so we don't trip Trusted Types on sites like youtube.com.
-  const STROKE = { stroke: "currentColor", "stroke-width": "1.25",
-                   "stroke-linecap": "round", fill: "none" };
-  const STROKE_JOIN = Object.assign({}, STROKE, { "stroke-linejoin": "round" });
-  const STROKE_THICK = Object.assign({}, STROKE_JOIN, { "stroke-width": "1.4" });
+  // Unified stroke width 1.5px across all icons for visual consistency.
+  // Previously chevrons used 1.4 and the rest 1.25, which made the back/
+  // forward arrows feel heavier than the surrounding icons.
+  const STROKE = { stroke: "currentColor", "stroke-width": "1.5",
+                   "stroke-linecap": "round", "stroke-linejoin": "round",
+                   fill: "none" };
+  const STROKE_JOIN = STROKE;
+  const STROKE_THICK = STROKE;
   const ICONS = {
     sidebar: [["path", Object.assign({ d: "M3 4.5h10M3 8h10M3 11.5h10" }, STROKE)]],
     back:    [["path", Object.assign({ d: "M10 4l-4 4 4 4" }, STROKE_THICK)]],
