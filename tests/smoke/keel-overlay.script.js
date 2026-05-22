@@ -582,8 +582,9 @@
       transition-duration: 80ms;
     }
     /* Keyboard focus ring — visible only when reached via Tab/Cmd-L, not
-       on mouse focus. Matches Safari's accessibility: 2px accent ring with
-       a 0.5px inset white separator. */
+       on mouse focus. 2.5px accent ring (~80% alpha post-v156) with a
+       0.5px white/black separator that prevents the ring from fusing
+       with the pill's accent-tinted background on saturated-brand sites. */
     .url-pill:focus-visible {
       outline: none;
       box-shadow:
