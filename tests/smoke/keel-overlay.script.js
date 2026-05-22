@@ -614,7 +614,7 @@
       box-shadow:
         inset 0 0 0 0.5px ${accent}80,
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.10)'},
-        0 2px 14px -4px ${accent}33;
+        0 2px 14px -4px ${accent}40;
     }
     .url-pill:active {
       /* 0.985 (1.5% shrink) is slightly more pronounced than the prior
