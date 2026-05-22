@@ -356,9 +356,16 @@
         linear-gradient(180deg,
           ${isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.05)'} 0%,
           transparent 100%);
+      /* Default invisible — only shows when chrome is hidden (rare, e.g.
+         keyboard summon away in some flow). Previously default was
+         opacity 1 with state=visible overriding to 0, which caused a
+         brief flash of the peek line during inject before the override
+         applied. Invert: peek invisible by default, becomes visible
+         only when state is explicitly "hidden". */
+      opacity: 0;
       transition: opacity 220ms;
     }
-    :host([data-state="visible"]) .peek { opacity: 0; }
+    :host([data-state="hidden"]) .peek { opacity: 1; }
 
     /* Traffic lights — standalone, no pill */
     .traffic {
