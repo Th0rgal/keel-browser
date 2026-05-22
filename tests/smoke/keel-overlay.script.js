@@ -778,18 +778,16 @@
   const STROKE = { stroke: "currentColor", "stroke-width": "1.5",
                    "stroke-linecap": "round", "stroke-linejoin": "round",
                    fill: "none" };
-  const STROKE_JOIN = STROKE;
-  const STROKE_THICK = STROKE;
   const ICONS = {
     sidebar: [["path", Object.assign({ d: "M3 4.5h10M3 8h10M3 11.5h10" }, STROKE)]],
-    back:    [["path", Object.assign({ d: "M10 4l-4 4 4 4" }, STROKE_THICK)]],
-    forward: [["path", Object.assign({ d: "M6 4l4 4-4 4" }, STROKE_THICK)]],
+    back:    [["path", Object.assign({ d: "M10 4l-4 4 4 4" }, STROKE)]],
+    forward: [["path", Object.assign({ d: "M6 4l4 4-4 4" }, STROKE)]],
     reload:  [
       ["path", Object.assign({ d: "M3.5 8a4.5 4.5 0 1 1 1.3 3.15" }, STROKE)],
-      ["path", Object.assign({ d: "M3.2 4v3h3" }, STROKE_JOIN)],
+      ["path", Object.assign({ d: "M3.2 4v3h3" }, STROKE)],
     ],
     share: [
-      ["path", Object.assign({ d: "M8 2.5v8M5 5.5l3-3 3 3" }, STROKE_JOIN)],
+      ["path", Object.assign({ d: "M8 2.5v8M5 5.5l3-3 3 3" }, STROKE)],
       ["path", Object.assign({ d: "M4 8.5v4a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-4" }, STROKE)],
     ],
     plus: [["path", Object.assign({ d: "M8 3.5v9M3.5 8h9" }, STROKE)]],
