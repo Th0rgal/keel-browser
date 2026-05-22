@@ -196,8 +196,21 @@
   }
 
   // Strip leading "www." for a cleaner read in the URL pill — matches Safari
-  // and Arc. The full host is still in the tooltip via `title`.
-  const rawHost = (P.host || location.host).replace(/</g, "&lt;");
+  // and Arc. The full host is still in the tooltip via `title`. For URL
+  // schemes that have no hostname (file://, about:blank, etc.) fall back
+  // to a sensible label so the pill doesn't show an empty string.
+  let rawHost = (P.host || location.host).replace(/</g, "&lt;");
+  if (!rawHost) {
+    if (location.protocol === "file:") {
+      const last = location.pathname.split("/").filter(Boolean).pop();
+      rawHost = (last || "Local file").replace(/</g, "&lt;");
+    } else if (location.protocol === "about:") {
+      rawHost = (location.pathname || "New Tab").replace(/</g, "&lt;");
+    } else {
+      // data:, javascript:, etc. — show the protocol name.
+      rawHost = location.protocol.replace(/:$/, "").replace(/</g, "&lt;");
+    }
+  }
   const host    = rawHost.replace(/^www\./i, "");
   const title   = (P.title || document.title || "").replace(/</g, "&lt;");
   const tint    = pageTint();
