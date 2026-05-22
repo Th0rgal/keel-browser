@@ -391,8 +391,9 @@
          showing simultaneously. */
       opacity: 0;
       transition: opacity 180ms ease-out;
-      /* Offset text slightly left to optically center it against the
-         favicon's left-of-center weight. */
+      /* Offset text slightly left to optically center against the
+         favicon's left-of-center weight. Removed when Aa badge is
+         present (already provides right-side weight). */
       padding-right: 15px;
       /* Tiny text-shadow softens edges against the translucent glass and
          improves legibility when the scrim is busy (gradient sites). */
@@ -401,6 +402,9 @@
         : '0 1px 0 rgba(0,0,0,0.25)'};
     }
     .url-pill .lock { opacity: 0.42; flex: 0 0 auto; }
+    /* When Reader badge is present, drop the text padding-right since the
+       badge itself provides right-side visual weight. */
+    .url-pill:has(.reader-badge) .text { padding-right: 0; }
     /* Fixed-size holder so layout never jiggles when the favicon swaps in
        over the lock placeholder. */
     .url-pill .favicon-holder {
