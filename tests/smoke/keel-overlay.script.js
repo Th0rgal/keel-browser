@@ -904,9 +904,10 @@
     :host([data-state="visible"]) .ribbon {
       transform: translateY(0) scale(1);
       opacity: 1;
-      /* Entrance: spring-like. 220ms feels noticeably snappier than the
-         previous 260ms — chrome arrives immediately on summon, lands
-         with the same gentle settle. */
+      /* Entrance: spring-like. 220ms transform (cubic-bezier overshoot
+         curve gives a tiny settle at the end) + 180ms opacity (matches
+         the URL text fade-in cadence post-v185, so layered elements
+         arrive on the same beat). */
       transition: transform 220ms cubic-bezier(.16,.84,.20,1), opacity 180ms ease-out;
     }
     :host([data-state="visible"]) .url-pill .text {
