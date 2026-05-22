@@ -635,7 +635,7 @@
     }
     .url-pill.loading::before {
       content: ""; position: absolute; left: 0; right: 0; bottom: 0;
-      height: 1px;
+      height: 1.5px;
       background: linear-gradient(90deg, transparent 0%, ${accent}cc 50%, transparent 100%);
       background-size: 50% 100%;
       background-repeat: no-repeat;
