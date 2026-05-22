@@ -357,6 +357,7 @@
       font-size: 13px;
       font-weight: 500;
       letter-spacing: -0.01em;
+      line-height: 15px;
       /* Offset text slightly left to optically center it against the
          favicon's left-of-center weight. */
       padding-right: 15px;
