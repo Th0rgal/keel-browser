@@ -293,7 +293,7 @@
         ${isLight
           ? 'linear-gradient(180deg, rgba(255,255,255,0.66) 0%, rgba(255,255,255,0.58) 100%),'
           : 'linear-gradient(180deg, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.26) 100%),'}
-        ${accent}10;
+        ${accent}18;
       color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
       box-shadow:
         /* hairline border */
