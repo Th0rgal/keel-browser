@@ -637,6 +637,11 @@
         0 12px 28px -12px ${isLight ? 'rgba(0,0,0,0.32)' : 'rgba(0,0,0,0.65)'};
       transition: box-shadow 220ms ease;
     }
+    /* Unfocused window: chrome subtly dims, traffic lights desaturate.
+       Matches macOS native chrome behavior. */
+    :host([data-unfocused="1"]) .ribbon { opacity: 0.85; }
+    :host([data-unfocused="1"]) .url-pill { filter: saturate(0.6); }
+    :host([data-unfocused="1"]) .icon { opacity: 0.45; }
 
     /* Accessibility: honour prefers-reduced-motion. Replace the slide+scale
        with a simple opacity fade so the chrome still appears/disappears
@@ -925,4 +930,14 @@
   }
   syncScrolled();
   window.addEventListener("scroll", syncScrolled, { passive: true });
+
+  // Window-focus aware dimming: when the window loses focus, the chrome
+  // subtly dims — mirrors macOS native window chrome behavior where the
+  // active window's chrome is more saturated than inactive ones.
+  function syncFocus() {
+    hostEl.dataset.unfocused = document.hasFocus() ? "0" : "1";
+  }
+  syncFocus();
+  window.addEventListener("focus", syncFocus, { passive: true });
+  window.addEventListener("blur", syncFocus, { passive: true });
 })();
