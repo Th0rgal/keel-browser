@@ -359,9 +359,9 @@
           ? 'linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.78) 100%)'
           : 'linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.34) 100%)'};
       box-shadow:
-        inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.13)' : 'rgba(255,255,255,0.10)'},
+        inset 0 0 0 0.5px ${accent}55,
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.10)'},
-        0 2px 8px -4px rgba(0,0,0,0.15);
+        0 2px 8px -4px ${accent}25;
     }
     .url-pill:active {
       transform: translate(-50%, -50%) scale(0.99);
