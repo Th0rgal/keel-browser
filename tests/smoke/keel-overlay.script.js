@@ -700,7 +700,8 @@
       background: ${accent}22;
       color: ${accent};
       border-color: ${accent}66;
-      transition: opacity 90ms ease, background 90ms ease, border-color 90ms ease, color 90ms ease;
+      transform: translateY(-0.5px);
+      transition: opacity 90ms ease, background 90ms ease, border-color 90ms ease, color 90ms ease, transform 90ms ease;
     }
 
     .spacer { flex: 1 1 auto; }
@@ -795,7 +796,8 @@
       .icon[title="Forward"]:hover svg,
       .url-pill .favicon-holder:hover .favicon,
       .url-pill .favicon-holder:hover .lock,
-      .url-pill:active .favicon { transform: none !important; }
+      .url-pill:active .favicon,
+      .url-pill .reader-badge:hover { transform: none !important; }
       /* Replace the favicon-arrive scale+fade with a pure opacity fade. */
       .url-pill .favicon { animation: none !important; }
       /* The loading-shimmer cycles a background-position translation
