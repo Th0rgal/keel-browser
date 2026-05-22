@@ -362,8 +362,9 @@
     }
 
     /* Naked icon — no pill background, just hoverable. Safari-style.
-       Slightly more muted than v15 (0.72->0.62) to match Safari's neutral
-       graphite icons rather than its sharp button icons. */
+       Idle opacity 0.62 matches Safari's ~0.6-0.65 neutral graphite
+       icons (was 0.58, which read a touch too dim — icons looked
+       almost dormant rather than discoverably interactive). */
     .icon {
       width: 28px; height: 28px;
       border: none; background: transparent;
@@ -372,7 +373,7 @@
       font-size: 14px;
       display: inline-flex; align-items: center; justify-content: center;
       cursor: pointer;
-      opacity: 0.58;
+      opacity: 0.62;
       transition: background 120ms ease, opacity 120ms ease;
     }
     /* Icon hover: mostly neutral fill with a faint tint of the per-tab
