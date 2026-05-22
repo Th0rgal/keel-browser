@@ -652,7 +652,11 @@
       width: 16px; height: 16px;
       object-fit: contain;
       border-radius: 4px;
-      transition: opacity 160ms ease, transform 120ms ease;
+      /* 220ms transform = the "graceful retreat" timing for hover-out
+         (matches v149/v150/v160 pattern). favicon-holder:hover overrides
+         this with 140ms spring for the snappy wake. Active state has
+         its own 80ms snap via .url-pill:active .favicon. */
+      transition: opacity 160ms ease, transform 220ms cubic-bezier(.16,.84,.20,1);
       animation: favicon-arrive 320ms cubic-bezier(.16,.84,.20,1) backwards;
       animation-delay: 160ms;
       /* Hairline halo + 1px soft drop shadow: gives the favicon a faint
