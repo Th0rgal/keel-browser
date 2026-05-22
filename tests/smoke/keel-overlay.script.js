@@ -594,12 +594,17 @@
     /* Keyboard focus ring — visible only when reached via Tab/Cmd-L, not
        on mouse focus. 2.5px accent ring (~80% alpha post-v156) with a
        0.5px white/black separator that prevents the ring from fusing
-       with the pill's accent-tinted background on saturated-brand sites. */
+       with the pill's accent-tinted background on saturated-brand sites.
+       Recessed-bottom inset shadow preserved (v205) so the pill keeps
+       its v126 "set into the scrim" look during keyboard focus —
+       without this, focused pills looked elevated/flat compared to
+       idle/hover. */
     .url-pill:focus-visible {
       outline: none;
       box-shadow:
         inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.13)' : 'rgba(255,255,255,0.10)'},
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.10)'},
+        inset 0 -0.5px 0 0 ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.20)'},
         0 0 0 0.5px ${isLight ? '#fff' : '#000'},
         0 0 0 2.5px ${accent}cc;
     }
