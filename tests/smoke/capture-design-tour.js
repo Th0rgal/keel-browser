@@ -37,6 +37,11 @@ const sites = [
   { name: "20-airbnb",     url: "https://www.airbnb.com",    theme: "light" },
   { name: "21-spotify",    url: "https://www.spotify.com",   theme: "dark"  },
   { name: "22-mozilla",    url: "https://www.mozilla.org",   theme: "light" },
+  // High-information density, content-heavy
+  { name: "23-nyt",        url: "https://www.nytimes.com",   theme: "light" },
+  { name: "24-reddit",     url: "https://www.reddit.com",    theme: "dark"  },
+  { name: "25-bbc",        url: "https://www.bbc.com",       theme: "light" },
+  { name: "26-substack",   url: "https://substack.com",      theme: "light" },
 ];
 
 const isRoot = process.getuid && process.getuid() === 0;

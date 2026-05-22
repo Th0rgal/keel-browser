@@ -245,7 +245,13 @@
       height: 27px; min-width: 280px; max-width: 520px;
       padding: 0 14px 0 10px;
       border-radius: 9px;
-      background: ${isLight ? 'rgba(255,255,255,0.62)' : 'rgba(0,0,0,0.22)'};
+      /* Subtle internal gradient — slightly darker bottom for depth so the
+         pill doesn't read as a perfectly flat fill. Mirrors Safari's URL
+         field which has a faint vertical gradient. */
+      background:
+        ${isLight
+          ? 'linear-gradient(180deg, rgba(255,255,255,0.66) 0%, rgba(255,255,255,0.58) 100%)'
+          : 'linear-gradient(180deg, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.26) 100%)'};
       color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
       box-shadow:
         /* hairline border */
@@ -259,7 +265,10 @@
       transition: background 140ms ease, box-shadow 140ms ease;
     }
     .url-pill:hover {
-      background: ${isLight ? 'rgba(255,255,255,0.82)' : 'rgba(0,0,0,0.30)'};
+      background:
+        ${isLight
+          ? 'linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.78) 100%)'
+          : 'linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.34) 100%)'};
       box-shadow:
         inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.13)' : 'rgba(255,255,255,0.10)'},
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.10)'},
