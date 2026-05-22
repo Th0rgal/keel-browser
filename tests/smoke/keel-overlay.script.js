@@ -490,8 +490,8 @@
        a distinct interactive affordance rather than a passive label. */
     .url-pill .reader-badge {
       flex: 0 0 auto;
-      margin-right: -6px;
-      width: 22px; height: 18px;
+      margin-right: -4px;
+      width: 20px; height: 16px;
       background: ${isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.06)'};
       color: ${isLight ? '#1d1d1f' : '#e9ebef'};
       border: 0.5px solid ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'};
