@@ -484,7 +484,11 @@
         ? '0 1px 0 rgba(255,255,255,0.4)'
         : '0 1px 0 rgba(0,0,0,0.25)'};
     }
-    .url-pill .lock { opacity: 0.42; flex: 0 0 auto; }
+    .url-pill .lock {
+      opacity: 0.42;
+      flex: 0 0 auto;
+      color: ${isLight ? 'currentColor' : accent};
+    }
     /* When Reader badge is present, drop the text padding-right since the
        badge itself provides right-side visual weight, and grow the pill
        slightly to compensate for the badge taking horizontal space. */
