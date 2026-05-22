@@ -438,8 +438,10 @@
         inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.09)' : 'rgba(255,255,255,0.04)'},
         /* top reflection */
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.06)'},
-        /* recessed well bottom shadow (dark mode only) */
-        ${isLight ? '' : 'inset 0 -0.5px 0 0 rgba(0,0,0,0.20),'}
+        /* recessed well bottom shadow — both modes. Light mode gets a
+           faint inset so the pill reads as recessed below the scrim
+           plane (matches Safari light), not as an elevated white card. */
+        inset 0 -0.5px 0 0 ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.20)'},
         /* outer soft halo to seat the pill in the scrim */
         0 1px 2px -0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.30)'};
       transition: background 140ms ease, box-shadow 140ms ease,
