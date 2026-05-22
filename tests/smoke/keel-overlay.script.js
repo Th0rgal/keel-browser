@@ -343,7 +343,7 @@
     .ribbon::after {
       content: ""; position: absolute; left: 0; right: 0; bottom: 0;
       height: 1.5px;
-      background: linear-gradient(90deg, transparent 0%, ${accent}a0 18%, ${accent}b8 50%, ${accent}a0 82%, transparent 100%);
+      background: linear-gradient(90deg, transparent 0%, ${accent}a0 18%, ${accent}b8 40%, ${accent}b8 60%, ${accent}a0 82%, transparent 100%);
       opacity: 0.92;
       pointer-events: none;
       box-shadow: 0 -8px 14px -2px ${accent}48;
