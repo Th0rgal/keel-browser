@@ -473,10 +473,11 @@
          protects dark-on-dark favicons (linear's circle, pitchfork's dot)
          against the recessed dark well. Stroke matches the chrome's
          border hairline vocabulary so the favicon reads as a chrome
-         element rather than an embedded image. */
+         element rather than an embedded image. On dark mode, the halo
+         picks up a hint of the per-tab accent so it carries identity. */
       filter: ${isLight
         ? 'drop-shadow(0 0.5px 1px rgba(0,0,0,0.10))'
-        : 'drop-shadow(0 0 0.5px rgba(255,255,255,0.25)) drop-shadow(0 0.5px 1px rgba(0,0,0,0.30))'};
+        : `drop-shadow(0 0 0.5px ${accent}66) drop-shadow(0 0.5px 1px rgba(0,0,0,0.30))`};
       box-shadow: 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)'};
     }
     .url-pill .right-icons { display: flex; align-items: center; gap: 0; margin-right: -6px; }
