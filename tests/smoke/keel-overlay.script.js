@@ -229,14 +229,15 @@
     }
     .icon-group { display: inline-flex; align-items: center; gap: 2px; }
 
-    /* URL pill — the only pill. Centered. The per-tab accent shows only as
-       the scrim underline, so no duplicate inset here. Width range tuned
-       to Safari's actual URL bar proportions (280-520px). Border radius
-       9px matches macOS Safari's URL field.
-       Dark mode: pill is *darker* than scrim, like Safari's recessed
-       well effect (not raised glass). The 0.5px top inset highlight
-       still gives it dimension. */
+    /* URL pill — the only pill. Geometrically centered in the viewport via
+       position: absolute (not flex), since the icon groups on either side
+       are asymmetric (more icons left). Matches Safari's URL bar layout.
+       Border radius 9px matches macOS Safari's URL field. Dark mode: pill
+       is *darker* than scrim, like Safari's recessed well effect. */
     .url-pill {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
       display: inline-flex; align-items: center; gap: 8px;
       height: 27px; min-width: 280px; max-width: 520px;
       padding: 0 14px 0 10px;
@@ -262,7 +263,7 @@
         0 2px 8px -4px rgba(0,0,0,0.15);
     }
     .url-pill:active {
-      transform: scale(0.99);
+      transform: translate(-50%, -50%) scale(0.99);
       transition-duration: 80ms;
     }
     .url-pill .text {
@@ -408,13 +409,14 @@
     iconBtn("grid",  "Tab overview"),
   ]);
 
+  // URL pill is position: absolute (centered), so flex order doesn't matter
+  // for it. Left & right icon groups flank it via flex layout.
   const ribbon = el("div", { class: "ribbon" }, [
     traffic,
     leftIcons,
     el("div", { class: "spacer" }),
-    urlPill,
-    el("div", { class: "spacer" }),
     rightIcons,
+    urlPill, // last, but absolute-positioned so visually centered
   ]);
 
   const peek = el("div", { class: "peek" });
