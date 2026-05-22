@@ -585,7 +585,7 @@
        over the lock placeholder. */
     .url-pill .favicon-holder {
       position: relative;
-      width: 15px; height: 15px;
+      width: 16px; height: 16px;
       flex: 0 0 auto;
       display: inline-flex; align-items: center; justify-content: center;
     }
@@ -600,7 +600,7 @@
       to   { transform: scale(1);    opacity: 1; }
     }
     .url-pill .favicon {
-      width: 15px; height: 15px;
+      width: 16px; height: 16px;
       object-fit: contain;
       border-radius: 4px;
       transition: opacity 160ms ease, transform 120ms ease;
