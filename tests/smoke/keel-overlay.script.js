@@ -210,6 +210,18 @@
     document.documentElement.insertBefore(h, document.documentElement.firstChild);
   }
   document.head.appendChild(pagePushStyle);
+
+  // Print-mode: clear the body padding-top added by the chrome's
+  // reserved band, so printed/saved-as-PDF pages don't have a 40px gap
+  // at the top where the chrome would have been.
+  const pagePrintStyle = document.createElement("style");
+  pagePrintStyle.id = "__keel_pageprint__";
+  pagePrintStyle.textContent = `
+    @media print {
+      body { padding-top: ${origPaddingTop}px !important; }
+    }
+  `;
+  document.head.appendChild(pagePrintStyle);
   if (scrollY > 0) {
     requestAnimationFrame(() => window.scrollTo({ top: scrollY + 40, behavior: "instant" }));
   }
