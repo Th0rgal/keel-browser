@@ -337,7 +337,7 @@
           ? 'linear-gradient(180deg, rgba(255,255,255,0.66) 0%, rgba(255,255,255,0.58) 100%),'
           : 'linear-gradient(180deg, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.26) 100%),'}
         ${accent}18;
-      color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
+      color: ${isLight ? '#1d1d1f' : '#f4f5f7'};
       box-shadow:
         /* hairline border */
         inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.09)' : 'rgba(255,255,255,0.04)'},
