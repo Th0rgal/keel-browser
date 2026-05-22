@@ -661,6 +661,12 @@
         0 12px 28px -12px ${isLight ? 'rgba(0,0,0,0.32)' : 'rgba(0,0,0,0.65)'};
       transition: box-shadow 220ms ease;
     }
+    /* Accent line thickens to 2px when scrolled, becoming a slightly
+       more present brand indicator while there's content above. */
+    :host([data-scrolled="1"]) .ribbon::after {
+      height: 2px;
+      transition: height 220ms ease;
+    }
     /* Unfocused window: chrome subtly dims, traffic lights desaturate.
        Matches macOS native chrome behavior. */
     :host([data-unfocused="1"]) .ribbon { opacity: 0.85; }
