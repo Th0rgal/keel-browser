@@ -537,10 +537,13 @@
            plane (matches Safari light), not as an elevated white card. */
         inset 0 -0.5px 0 0 ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.20)'},
         /* outer soft halo to seat the pill in the scrim. Dark mode gets
-           a slightly stronger halo (0.32 vs the prior 0.30) so the
-           recessed pill reads as clearly "set into" the scrim against
-           the lighter accent tint that paints through post-v125. */
-        0 1px 2px -0.5px ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.32)'};
+           a slightly stronger halo (0.32 v184) so the recessed pill
+           reads clearly "set into" the scrim against the accent tint
+           that paints through post-v125. Light mode bumped 0.08 -> 0.10
+           (v201) for symmetric "settled in scrim" feel — the light pill
+           is also recessed (v126) so the close-in halo helps define its
+           bottom edge against the cream-tinted scrim. */
+        0 1px 2px -0.5px ${isLight ? 'rgba(0,0,0,0.10)' : 'rgba(0,0,0,0.32)'};
       transition: background 140ms ease, box-shadow 140ms ease,
                   border-radius 220ms cubic-bezier(.16,.84,.20,1),
                   min-width 220ms cubic-bezier(.16,.84,.20,1);
