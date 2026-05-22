@@ -451,13 +451,13 @@
          overrides during the cursor-in phase. */
       transition: background 180ms ease, opacity 180ms ease;
     }
-    /* Icon hover: mostly neutral fill with a tint of the per-tab accent
-       layered in (~14%), so hovering an icon visually links it to the
-       chrome's identity color without becoming garish. The accent layer
-       is now actually painting post-v125 hex fix, so the previous 12%
-       calibration was slightly understated for sites with strong brand
-       colors — bumped to 14% to read clearly as "this hover belongs to
-       this tab's chrome." */
+    /* Icon hover: neutral darken (7% black light / 10% white dark, v154)
+       layered over the per-tab accent (~14% alpha, v144). Composited the
+       hover treatment links the button visually to the chrome's tab
+       identity without going garish on saturated-brand sites. Pre-v125
+       the accent layer was emitting invalid CSS so the hover was
+       effectively neutral only; the post-v144 14% accent reads clearly
+       on top of the now-working accent compositing. */
     .icon:hover {
       opacity: 1;
       background:
