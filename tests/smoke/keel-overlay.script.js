@@ -430,7 +430,7 @@
       opacity: 1;
       outline: none;
       box-shadow: 0 0 0 0.5px ${isLight ? '#fff' : '#000'},
-                  0 0 0 2.5px ${accent}aa;
+                  0 0 0 2.5px ${accent}cc;
     }
     .icon:active {
       background:
@@ -520,7 +520,7 @@
         inset 0 0 0 0.5px ${isLight ? 'rgba(0,0,0,0.13)' : 'rgba(255,255,255,0.10)'},
         inset 0 0.5px 0 0 ${isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.10)'},
         0 0 0 0.5px ${isLight ? '#fff' : '#000'},
-        0 0 0 2.5px ${accent}aa;
+        0 0 0 2.5px ${accent}cc;
     }
     .url-pill .text {
       flex: 1 1 auto;
