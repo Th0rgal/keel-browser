@@ -177,12 +177,10 @@
   document.documentElement.appendChild(root);
   const shadow = root.attachShadow({ mode: "open" });
 
-  // Reserve 40px at the top of the page for the chrome (Safari-style).
-  // The page content always sits BELOW the chrome — no layout jump on
-  // summon/dismiss. Matches Safari's desktop behavior where the URL bar
-  // permanently occupies its own band. The chrome's hidden state means
-  // an empty translucent band at top (with the 2-px peek hairline), not
-  // a fully reclaimed viewport.
+  // Reserve 40px at the top of the page for the chrome — Safari-desktop
+  // style. The chrome is always visible, so the page content always sits
+  // below it. No layout jump on summon/dismiss because the chrome is
+  // never dismissed.
   const pagePushStyle = document.createElement("style");
   pagePushStyle.id = "__keel_pagepush__";
   pagePushStyle.textContent = `
@@ -838,53 +836,25 @@
   shadow.appendChild(peek);
   shadow.appendChild(ribbon);
 
-  // Hidden by default — pages get the full viewport. The 3-px peek line is
-  // the only steady-state hint. Move cursor into the top ~100px to summon.
+  // Visible by default (Safari desktop behavior). The reserved 40px band
+  // is always shown with the chrome filling it. F11 / fullscreen mode
+  // would hide the chrome temporarily; auto-hide on cursor leave is no
+  // longer the default.
   const hostEl = shadow.host;
-  hostEl.dataset.state = "hidden";
+  hostEl.dataset.state = "visible";
 
-  let idleT;
-  // Default dwell-to-hide is 1.2s. The initial flash on inject extends to
-  // 1.8s so users get a chance to see the favicon load (favicon HTTP
-  // fetch can take 300-600ms on slow connections, and we want the
-  // identification animation to be observable, not blink past).
-  const show = (holdMs = 1200) => {
-    hostEl.dataset.state = "visible";
-    clearTimeout(idleT);
-    idleT = setTimeout(() => { hostEl.dataset.state = "hidden"; }, holdMs);
-  };
+  // The chrome stays visible by default — Safari-like permanent presence.
+  // show() is kept for keyboard-summon shortcuts so the chrome can be
+  // re-shown if it ever gets temporarily hidden (e.g., fullscreen toggle).
+  const show = () => { hostEl.dataset.state = "visible"; };
 
-  // Cursor proximity (Safari-style) — require 200ms dwell in top 60px to
-  // avoid accidental summons. After cursor leaves top area, auto-hide in 1.2s.
-  // In the 60-120px band, the peek line subtly brightens as proximity
-  // feedback — gives discoverability without summoning the full chrome.
-  let dwellT, inTop = false;
-  document.addEventListener("mousemove", e => {
-    // Proximity hint on peek line: 0..1 strength from 120px down to 0.
-    const prox = Math.max(0, Math.min(1, (120 - e.clientY) / 60));
-    peek.style.opacity = String(0.6 + 0.4 * prox);
-
-    if (e.clientY < 60) {
-      if (!inTop) {
-        inTop = true;
-        clearTimeout(dwellT);
-        dwellT = setTimeout(() => { if (inTop) show(); }, 200);
-      }
-    } else {
-      inTop = false;
-      clearTimeout(dwellT);
-    }
-  }, { passive: true });
-
-  // Always-summon shortcuts (mirrors patches/0004 KeelAutohideController)
+  // Keyboard shortcuts still work — F6/Cmd+L focus the URL pill, but
+  // since the chrome stays visible permanently, there's no need to
+  // summon it first. Just ensure it's visible if anything ever hid it.
   document.addEventListener("keydown", e => {
     if (e.key === "F6" || (e.ctrlKey && (e.key === "l" || e.key === "L")) ||
         (e.ctrlKey && (e.key === "t" || e.key === "T"))) {
       show();
     }
   }, { passive: true });
-
-  // Brief flash on inject so the user sees the chrome exists. Hold longer
-  // than the default so the favicon has time to fetch + animate in.
-  show(1800);
 })();
