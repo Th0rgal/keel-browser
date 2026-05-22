@@ -426,7 +426,7 @@
        mirrors macOS Dock-style icon-bounce, scaled way down. */
     .icon svg { transition: transform 140ms cubic-bezier(.16,.84,.20,1); }
     .icon:hover svg { transform: scale(1.10); }
-    .icon:active svg { transform: scale(0.92); }
+    .icon:active svg { transform: scale(0.94); }
     /* Share icon gets a tiny upward lift on hover, mirroring its
        "send up and out" affordance. */
     .icon[title="Share"]:hover svg { transform: scale(1.10) translateY(-1px); }
