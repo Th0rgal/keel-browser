@@ -310,7 +310,7 @@
       background: linear-gradient(90deg, transparent 0%, ${accent}a0 18%, ${accent}b8 50%, ${accent}a0 82%, transparent 100%);
       opacity: 0.92;
       pointer-events: none;
-      box-shadow: 0 -6px 12px -2px ${accent}3a;
+      box-shadow: 0 -8px 14px -2px ${accent}48;
     }
 
     /* Steady-state hairline — present even when ribbon is hidden so the user
