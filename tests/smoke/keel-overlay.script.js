@@ -882,6 +882,15 @@
   faviconImg.src = findFaviconHref();
   faviconHolder.appendChild(faviconImg);
 
+  // Slow-favicon timeout: if the favicon hasn't loaded in 4 seconds,
+  // give up and let the lock fallback stand. Prevents hung load on
+  // sites with broken / unreachable favicon endpoints.
+  setTimeout(() => {
+    if (!faviconImg.complete || faviconImg.naturalWidth <= 1) {
+      faviconImg.style.display = "none";
+    }
+  }, 4000);
+
   // Detect if the page is "article-shaped" — significant article/main
   // element, multiple paragraphs, headings. If so, the URL pill shows a
   // Safari-style "Aa" Reader Mode badge.
