@@ -184,9 +184,13 @@
   // style. The chrome is always visible, so the page content always sits
   // below it. Animate the initial 0 -> 40px shift on inject so pages
   // don't snap-jump when the overlay first attaches.
+  //
+  // scroll-padding-top: 40px means #anchor links and Element.scrollIntoView
+  // land below the chrome rather than under it — matches real Safari.
   const pagePushStyle = document.createElement("style");
   pagePushStyle.id = "__keel_pagepush__";
   pagePushStyle.textContent = `
+    html { scroll-padding-top: 40px !important; }
     body {
       padding-top: 40px !important;
       transition: padding-top 220ms cubic-bezier(.16,.84,.20,1);
