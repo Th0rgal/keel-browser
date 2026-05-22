@@ -517,6 +517,9 @@
         linear-gradient(${accent}24, ${accent}24);
       box-shadow: 0 0 0 0.5px ${isLight ? '#fff' : '#000'},
                   0 0 0 2.5px ${accent}cc;
+      /* 90ms snappy in (matches hover-in timing post-v149); the default
+         180ms ease applies on focus-out for graceful settle. */
+      transition: background 90ms ease, opacity 90ms ease, box-shadow 90ms ease;
     }
     .icon:active {
       background:
