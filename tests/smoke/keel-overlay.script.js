@@ -455,8 +455,10 @@
     }
     .url-pill .lock { opacity: 0.42; flex: 0 0 auto; }
     /* When Reader badge is present, drop the text padding-right since the
-       badge itself provides right-side visual weight. */
+       badge itself provides right-side visual weight, and grow the pill
+       slightly to compensate for the badge taking horizontal space. */
     .url-pill:has(.reader-badge) .text { padding-right: 0; }
+    .url-pill:has(.reader-badge) { min-width: 320px; max-width: 560px; }
     /* Loading state: shimmering accent border slides across the bottom of
        the URL pill while the page is still loading. */
     @keyframes url-loading-shimmer {
