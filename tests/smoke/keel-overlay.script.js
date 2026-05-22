@@ -88,7 +88,12 @@
       }
       r = f(h + 1/3); g = f(h); b = f(h - 1/3);
     }
-    return "rgb(" + Math.round(r*255) + "," + Math.round(g*255) + "," + Math.round(b*255) + ")";
+    // Emit hex (#rrggbb) — many template literals append an alpha byte to
+    // the accent (e.g. `${accent}18` for ~9% alpha), which requires a hex
+    // base. Returning `rgb(...)` here would silently produce invalid CSS
+    // like `rgb(...)18` and the per-tab tint would not paint.
+    const h2 = (n) => Math.round(n*255).toString(16).padStart(2, "0");
+    return "#" + h2(r) + h2(g) + h2(b);
   }
   // Normalize an arbitrary color into a clamped accent (S <= 0.55,
   // L in [0.40, 0.70]). Greys (low saturation) return null so the caller
