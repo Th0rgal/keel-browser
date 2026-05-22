@@ -199,19 +199,23 @@
   // and Arc. The full host is still in the tooltip via `title`. For URL
   // schemes that have no hostname (file://, about:blank, etc.) fall back
   // to a sensible label so the pill doesn't show an empty string.
-  let rawHost = (P.host || location.host).replace(/</g, "&lt;");
-  if (!rawHost) {
-    if (location.protocol === "file:") {
-      const last = location.pathname.split("/").filter(Boolean).pop();
-      rawHost = (last || "Local file").replace(/</g, "&lt;");
-    } else if (location.protocol === "about:") {
-      rawHost = (location.pathname || "New Tab").replace(/</g, "&lt;");
-    } else {
-      // data:, javascript:, etc. — show the protocol name.
-      rawHost = location.protocol.replace(/:$/, "").replace(/</g, "&lt;");
+  // Helper so SPA refreshUrl() picks up the same fallback logic below.
+  function computeDisplayHost() {
+    let rawHost = (P.host || location.host).replace(/</g, "&lt;");
+    if (!rawHost) {
+      if (location.protocol === "file:") {
+        const last = location.pathname.split("/").filter(Boolean).pop();
+        rawHost = (last || "Local file").replace(/</g, "&lt;");
+      } else if (location.protocol === "about:") {
+        rawHost = (location.pathname || "New Tab").replace(/</g, "&lt;");
+      } else {
+        // data:, javascript:, etc. — show the protocol name.
+        rawHost = location.protocol.replace(/:$/, "").replace(/</g, "&lt;");
+      }
     }
+    return rawHost.replace(/^www\./i, "");
   }
-  const host    = rawHost.replace(/^www\./i, "");
+  const host = computeDisplayHost();
   const title   = (P.title || document.title || "").replace(/</g, "&lt;");
   const tint    = pageTint();
   // Compute the chrome's light/dark mode from the sampled tint first
@@ -1183,7 +1187,7 @@
   // host and the user might miss the transition. The dip-and-restore
   // rides on the existing `transition: opacity 180ms` rule.
   function refreshUrl() {
-    const newHost = location.host.replace(/^www\./i, "").replace(/</g, "&lt;");
+    const newHost = computeDisplayHost();
     if (urlTextSpan.textContent !== newHost) {
       urlTextSpan.style.opacity = "0.4";
       requestAnimationFrame(() => {
