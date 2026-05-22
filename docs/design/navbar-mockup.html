@@ -146,10 +146,12 @@
       color: var(--url-fg, #1d1d1f);
       box-shadow:
         inset 0 0 0 0.5px var(--url-border, rgba(0,0,0,0.09)),
-        inset 0 0.5px 0 0 var(--url-highlight, rgba(255,255,255,0.6));
-      transition: background 140ms ease;
+        inset 0 0.5px 0 0 var(--url-highlight, rgba(255,255,255,0.6)),
+        0 1px 1px -0.5px rgba(0,0,0,0.04);
+      transition: background 140ms ease, box-shadow 140ms ease;
     }
     .url-pill:hover { background: var(--url-bg-hover, rgba(255,255,255,0.82)); }
+    .url-pill:active { transform: scale(0.99); transition-duration: 80ms; }
     .url-pill .lock { opacity: 0.42; flex: 0 0 auto; }
     .url-pill .text {
       flex: 1 1 auto;
@@ -193,7 +195,9 @@
       color: #f0f1f3;
       box-shadow:
         inset 0 0 0 0.5px rgba(255,255,255,0.04),
-        inset 0 0.5px 0 0 rgba(255,255,255,0.06);
+        inset 0 0.5px 0 0 rgba(255,255,255,0.06),
+        inset 0 -0.5px 0 0 rgba(0,0,0,0.20),
+        0 1px 1px -0.5px rgba(0,0,0,0.25);
     }
     .window:has(.page[data-mode="dark"]) .url-pill:hover { background: rgba(0,0,0,0.30); }
 
