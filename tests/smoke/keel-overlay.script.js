@@ -820,10 +820,12 @@
       font-size: 10px;
       cursor: pointer;
       opacity: 0.75;
-      /* Asymmetric like the toolbar icons (v149): slow graceful retreat
-         (180ms) when cursor leaves, snappy wake (90ms) on hover-in
-         via the :hover rule. */
-      transition: opacity 180ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease;
+      /* Asymmetric like the toolbar icons (v149/v150): 180ms graceful
+         retreat on hover-out, 90ms snappy wake on hover-in (via the
+         :hover rule). The transform's added by hover (v161, -0.5px
+         lift) gets the same 90ms in / 180ms out treatment via the
+         transform property in this list. */
+      transition: opacity 180ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
       display: inline-flex; align-items: center; justify-content: center;
       letter-spacing: -0.02em;
       box-sizing: border-box;
