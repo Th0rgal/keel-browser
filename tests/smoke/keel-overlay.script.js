@@ -542,7 +542,7 @@
       display: inline-flex; align-items: center; gap: 8px;
       height: 27px; min-height: 27px;
       min-width: 280px; max-width: 520px;
-      padding: 0 14px 0 10px;
+      padding: 0 14px 0 11px;
       border-radius: 9px;
       overflow: hidden; /* contain the loading shimmer pseudo-element */
       /* Subtle internal gradient — slightly darker bottom for depth so the
