@@ -146,9 +146,15 @@
       /* Spring-like ease: quick entrance, soft settle. Closer to Apple's
          native swipe-in feel than a flat cubic-bezier. */
       transition: transform 260ms cubic-bezier(.16,.84,.20,1), opacity 180ms ease-out;
-      background: ${isLight
-        ? 'linear-gradient(180deg, rgba(245,246,248,0.88) 0%, rgba(245,246,248,0.82) 78%, rgba(245,246,248,0) 100%)'
-        : 'linear-gradient(180deg, rgba(22,23,26,0.82) 0%, rgba(22,23,26,0.74) 78%, rgba(22,23,26,0) 100%)'};
+      /* The scrim base is light/dark neutral; the per-tab accent shows
+         through as a very subtle (~8%) tint via a second layer. Matches
+         Safari's "Show color in tab bar" — chrome quietly carries the
+         page's brand color without becoming garish. */
+      background:
+        ${isLight
+          ? 'linear-gradient(180deg, rgba(245,246,248,0.88) 0%, rgba(245,246,248,0.82) 78%, rgba(245,246,248,0) 100%),'
+          : 'linear-gradient(180deg, rgba(22,23,26,0.82) 0%, rgba(22,23,26,0.74) 78%, rgba(22,23,26,0) 100%),'}
+        linear-gradient(180deg, ${accent}18 0%, ${accent}10 60%, transparent 100%);
       backdrop-filter: blur(26px) saturate(180%);
       -webkit-backdrop-filter: blur(26px) saturate(180%);
       /* Soft drop-shadow under the scrim so the chrome reads as "floating
@@ -228,7 +234,7 @@
     .url-pill {
       display: inline-flex; align-items: center; gap: 8px;
       height: 27px; min-width: 280px; max-width: 520px;
-      padding: 0 12px;
+      padding: 0 14px 0 10px;
       border-radius: 9px;
       background: ${isLight ? 'rgba(255,255,255,0.62)' : 'rgba(0,0,0,0.22)'};
       color: ${isLight ? '#1d1d1f' : '#f0f1f3'};
