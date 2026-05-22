@@ -274,6 +274,10 @@
   // hidden state (e.g. browser fullscreen, where the chrome retreats).
   const style = document.createElement("style");
   style.textContent = `
+    /* Reset the host element's inherited styles so the chrome renders
+       independent of whatever the page applies to its descendants —
+       protects against sites that aggressively reset every element's
+       font/color/etc. via the universal selector. */
     :host { all: initial; }
     /* Defensive box-sizing inside the shadow root — prevents page CSS
        that resets body { box-sizing: content-box } from interfering. */
