@@ -512,6 +512,12 @@
     .url-pill .favicon-holder:hover .favicon {
       transform: scale(1.08);
     }
+    /* When URL pill is being pressed/clicked, the favicon briefly scales
+       down — tactile press feedback like macOS Dock icon bounce. */
+    .url-pill:active .favicon {
+      transform: scale(0.92);
+      transition-duration: 80ms;
+    }
     /* Fixed-size holder so layout never jiggles when the favicon swaps in
        over the lock placeholder. */
     .url-pill .favicon-holder {
