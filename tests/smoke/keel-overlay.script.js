@@ -400,7 +400,8 @@
       left: 50%; top: 50%;
       transform: translate(-50%, -50%);
       display: inline-flex; align-items: center; gap: 8px;
-      height: 27px; min-width: 280px; max-width: 520px;
+      height: 27px; min-height: 27px;
+      min-width: 280px; max-width: 520px;
       padding: 0 14px 0 10px;
       border-radius: 9px;
       overflow: hidden; /* contain the loading shimmer pseudo-element */
