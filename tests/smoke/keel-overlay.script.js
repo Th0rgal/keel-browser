@@ -219,7 +219,13 @@
   const title   = (P.title || document.title || "").replace(/</g, "&lt;");
   const tint    = pageTint();
   // Compute the chrome's light/dark mode from the sampled tint first
-  // so theme-color selection can match the visual context.
+  // so theme-color selection can match the visual context. Uses the
+  // ITU-R BT.709 luminance formula (perceptual brightness weighting:
+  // green is more visible to the human eye than blue, so it carries
+  // more weight) with a threshold of 160/255 ≈ 0.63 — a hair above
+  // the perceptual midpoint to bias slightly toward "dark" mode on
+  // cream/off-white pages (e.g. arXiv), keeping the chrome high-
+  // contrast against page text.
   const isLightForAccent = (() => {
     const c = parseColor(tint) || { r: 247, g: 246, b: 242 };
     return (0.2126*c.r + 0.7152*c.g + 0.0722*c.b) > 160;
