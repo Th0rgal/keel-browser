@@ -197,7 +197,15 @@
       transition: padding-top 220ms cubic-bezier(.16,.84,.20,1);
     }
   `;
+  // Preserve scroll position: if the user has already scrolled when chrome
+  // injects, the added 40px would push everything down and the viewport
+  // would now show content that was previously off-screen. Capture and
+  // restore scroll Y so the page visually doesn't jump.
+  const scrollY = window.scrollY;
   document.head.appendChild(pagePushStyle);
+  if (scrollY > 0) {
+    requestAnimationFrame(() => window.scrollTo({ top: scrollY + 40, behavior: "instant" }));
+  }
 
   const isLight = (() => {
     // crude luminance check
