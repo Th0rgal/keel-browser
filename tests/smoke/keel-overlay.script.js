@@ -1,15 +1,35 @@
-// Keel chrome overlay — Safari-style floating segmented pills.
+// Keel chrome overlay — Safari-style top ribbon with per-tab tinting.
 // Injected into the page via CDP/Runtime.evaluate when Brave is launched in
-// --app mode (no native tab strip / address bar). The overlay paints a 60px
-// transparent ribbon at the top with the page color bleeding through, and
-// four separate rounded-white capsules floating on top of it.
+// --app mode (no native tab strip / address bar).
 //
-// Layout (from left to right):
-//   [traffic lights]   [sidebar ▾]   [⟨ ⟩]   ...space...   [host pill]   ...space...   [⇪ ⊕ ⌐]
+// Layout (geometric viewport center for the URL pill, flex for the rest):
 //
-// All capsules are 32px tall, ~14-16px border-radius, glass / blurred,
-// with a single soft drop shadow. The strip itself has no background — the
-// page color tints the area via the standard browser page background.
+//   [⏺⏺⏺]  [☰ ‹ ›]  ……  [🔒 host.com (Aa)]  ……  [⇪ ▢]
+//      ▲       ▲                ▲                  ▲
+//   traffic  left icons    URL pill (favicon +     right icons
+//                          host + reader badge)
+//
+// The ribbon is a 40-px translucent scrim with backdrop-filter blur(26)
+// saturate(180%), a per-tab accent gradient layer (~18-24% opacity), a
+// hairline border-bottom, a 1.5px accent stripe with a soft glow, and a
+// soft drop shadow under the scrim.
+//
+// Per-tab identity (the chrome's signature):
+//   - meta[theme-color] (or mask-icon color, or sampled page-top color)
+//     becomes the page accent
+//   - accent tints the scrim base, the bottom stripe, the URL pill bg,
+//     the icon-hover background, and the URL-pill hover border
+//   - the favicon (15x15, SVG preferred) carries visual brand
+//   - clamped HSL: saturation ≤ 0.55, lightness ∈ [0.40, 0.70]
+//
+// Steady state: hidden. A 2-px hairline at the very top with the per-tab
+// accent at low opacity is the only thing visible. Cursor-dwell (200ms
+// in top 60px) summons the chrome with a spring-like translateY + scale;
+// auto-hide 1.2s after the cursor leaves the top area.
+//
+// A11y: prefers-reduced-motion swaps animations for opacity fades; the
+// URL pill is tabbable (role=textbox), icons have aria-labels + focus
+// rings. Print media hides the chrome entirely.
 
 (() => {
   if (document.getElementById("__keel_chrome__")) return;
