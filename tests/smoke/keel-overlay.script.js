@@ -511,9 +511,13 @@
     }
     .url-pill:hover .text,
     .url-pill:focus-visible .text {
-      /* Slight text size bump on hover — read as "zooming for input". */
+      /* Slight text size bump on hover — read as "zooming for input".
+         All animated properties at 140ms snappy in (the default rule's
+         220ms takes over on hover-out for graceful settle). */
       font-size: 13.5px;
-      transition: font-size 140ms cubic-bezier(.16,.84,.20,1);
+      transition: font-size 140ms cubic-bezier(.16,.84,.20,1),
+                  background 140ms cubic-bezier(.16,.84,.20,1),
+                  box-shadow 140ms cubic-bezier(.16,.84,.20,1);
       background:
         ${isLight
           ? 'linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.78) 100%)'
