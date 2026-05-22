@@ -650,6 +650,9 @@
   // placeholder flash that some browsers show during image fetch.
   const faviconHolder = document.createElement("span");
   faviconHolder.className = "favicon-holder";
+  faviconHolder.title = location.protocol === "https:"
+    ? `Connection is secure (${host})`
+    : `Connection is not secure (${host})`;
   const lockGlyph = svgIcon("lock", { cls: "lock", size: 11 });
   faviconHolder.appendChild(lockGlyph);
 
