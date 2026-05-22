@@ -188,8 +188,9 @@
   // below the chrome — matches real Safari.
   const pagePushStyle = document.createElement("style");
   pagePushStyle.id = "__keel_pagepush__";
-  const origPaddingTop = parseInt(
-    getComputedStyle(document.body).paddingTop, 10) || 0;
+  const origPaddingTop = document.body
+    ? (parseInt(getComputedStyle(document.body).paddingTop, 10) || 0)
+    : 0;
   pagePushStyle.textContent = `
     html { scroll-padding-top: 40px !important; }
     body {
@@ -355,6 +356,9 @@
     .icon svg { transition: transform 140ms cubic-bezier(.16,.84,.20,1); }
     .icon:hover svg { transform: scale(1.08); }
     .icon:active svg { transform: scale(0.92); }
+    /* Share icon gets a tiny upward lift on hover, mirroring its
+       "send up and out" affordance. */
+    .icon[title="Share"]:hover svg { transform: scale(1.08) translateY(-1px); }
     .icon:focus-visible {
       opacity: 1;
       outline: none;
