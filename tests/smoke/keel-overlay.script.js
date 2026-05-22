@@ -467,7 +467,7 @@
       width: 28px; height: 28px;
       border: none; background: transparent;
       color: ${isLight ? '#1d1d1f' : '#e9ebef'};
-      border-radius: 7px;
+      border-radius: 6px;
       font: inherit;
       display: inline-flex; align-items: center; justify-content: center;
       cursor: pointer;
