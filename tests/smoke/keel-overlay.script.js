@@ -286,7 +286,12 @@
       height: 40px;
       z-index: 2147483647;
       display: flex; align-items: center;
-      padding: 0 16px;
+      /* Padding scales gently with viewport width (clamped 16-32px).
+         Standard 1080p stays close to 16px; on ultra-wide / 4K displays
+         the chrome breathes more, so the toolbar icons don't cluster
+         against the viewport edge. Narrow viewport overrides below
+         keep this from going below 10px on phones. */
+      padding: 0 clamp(16px, 1vw, 32px);
       gap: 3px;
       font: 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Inter", system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
