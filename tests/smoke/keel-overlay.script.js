@@ -482,6 +482,12 @@
       flex: 1 1 auto;
       text-align: center;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      /* URL hosts are always LTR (ASCII-only). Force ltr direction even
+         if the page document is RTL — otherwise the favicon would
+         appear on the wrong side, and ellipsis truncation would behave
+         oddly. */
+      direction: ltr;
+      unicode-bidi: isolate;
       font-size: 13px;
       font-weight: 500;
       letter-spacing: -0.005em;
