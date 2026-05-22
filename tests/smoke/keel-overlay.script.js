@@ -332,7 +332,7 @@
 
     /* Traffic lights — standalone, no pill */
     .traffic {
-      display: flex; gap: 7px; align-items: center;
+      display: flex; gap: 8px; align-items: center;
       padding: 0 10px 0 2px;
     }
     .traffic .dot {
