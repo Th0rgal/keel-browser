@@ -278,7 +278,15 @@
       opacity: 0.62;
       transition: background 120ms ease, opacity 120ms ease;
     }
-    .icon:hover { opacity: 1; background: ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}; }
+    /* Icon hover: mostly neutral fill with a faint tint of the per-tab
+       accent layered in (~12%), so hovering an icon visually links it
+       to the chrome's identity color without becoming garish. */
+    .icon:hover {
+      opacity: 1;
+      background:
+        linear-gradient(${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}, ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}),
+        linear-gradient(${accent}1f, ${accent}1f);
+    }
     .icon:focus-visible {
       opacity: 1;
       outline: none;
