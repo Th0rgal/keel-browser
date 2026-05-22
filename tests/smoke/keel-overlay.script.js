@@ -568,12 +568,17 @@
       mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 6px), transparent 100%);
       /* Subtle fade-in: URL text appears 80ms after the chrome arrives,
          creating a tiny layered presentation rather than everything
-         showing simultaneously. Also smooth font-size transitions so
-         that on hover-out the text doesn't snap from 13.5px back to
-         13px (the :hover rule has its own snappy 140ms in-transition). */
+         showing simultaneously. The font-size + background + box-shadow
+         transitions are the "hover-out" timings (220ms graceful spring);
+         the :hover rule overrides font-size with a faster 140ms snap on
+         hover-in. Pre-v167 background and box-shadow weren't in the
+         transition list — they snapped on hover-out, which felt
+         abrupt against the smoothly-animating font-size. */
       opacity: 0;
       transition: opacity 180ms ease-out,
-                  font-size 220ms cubic-bezier(.16,.84,.20,1);
+                  font-size 220ms cubic-bezier(.16,.84,.20,1),
+                  background 220ms cubic-bezier(.16,.84,.20,1),
+                  box-shadow 220ms cubic-bezier(.16,.84,.20,1);
       /* Offset text slightly left to optically center against the
          favicon's left-of-center weight. Removed when Aa badge is
          present (already provides right-side weight). */
