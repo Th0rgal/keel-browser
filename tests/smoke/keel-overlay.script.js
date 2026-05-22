@@ -408,7 +408,7 @@
     .icon:hover {
       opacity: 1;
       background:
-        linear-gradient(${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}, ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'}),
+        linear-gradient(${isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.10)'}, ${isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.10)'}),
         linear-gradient(${accent}24, ${accent}24);
       transition: background 90ms ease, opacity 90ms ease;
     }
