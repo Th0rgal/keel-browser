@@ -316,9 +316,13 @@
         ${isLight ? '' : 'inset 0 -0.5px 0 0 rgba(0,0,0,0.20),'}
         /* outer soft halo to seat the pill in the scrim */
         0 1px 1px -0.5px ${isLight ? 'rgba(0,0,0,0.04)' : 'rgba(0,0,0,0.25)'};
-      transition: background 140ms ease, box-shadow 140ms ease;
+      transition: background 140ms ease, box-shadow 140ms ease,
+                  min-width 220ms cubic-bezier(.16,.84,.20,1);
     }
     .url-pill:hover {
+      /* Bumps min-width on hover to subtly hint at edit-on-click —
+         Safari grows the URL bar slightly when focused. */
+      min-width: 360px;
       background:
         ${isLight
           ? 'linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.78) 100%)'
