@@ -548,7 +548,7 @@
         : '0 1px 0 rgba(0,0,0,0.3), 0 0 1px rgba(0,0,0,0.2)'};
     }
     .url-pill .lock {
-      opacity: 0.42;
+      opacity: 0.55;
       flex: 0 0 auto;
       color: ${isLight ? 'currentColor' : accent};
     }
