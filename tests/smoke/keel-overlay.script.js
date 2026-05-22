@@ -28,8 +28,9 @@
 // macOS Safari's desktop chrome — chrome and page never overlap.
 //
 // State: visible by default. The chrome stays on top, no auto-hide.
-// F11/fullscreen will hide it; keyboard shortcuts (F6, Cmd-L, Cmd-T)
-// call show() to bring it back if hidden.
+// Browser fullscreen (Cmd-Ctrl-F) makes the chrome retreat off-screen
+// via a :host-context(:fullscreen) rule; the page gets the full
+// viewport. Exiting fullscreen brings the chrome back automatically.
 //
 // A11y: prefers-reduced-motion swaps animations for opacity fades; the
 // URL pill is tabbable (role=textbox), icons have aria-labels + focus
