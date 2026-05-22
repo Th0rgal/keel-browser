@@ -146,11 +146,11 @@
       transform: translateY(-100%) scale(0.985);
       transform-origin: 50% 0;
       opacity: 0;
-      /* Spring-like ease: quick entrance, soft settle. Closer to Apple's
-         native swipe-in feel than a flat cubic-bezier. The subtle scale
-         from 0.985 -> 1.0 gives a gentle puff that lands the chrome
-         rather than hard-stopping at its final position. */
-      transition: transform 260ms cubic-bezier(.16,.84,.20,1), opacity 180ms ease-out;
+      /* Exit (hidden state): faster, just retreat. Entrance overrides
+         these in the :host([data-state="visible"]) rule below to spring
+         in more deliberately — Apple uses asymmetric in/out timing on
+         menu bars and tab pills. */
+      transition: transform 160ms cubic-bezier(.5,0,.85,.4), opacity 140ms ease-in;
       /* The scrim base is light/dark neutral; the per-tab accent shows
          through as a very subtle (~8%) tint via a second layer. Matches
          Safari's "Show color in tab bar" — chrome quietly carries the
@@ -333,6 +333,8 @@
     :host([data-state="visible"]) .ribbon {
       transform: translateY(0) scale(1);
       opacity: 1;
+      /* Entrance: spring-like, slightly longer than the exit. */
+      transition: transform 260ms cubic-bezier(.16,.84,.20,1), opacity 180ms ease-out;
     }
   `;
   shadow.appendChild(style);
