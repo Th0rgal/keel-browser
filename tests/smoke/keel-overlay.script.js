@@ -373,11 +373,14 @@
       border-bottom: 0.5px solid ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.06)'};
     }
     .ribbon > * { pointer-events: auto; }
-    /* Tint accent — a thin colored under-line that scrolls with the chrome.
-       This is the ONLY per-tab tint indicator; the URL pill no longer
-       carries its own inset to avoid double-marking the accent. A 6px
-       soft glow above it (box-shadow) softens the transition into the
-       page so the line doesn't read as a hard edge cut. */
+    /* Tint accent — a thin colored under-line at the chrome's bottom
+       edge. Originally the ONLY accent indicator; post-v125 the accent
+       also paints into the scrim base, URL pill bg, icon hover, hover
+       border, favicon halo (dark), Reader badge hover, loading shimmer,
+       and focus rings. The bottom stripe remains the most defined
+       per-tab brand cue — a 8px soft glow above it (post-v133) softens
+       the transition into the page so the line doesn't read as a hard
+       edge cut. */
     .ribbon::after {
       content: ""; position: absolute; left: 0; right: 0; bottom: 0;
       height: 1.5px;
